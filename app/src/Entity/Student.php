@@ -7,11 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Élève
  */
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Un compte existe déjà avec cet email.')]
 class Student extends AbstractUser
 {
     #[ORM\Id]

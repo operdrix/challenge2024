@@ -6,8 +6,10 @@ use App\Repository\InscriptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: InscriptionRepository::class)]
+#[UniqueEntity(fields: ['grade', 'training'], message: 'Cette classe est déjà inscrite à cette formation.')]
 class Inscription
 {
     #[ORM\Id]

@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\TrainingObjectiveRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrainingObjectiveRepository::class)]
+#[UniqueEntity(fields: ['title', 'training'], message: 'Cet objectif de formation existe déjà pour cette formation.')]
 class TrainingObjective
 {
     #[ORM\Id]

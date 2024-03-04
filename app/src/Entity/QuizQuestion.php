@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use App\Enum\QuizQuestionTypeEnum;
 use App\Repository\QuizQuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: QuizQuestionRepository::class)]
+#[UniqueEntity(fields: ['title', 'quiz', 'type'], message: 'Cette question est déjà créée pour ce quiz.')]
 class QuizQuestion
 {
     #[ORM\Id]
@@ -17,6 +21,9 @@ class QuizQuestion
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, enumType: QuizQuestionTypeEnum::class)]
+    private ?QuizQuestionTypeEnum $type = null;
 
     #[ORM\Column]
     private ?float $point = null;
@@ -50,6 +57,17 @@ class QuizQuestion
         return $this;
     }
 
+    public function getType(): ?QuizQuestionTypeEnum
+    {
+        return $this->type;
+    }
+
+    public function setType(QuizQuestionTypeEnum $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
     public function getPoint(): ?float
     {
         return $this->point;

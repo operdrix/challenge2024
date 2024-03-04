@@ -6,8 +6,10 @@ use App\Repository\TrainingSessionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrainingSessionRepository::class)]
+#[UniqueEntity(fields: ['startDate', 'length'], message: 'Une session de formation existe déjà à cette date et pour cette durée.')]
 class TrainingSession
 {
     #[ORM\Id]
@@ -22,7 +24,7 @@ class TrainingSession
     private ?\DateTimeImmutable $startDate = null;
 
     #[ORM\Column]
-    private ?bool $isOnline = null;
+    private ?bool $isOnline = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $sessionLink = null;

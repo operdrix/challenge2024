@@ -6,8 +6,10 @@ use App\Repository\QuizRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: QuizRepository::class)]
+#[UniqueEntity(fields: ['label', 'training'], message: 'Ce quiz est déjà créé pour cette formation.')]
 class Quiz
 {
     #[ORM\Id]
@@ -19,7 +21,7 @@ class Quiz
     private ?string $label = null;
 
     #[ORM\Column]
-    private ?bool $isOpened = null;
+    private ?bool $isOpened = false;
 
     #[ORM\Column(nullable: true)]
     private ?int $duration = null;
