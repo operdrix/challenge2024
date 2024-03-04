@@ -18,6 +18,8 @@ class HomepageController extends AbstractController
     public function index(): Response
     {
         $this->addFlash("success", "Exemple de message toast");
+        $this->addFlash("warning", "Exemple de message toast");
+        $this->addFlash("danger", "Exemple de message toast");
 
         return $this->render('homepage/index.html.twig', [
             'controller_name' => 'HomepageController',
