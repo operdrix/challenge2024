@@ -17,7 +17,9 @@
                 Se connecter à la plateforme
             </h2>
             {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
             {% endif %}
             <form class="mt-8 space-y-6" action="{{ path('login') }}" method="post">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
