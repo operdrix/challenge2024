@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use App\Enum\DifficultyEnum;
 use App\Repository\TrainingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrainingRepository::class)]
+#[UniqueEntity(fields: ['title', 'teacher'], message: 'Cette formation existe déjà.')]
 class Training
 {
     #[ORM\Id]
@@ -24,8 +28,8 @@ class Training
     #[ORM\Column]
     private ?int $length = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $difficulty = null;
+    #[ORM\Column(type: Types::STRING, length: 255, enumType: DifficultyEnum::class)]
+    private ?DifficultyEnum $difficulty = null;
 
     #[ORM\ManyToOne(inversedBy: 'trainings')]
     #[ORM\JoinColumn(nullable: false)]
@@ -96,12 +100,12 @@ class Training
         return $this;
     }
 
-    public function getDifficulty(): ?string
+    public function getDifficulty(): ?DifficultyEnum
     {
         return $this->difficulty;
     }
 
-    public function setDifficulty(string $difficulty): static
+    public function setDifficulty(DifficultyEnum $difficulty): static
     {
         $this->difficulty = $difficulty;
 

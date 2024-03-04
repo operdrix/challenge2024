@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\TrainingCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrainingCategoryRepository::class)]
+#[UniqueEntity(fields: ['label', 'teacher'], message: 'Cette catégorie de formation existe déjà pour ce professeur.')]
 class TrainingCategory
 {
     #[ORM\Id]

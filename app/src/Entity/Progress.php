@@ -6,8 +6,10 @@ use App\Repository\ProgressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ProgressRepository::class)]
+#[UniqueEntity(fields: ['inscription', 'student'], message: 'Cet élève est déjà inscrit à cette formation.')]
 class Progress
 {
     #[ORM\Id]

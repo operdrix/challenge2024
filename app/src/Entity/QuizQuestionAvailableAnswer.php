@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\QuizQuestionAvailableAnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: QuizQuestionAvailableAnswerRepository::class)]
+#[UniqueEntity(fields: ['content', 'quiz'], message: 'Cette réponse est déjà associée à cette question.')]
 class QuizQuestionAvailableAnswer
 {
     #[ORM\Id]
@@ -17,7 +19,7 @@ class QuizQuestionAvailableAnswer
     private ?string $content = null;
 
     #[ORM\Column]
-    private ?bool $isCorrect = null;
+    private ?bool $isCorrect = false;
 
     #[ORM\ManyToOne(inversedBy: 'quizQuestionAvailableAnswers')]
     #[ORM\JoinColumn(nullable: false)]

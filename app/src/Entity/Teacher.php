@@ -7,11 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Prof
  */
 #[ORM\Entity(repositoryClass: TeacherRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Un compte existe déjà avec cet email.')]
 class Teacher extends AbstractUser
 {
     #[ORM\Id]
@@ -24,8 +26,6 @@ class Teacher extends AbstractUser
      */
     #[ORM\Column(type: Types::JSON)]
     protected array $roles = ["ROLE_TEACHER"];
-<<<<<<< HEAD
-=======
 
     #[ORM\OneToMany(targetEntity: Training::class, mappedBy: 'teacher')]
     private Collection $trainings;
@@ -46,7 +46,6 @@ class Teacher extends AbstractUser
         $this->grades = new ArrayCollection();
         $this->schools = new ArrayCollection();
     }
->>>>>>> core/entities
 
     /********************************/
     /* AUTO GENERATED CONTENT BELOW */

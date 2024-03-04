@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\TrainingSessionStudentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrainingSessionStudentRepository::class)]
+#[UniqueEntity(fields: ['trainingSession', 'student'], message: 'Cet étudiant est déjà inscrit à cette session.')]
 class TrainingSessionStudent
 {
     #[ORM\Id]
@@ -14,7 +16,7 @@ class TrainingSessionStudent
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?bool $isPresent = null;
+    private ?bool $isPresent = false;
 
     #[ORM\ManyToOne(inversedBy: 'trainingSessionStudents')]
     private ?TrainingSession $trainingSession = null;

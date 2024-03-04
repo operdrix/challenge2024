@@ -6,8 +6,10 @@ use App\Repository\GradeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: GradeRepository::class)]
+#[UniqueEntity(fields: ['label', 'school', 'teacher'], message: 'Vous avez déjà créé cette classe dans cette école.')]
 class Grade
 {
     #[ORM\Id]

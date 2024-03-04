@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\QuizQuestionStudentAnswerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: QuizQuestionStudentAnswerRepository::class)]
+#[UniqueEntity(fields: ['quizQuestion', 'student'], message: 'Cette réponse est déjà associée à cette question pour cet élève.')]
 class QuizQuestionStudentAnswer
 {
     #[ORM\Id]

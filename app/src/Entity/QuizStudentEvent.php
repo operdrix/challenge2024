@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
+use App\Enum\EventTypeEnum;
 use App\Repository\QuizStudentEventRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: QuizStudentEventRepository::class)]
+#[UniqueEntity(fields: ['startedAt', 'student', 'eventType'], message: 'Cet événement existe déjà pour cet élève.')]
 class QuizStudentEvent
 {
     #[ORM\Id]
@@ -16,8 +20,8 @@ class QuizStudentEvent
     #[ORM\Column]
     private ?\DateTimeImmutable $startedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $eventType = null;
+    #[ORM\Column(type: Types::STRING, length: 255, enumType: EventTypeEnum::class)]
+    private ?EventTypeEnum $eventType = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -40,12 +44,12 @@ class QuizStudentEvent
         return $this;
     }
 
-    public function getEventType(): ?string
+    public function getEventType(): ?EventTypeEnum
     {
         return $this->eventType;
     }
 
-    public function setEventType(string $eventType): static
+    public function setEventType(EventTypeEnum $eventType): static
     {
         $this->eventType = $eventType;
 

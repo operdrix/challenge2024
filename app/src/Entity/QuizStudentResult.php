@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\QuizStudentResultRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: QuizStudentResultRepository::class)]
+#[UniqueEntity(fields: ['quiz', 'student'], message: 'Ce résultat est déjà créé pour ce quiz et cet élève.')]
 class QuizStudentResult
 {
     #[ORM\Id]
@@ -24,7 +26,7 @@ class QuizStudentResult
     private ?string $comment = null;
 
     #[ORM\Column]
-    private ?bool $isValidated = null;
+    private ?bool $isValidated = false;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $duration = null;

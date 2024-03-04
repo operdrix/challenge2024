@@ -2,10 +2,14 @@
 
 namespace App\Entity;
 
+use App\Enum\ResourceTypeEnum;
 use App\Repository\ResourceRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ResourceRepository::class)]
+#[UniqueEntity(fields: ['title', 'training'], message: 'Cette ressource est déjà créée pour cette formation.')]
 class Resource
 {
     #[ORM\Id]
@@ -16,8 +20,8 @@ class Resource
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    #[ORM\Column(type: Types::STRING, length: 255, enumType: ResourceTypeEnum::class)]
+    private ?ResourceTypeEnum $type = null;
 
     #[ORM\Column(length: 255)]
     private ?string $link = null;
@@ -43,12 +47,12 @@ class Resource
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType(): ?ResourceTypeEnum
     {
         return $this->type;
     }
 
-    public function setType(string $type): static
+    public function setType(ResourceTypeEnum $type): static
     {
         $this->type = $type;
 
