@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Admin;
 use App\Entity\Student;
+use App\Entity\Teacher;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -32,10 +33,21 @@ class AppFixtures extends Fixture
             $admin->setFirstname("admin" . $i);
             $admin->setLastname("admin" . $i);
             $admin->setEmail("admin@admin" . $i . ".fr");
-            $admin->setPassword($this->passwordHasher->hashPassword($admin, "kschuler"));
+            $admin->setPassword($this->passwordHasher->hashPassword($admin, "admin"));
             $admin->setBirthdate(new \DateTimeImmutable());
             $admin->setPhoneNumber("06 06 06 06 06");
             $manager->persist($admin);
+        }
+
+        for ($i = 0; $i < 40; $i++) {
+            $teacher = new Teacher();
+            $teacher->setFirstname("teacher" . $i);
+            $teacher->setLastname("teacher" . $i);
+            $teacher->setEmail("teacher@teacher" . $i . ".fr");
+            $teacher->setPassword($this->passwordHasher->hashPassword($teacher, "teacher"));
+            $teacher->setBirthdate(new \DateTimeImmutable());
+            $teacher->setPhoneNumber("06 06 06 06 06");
+            $manager->persist($teacher);
         }
 
         $student = new Student();

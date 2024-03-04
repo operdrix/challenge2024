@@ -2,7 +2,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Admin;
+use App\Entity\Teacher;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -13,9 +13,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Formulaire d'un administateur
+ * Formulaire d'un prof
  */
-class AdminType extends AbstractType
+class TeacherType extends AbstractType
 {
     /**
      * {@inheritDoc}
@@ -70,7 +70,7 @@ class AdminType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Admin::class,
+            'data_class' => Teacher::class,
         ]);
     }
 }

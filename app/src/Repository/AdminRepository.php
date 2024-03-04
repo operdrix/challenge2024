@@ -8,6 +8,8 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repo des administateurs
+ *
  * @extends ServiceEntityRepository<Admin>
  *
  * @method Admin|null find($id, $lockMode = null, $lockVersion = null)

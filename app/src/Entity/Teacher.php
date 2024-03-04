@@ -19,6 +19,9 @@ class Teacher extends AbstractUser
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+     * Roles
+     */
     #[ORM\Column(type: Types::JSON)]
     protected array $roles = ["ROLE_TEACHER"];
 <<<<<<< HEAD

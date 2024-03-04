@@ -19,6 +19,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/administrators', name: "admin_administrators_")]
 class AdminController extends AbstractController
 {
+    /**
+     * Liste
+     */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
         EntityManagerInterface $entityManager,
@@ -42,6 +45,9 @@ class AdminController extends AbstractController
         );
     }
 
+    /**
+     * Édition
+     */
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
@@ -55,6 +61,7 @@ class AdminController extends AbstractController
         if (empty($admin)) {
             $admin = new Admin();
             $formOptions["validation_groups"] = [
+                "Default",
                 "user_new"
             ];
         }
@@ -77,14 +84,6 @@ class AdminController extends AbstractController
         return $this->render('admin/administrator/edit.html.twig', [
             'admin' => $admin,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(Admin $admin): Response
-    {
-        return $this->render('admin/administrator/show.html.twig', [
-            'admin' => $admin,
         ]);
     }
 
