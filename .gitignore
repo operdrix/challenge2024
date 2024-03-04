@@ -1,0 +1,8 @@
+###> ide ###
+/.idea
+###< ide ###
+
+###> infra ###
+/infra/volumes
+/infra/logs
+###< infra ###

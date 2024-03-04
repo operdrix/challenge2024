@@ -1,0 +1,56 @@
+services:
+  mariadb:
+    container_name: app-mariadb
+    image: mariadb:11.2.2
+    restart: unless-stopped
+    volumes:
+      - app-mariadb-data:/var/lib/mysql
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    networks:
+      - nw.backend
+
+  php:
+    container_name: app-php
+    image: app-image
+    environment:
+      APP_ENV: prod
+      MESSENGER_TRANSPORT_DSN: ${MESSENGER_TRANSPORT_DSN}
+      DATABASE_URL: ${DATABASE_URL}
+      MAILER_DSN: ${MAILER_DSN}
+    volumes:
+      - ./infra/php/prod/project.ini:/usr/local/etc/php/conf.d/project.ini:ro
+      - ./infra/php/prod/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+    networks:
+      - nw.backend
+      - nw.frontend
+    depends_on:
+      - mariadb
+    tty: true
+
+  nginx:
+    container_name: app-nginx
+    image: nginx:1.25.3
+    networks:
+      - nw.frontend
+    volumes:
+      - ./infra/volumes/prod/logs/nginx:/var/log/nginx
+      - ./infra/nginx/prod/virtualhost.conf:/etc/nginx/conf.d/default.conf:ro
+    volumes_from:
+      - php
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - php
+    tty: true
+
+volumes:
+  app-mariadb-data:
+
+networks:
+  nw.backend:
+  nw.frontend:
