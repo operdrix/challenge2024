@@ -3,12 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin;
-use App\Form\AdminType;
+use App\Form\Type\AdminType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
@@ -42,20 +44,34 @@ class AdminController extends AbstractController
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, EntityManagerInterface $entityManager, ?Admin $admin = null): Response
+    public function edit(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        UserPasswordHasherInterface $passwordHasher,
+        ?Admin $admin = null
+    ): Response
     {
+        $formOptions = [];
         if (empty($admin)) {
             $admin = new Admin();
+            $formOptions["validation_groups"] = [
+                "user_new"
+            ];
         }
 
-        $form = $this->createForm(AdminType::class, $admin);
+        $form = $this->createForm(AdminType::class, $admin, $formOptions);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!empty($admin->getPlainPassword())) {
+                $admin->setPassword($passwordHasher->hashPassword($admin, $admin->getPlainPassword()));
+                $admin->eraseCredentials();
+            }
+
             $entityManager->persist($admin);
             $entityManager->flush();
 
-            return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('admin_administrators_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('admin/administrator/edit.html.twig', [
