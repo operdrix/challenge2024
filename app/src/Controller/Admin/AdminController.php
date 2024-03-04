@@ -55,6 +55,7 @@ class AdminController extends AbstractController
         if (empty($admin)) {
             $admin = new Admin();
             $formOptions["validation_groups"] = [
+                "Default",
                 "user_new"
             ];
         }
@@ -77,14 +78,6 @@ class AdminController extends AbstractController
         return $this->render('admin/administrator/edit.html.twig', [
             'admin' => $admin,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(Admin $admin): Response
-    {
-        return $this->render('admin/administrator/show.html.twig', [
-            'admin' => $admin,
         ]);
     }
 
