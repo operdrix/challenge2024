@@ -2,15 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TeacherRepository;
+use App\Repository\AdminRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Prof
- */
-#[ORM\Entity(repositoryClass: TeacherRepository::class)]
-class Teacher extends AbstractUser
+#[ORM\Entity(repositoryClass: AdminRepository::class)]
+class Admin extends AbstractUser
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,7 +15,7 @@ class Teacher extends AbstractUser
     private ?int $id = null;
 
     #[ORM\Column(type: Types::JSON)]
-    protected array $roles = ["ROLE_STUDENT"];
+    protected array $roles = ["ROLE_ADMIN"];
 
     /********************************/
     /* AUTO GENERATED CONTENT BELOW */

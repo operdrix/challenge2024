@@ -94,6 +94,14 @@ abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserI
         return (string)$this->email;
     }
 
+    /**
+     * Nom complet
+     */
+    public function getFullname(): string
+    {
+        return $this->getFirstname() . " " . $this->getLastname();
+    }
+
     /********************************/
     /* AUTO GENERATED CONTENT BELOW */
     /********************************/
