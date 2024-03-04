@@ -96,6 +96,6 @@ class AdminController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('admin_administrators_index', [], Response::HTTP_SEE_OTHER);
     }
 }
