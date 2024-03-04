@@ -8,4 +8,16 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 
-import "./bootstrap"
+// start the Stimulus application
+import './bootstrap';
+
+// enable the interactive UI components from Flowbite with Turbo
+import 'flowbite/dist/flowbite.turbo.js';
+
+let preloader = document.getElementById("preloader")
+
+window.addEventListener('load', function () {
+    if (preloader !== null) {
+        this.document.getElementById('preloader').style.display = 'none'
+    }
+})

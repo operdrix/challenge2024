@@ -55,6 +55,8 @@ Encore
 
     .enableStimulusBridge('./assets/controllers.json')
 
+    .enablePostCssLoader()
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 
