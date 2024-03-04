@@ -88,25 +88,37 @@
     {% endfor %}
 
 
-    {{ include("layout/_nav.html.twig") }}
+    {% if app.user %}
+        {{ include("layout/_nav.html.twig") }}
+    {% endif %}
 
     <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
 
-        {{ include("layout/_sidebar.html.twig") }}
+        {% if app.user %}
+            {{ include("layout/_sidebar.html.twig") }}
 
-        <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
+            <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
+        {% endif %}
 
         <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
-            <main>
+            <main id="content-without-footer">
                 {% block body %}
 
                 {% endblock %}
             </main>
-            {{ include("layout/_footer.html.twig") }}
-            {{ include("layout/_copyright.html.twig") }}
-
+            {% if app.user %}
+                {{ include("layout/_footer.html.twig") }}
+            {% endif %}
 
         </div>
     </div>
+
+    <script defer>
+        const navbar = document.getElementById('main-navbar');
+        const content = document.getElementById('content-without-footer');
+        const footer = document.getElementById('main-footer');
+
+        content.style.height = `calc(100vh - ${navbar.offsetHeight + footer.offsetHeight + 30}px)`;
+    </script>
     </body>
 </html>
