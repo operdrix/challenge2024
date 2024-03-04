@@ -15,9 +15,14 @@ security:
             class: App\Entity\Teacher
             property: email
 
+        app_admin_provider:
+          entity:
+            class: App\Entity\Admin
+            property: email
+
         all_users:
           chain:
-            providers: [ 'app_student_provider', 'app_teacher_provider' ]
+            providers: [ 'app_student_provider', 'app_teacher_provider', 'app_admin_provider' ]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
