@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\AdminRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
+#[UniqueEntity("email")]
 class Admin extends AbstractUser
 {
     #[ORM\Id]

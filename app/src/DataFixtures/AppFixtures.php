@@ -27,6 +27,17 @@ class AppFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        for ($i = 0; $i < 40; $i++) {
+            $admin = new Admin();
+            $admin->setFirstname("admin" . $i);
+            $admin->setLastname("admin" . $i);
+            $admin->setEmail("admin@admin" . $i . ".fr");
+            $admin->setPassword($this->passwordHasher->hashPassword($admin, "kschuler"));
+            $admin->setBirthdate(new \DateTimeImmutable());
+            $admin->setPhoneNumber("06 06 06 06 06");
+            $manager->persist($admin);
+        }
+
         $student = new Student();
         $student->setFirstname("Kenza");
         $student->setLastname("Schuler");
