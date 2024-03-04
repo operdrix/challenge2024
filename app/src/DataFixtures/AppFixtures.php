@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Admin;
 use App\Entity\Student;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -82,6 +83,16 @@ class AppFixtures extends Fixture
         $student->setRoles(["ROLE_STUDENT"]);
         $student->setEmail("mrome@myges.fr");
         $student->setPassword($this->passwordHasher->hashPassword($student, "mrome"));
+        $student->setBirthdate(new \DateTimeImmutable());
+        $student->setPhoneNumber("06 06 06 06 06");
+        $manager->persist($student);
+
+        $student = new Admin();
+        $student->setFirstname("Administrateur");
+        $student->setLastname("Administrateur");
+        $student->setRoles(["ROLE_ADMIN"]);
+        $student->setEmail("admin@admin.fr");
+        $student->setPassword($this->passwordHasher->hashPassword($student, "admin"));
         $student->setBirthdate(new \DateTimeImmutable());
         $student->setPhoneNumber("06 06 06 06 06");
         $manager->persist($student);
