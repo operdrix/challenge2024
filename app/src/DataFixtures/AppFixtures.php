@@ -31,7 +31,6 @@ class AppFixtures extends Fixture
             $admin = new Admin();
             $admin->setFirstname("admin" . $i);
             $admin->setLastname("admin" . $i);
-            $admin->setRoles(["ROLE_STUDENT"]);
             $admin->setEmail("admin@admin" . $i . ".fr");
             $admin->setPassword($this->passwordHasher->hashPassword($admin, "kschuler"));
             $admin->setBirthdate(new \DateTimeImmutable());
