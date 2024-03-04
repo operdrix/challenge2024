@@ -19,6 +19,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/administrators', name: "admin_administrators_")]
 class AdminController extends AbstractController
 {
+    /**
+     * Liste
+     */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
         EntityManagerInterface $entityManager,
@@ -42,6 +45,9 @@ class AdminController extends AbstractController
         );
     }
 
+    /**
+     * Édition
+     */
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
