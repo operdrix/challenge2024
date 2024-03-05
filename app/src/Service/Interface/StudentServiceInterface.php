@@ -28,4 +28,9 @@ interface StudentServiceInterface
      * Send register email to student
      */
     public function sendNewStudentRegisterMail(Student $student);
+
+    /**
+     * Fetch inscriptions to generate flash message on student resgistration
+     */
+    public function generateRegistrationFlashMessages(Student $student): array;
 }
