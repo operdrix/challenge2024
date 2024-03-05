@@ -19,6 +19,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StudentRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Student::class);
@@ -27,8 +30,25 @@ class StudentRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filters = []): QueryBuilder
     {
-        return $this->createQueryBuilder("s");
+        $queryBuilder = $this->createQueryBuilder("s");
+
+        if (!empty($filters["firstname"])) {
+            $queryBuilder->andWhere("s.firstname LIKE :firstname")
+                ->setParameter("firstname", '%' . $filters["firstname"] . '%');
+        }
+
+        if (!empty($filters["lastname"])) {
+            $queryBuilder->andWhere("s.lastname LIKE :lastname")
+                ->setParameter("lastname", '%' . $filters["lastname"] . '%');
+        }
+
+        if (!empty($filters["email"])) {
+            $queryBuilder->andWhere("s.email LIKE :email")
+                ->setParameter("email", '%' . $filters["email"] . '%');
+        }
+
+        return $queryBuilder;
     }
 }

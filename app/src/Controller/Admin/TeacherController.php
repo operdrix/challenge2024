@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Teacher;
+use App\Form\Type\TeacherFilterType;
 use App\Form\Type\TeacherType;
+use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,21 +25,19 @@ class TeacherController extends AbstractController
      */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        EntityManagerInterface $em,
-        PaginatorInterface     $paginator,
+        FilteredListService $filteredListService,
         Request                $request,
     ): Response
     {
-        $query = $em->getRepository(Teacher::class)->getBaseQueryBuilder();
-
-        $pagination = $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            20 /*limit per page*/
+        [$pagination, $form] = $filteredListService->prepareFilteredList(
+            $request,
+            TeacherFilterType::class,
+            Teacher::class
         );
 
         return $this->render('admin/teacher/index.html.twig', [
             'pagination' => $pagination,
+            "form" => $form
         ]);
     }
 

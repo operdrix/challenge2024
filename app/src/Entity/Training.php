@@ -41,7 +41,7 @@ class Training
     #[ORM\OneToMany(targetEntity: TrainingObjective::class, mappedBy: 'training')]
     private Collection $trainingObjectives;
 
-    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'training')]
+    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'training', cascade: ['persist'])]
     private Collection $quizzes;
 
     #[ORM\OneToMany(targetEntity: Resource::class, mappedBy: 'training', orphanRemoval: true)]
@@ -50,6 +50,9 @@ class Training
     #[ORM\OneToMany(targetEntity: Inscription::class, mappedBy: 'training')]
     private Collection $inscriptions;
 
+    #[ORM\ManyToMany(targetEntity: TrainingCategory::class)]
+    private Collection $categories;
+
     public function __construct()
     {
         $this->trainingBlocks = new ArrayCollection();
@@ -57,6 +60,7 @@ class Training
         $this->quizzes = new ArrayCollection();
         $this->resources = new ArrayCollection();
         $this->inscriptions = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -270,6 +274,30 @@ class Training
                 $inscription->setTraining(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TrainingCategory>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(TrainingCategory $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(TrainingCategory $category): static
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }

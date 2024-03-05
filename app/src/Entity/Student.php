@@ -42,6 +42,15 @@ class Student extends AbstractUser
     #[ORM\OneToMany(targetEntity: Progress::class, mappedBy: 'student')]
     private Collection $progress;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photoFilename = null;
+
+    #[ORM\ManyToMany(targetEntity: Grade::class, inversedBy: 'students')]
+    private Collection $grades;
+
     public function __construct()
     {
         $this->quizQuestionStudentAnswers = new ArrayCollection();
@@ -49,6 +58,7 @@ class Student extends AbstractUser
         $this->inscriptions = new ArrayCollection();
         $this->trainingSessionStudents = new ArrayCollection();
         $this->progress = new ArrayCollection();
+        $this->grades = new ArrayCollection();
     }
 
     /********************************/
@@ -203,6 +213,54 @@ class Student extends AbstractUser
                 $progress->setStudent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPhotoFilename(): ?string
+    {
+        return $this->photoFilename;
+    }
+
+    public function setPhotoFilename(?string $photoFilename): static
+    {
+        $this->photoFilename = $photoFilename;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Grade>
+     */
+    public function getGrades(): Collection
+    {
+        return $this->grades;
+    }
+
+    public function addGrade(Grade $grade): static
+    {
+        if (!$this->grades->contains($grade)) {
+            $this->grades->add($grade);
+        }
+
+        return $this;
+    }
+
+    public function removeGrade(Grade $grade): static
+    {
+        $this->grades->removeElement($grade);
 
         return $this;
     }

@@ -27,8 +27,26 @@ class TeacherRepository extends ServiceEntityRepository
     /**
      * Requête par défaut
      */
-    public function getBaseQueryBuilder(): QueryBuilder
+    public function getBaseQueryBuilder(array $filters = []): QueryBuilder
     {
-        return $this->createQueryBuilder("t");
+        $queryBuilder = $this->createQueryBuilder("t");
+
+        if (!empty($filters["firstname"])) {
+            $queryBuilder->andWhere("t.firstname LIKE :firstname")
+                ->setParameter("firstname", '%' . $filters["firstname"] . '%');
+        }
+
+        if (!empty($filters["lastname"])) {
+            $queryBuilder->andWhere("t.lastname LIKE :lastname")
+                ->setParameter("lastname", '%' . $filters["lastname"] . '%');
+        }
+
+        if (!empty($filters["email"])) {
+            $queryBuilder->andWhere("t.email LIKE :email")
+                ->setParameter("email", '%' . $filters["email"] . '%');
+        }
+
+        return $queryBuilder;
+
     }
 }

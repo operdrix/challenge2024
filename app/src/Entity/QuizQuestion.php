@@ -35,7 +35,7 @@ class QuizQuestion
     #[ORM\OneToMany(targetEntity: QuizQuestionStudentAnswer::class, mappedBy: 'quizQuestion', orphanRemoval: true)]
     private Collection $quizQuestionStudentAnswers;
 
-    #[ORM\OneToMany(mappedBy: 'quizQuestion', targetEntity: QuizQuestionAvailableAnswer::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'quizQuestion', targetEntity: QuizQuestionAvailableAnswer::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $quizQuestionAvailableAnswers;
 
     public function __construct()

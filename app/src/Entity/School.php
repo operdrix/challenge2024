@@ -31,7 +31,7 @@ class School
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $contactName = null;
 
-    #[ORM\Column(length: 15, nullable: true)]
+    #[ORM\Column(length: 20, nullable: true)]
     private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 255, nullable: true)]

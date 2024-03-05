@@ -32,7 +32,7 @@ abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserI
     /**
      * @var string The hashed password
      */
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     protected ?string $password = null;
 
     /**

@@ -2,7 +2,7 @@ FROM php:8.2-fpm AS build
 
 ## Installation des utilitaires
 RUN apt-get update
-RUN apt-get install -y curl vim nano git zip npm
+RUN apt-get install -y curl vim nano git zip npm procps acl
 RUN npm install -g yarn
 
 
@@ -21,3 +21,7 @@ RUN install-php-extensions gd exif pdo_mysql intl zip bcmath && install-php-exte
 
 
 WORKDIR /var/www/app
+
+RUN HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1)
+RUN setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX public/*
+RUN setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX public/*

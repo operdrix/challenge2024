@@ -35,7 +35,7 @@ class Quiz
     #[ORM\JoinColumn(nullable: false)]
     private ?Training $training = null;
 
-    #[ORM\OneToMany(targetEntity: QuizQuestion::class, mappedBy: 'quiz', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: QuizQuestion::class, mappedBy: 'quiz', orphanRemoval: true, cascade: ['persist'])]
     private Collection $quizQuestions;
 
     #[ORM\OneToMany(targetEntity: QuizStudentResult::class, mappedBy: 'quiz')]
