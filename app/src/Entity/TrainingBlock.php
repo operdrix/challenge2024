@@ -37,6 +37,12 @@ class TrainingBlock
     #[ORM\ManyToMany(targetEntity: Resource::class)]
     private Collection $resources;
 
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $position = null;
+
     public function __construct()
     {
         $this->trainingSessions = new ArrayCollection();
@@ -159,6 +165,30 @@ class TrainingBlock
     public function removeResource(Resource $resource): static
     {
         $this->resources->removeElement($resource);
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): static
+    {
+        $this->position = $position;
 
         return $this;
     }

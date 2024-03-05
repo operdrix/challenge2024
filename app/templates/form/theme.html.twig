@@ -26,3 +26,27 @@
     {%- set error_item_class = error_item_class|default('mt-2 text-sm text-red-600 dark:text-red-500') -%}
     {{- parent() -}}
 {%- endblock form_errors -%}
+
+{%- block collection_widget -%}
+    <div
+            {{ stimulus_controller('form-collection') }}
+            data-form-collection-index-value="{{ form|length > 0 ? form|last.vars.name + 1 : 0 }}"
+            {% if form.vars['allow_add'] == true %}
+                data-form-collection-prototype-value="{{ form_widget(form.vars.prototype)|e('html_attr') }}"
+            {% endif %}
+    >
+    <button type="button" class="btn btn-success add-item" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Ajouter</button>
+        <ul {{ stimulus_target('form-collection', 'collectionContainer') }}>
+            {% for child in form.children %}
+                <li {{ stimulus_target('form-collection', 'field') }}>
+                    {{ form_widget(child) }}
+                    {% if form.vars['allow_delete'] == true %}
+                        <button type="button" class="btn btn-danger btn-sm remove-item" {{ stimulus_action('form-collection', 'removeItem' ) }}>
+                            Retirer
+                        </button>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{%- endblock collection_widget -%}

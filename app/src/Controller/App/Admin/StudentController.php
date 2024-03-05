@@ -4,7 +4,7 @@ namespace App\Controller\App\Admin;
 
 use App\Entity\Student;
 use App\Form\Type\StudentFilterType;
-use App\Form\Type\StudentType;
+use App\Form\Type\AdminStudentType;
 use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,8 +26,7 @@ class StudentController extends AbstractController
     public function index(
         FilteredListService $filteredListService,
         Request $request
-    ): Response
-    {
+    ): Response {
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             StudentFilterType::class,
@@ -46,12 +45,11 @@ class StudentController extends AbstractController
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
-        Request $request, 
+        Request $request,
         EntityManagerInterface $em,
         UserPasswordHasherInterface $passwordHasher,
         ?Student $student = null
-    ): Response
-    {
+    ): Response {
         $formOptions = [];
         if (empty($student)) {
             $student = new Student();
@@ -60,8 +58,8 @@ class StudentController extends AbstractController
                 "user_new"
             ];
         }
-        
-        $form = $this->createForm(StudentType::class, $student, $formOptions);
+
+        $form = $this->createForm(AdminStudentType::class, $student, $formOptions);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +86,7 @@ class StudentController extends AbstractController
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Student $student, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$student->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $student->getId(), $request->request->get('_token'))) {
             $em->remove($student);
             $em->flush();
         }

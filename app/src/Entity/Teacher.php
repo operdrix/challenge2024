@@ -39,12 +39,20 @@ class Teacher extends AbstractUser
     #[ORM\OneToMany(targetEntity: School::class, mappedBy: 'teacher')]
     private Collection $schools;
 
+    #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Message::class)]
+    private Collection $messages;
+
+    #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Conversation::class)]
+    private Collection $conversations;
+
     public function __construct()
     {
         $this->trainings = new ArrayCollection();
         $this->trainingCategories = new ArrayCollection();
         $this->grades = new ArrayCollection();
         $this->schools = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
     }
 
     /********************************/
@@ -170,6 +178,36 @@ class Teacher extends AbstractUser
             // set the owning side to null (unless already changed)
             if ($school->getTeacher() === $this) {
                 $school->setTeacher(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Conversation>
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversation $conversation): static
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations->add($conversation);
+            $conversation->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversation $conversation): static
+    {
+        if ($this->conversations->removeElement($conversation)) {
+            // set the owning side to null (unless already changed)
+            if ($conversation->getTeacher() === $this) {
+                $conversation->setTeacher(null);
             }
         }
 
