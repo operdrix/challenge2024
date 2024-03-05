@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Student;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,5 +22,13 @@ class StudentRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Student::class);
+    }
+
+    /**
+     * Requête de base
+     */
+    public function getBaseQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder("s");
     }
 }
