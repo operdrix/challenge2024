@@ -19,6 +19,10 @@
             {% if error %}
                 <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                     {{ error.messageKey|trans(error.messageData, 'security') }}
+                    <div class="alert alert-warning">
+                        Si vous êtes étudiants et que vous n'avez pas finalisé votre inscription, veuillez cliquer sur le lien reçu dans votre boite mail ou vous rendre sur la page 
+                        <a href="{{ path('app_student_register_first_step') }}">Inscription Étudiante</a>
+                    </div>
                 </div>
             {% endif %}
             <form class="mt-8 space-y-6" action="{{ path('login') }}" method="post">

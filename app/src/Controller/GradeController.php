@@ -64,11 +64,11 @@ class GradeController extends AbstractController
             $entityManager->persist($grade);
             $entityManager->flush();
 
-            return $this->redirectToRoute(
-                'app_grade_index',
-                ['school_id' => $grade->getSchool()->getId()],
-                Response::HTTP_SEE_OTHER
-            );
+            // return $this->redirectToRoute(
+            //     'app_grade_index',
+            //     ['school_id' => $grade->getSchool()->getId()],
+            //     Response::HTTP_SEE_OTHER
+            // );
         }
 
         return $this->render('grade/edit.html.twig', [
