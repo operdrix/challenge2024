@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Constant\AppConstant;
 use App\Entity\School;
-use App\Form\SchoolType;
+use App\Form\Type\SchoolType;
 use App\Repository\SchoolRepository;
 use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;

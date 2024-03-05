@@ -35,6 +35,7 @@
                 data-form-collection-prototype-value="{{ form_widget(form.vars.prototype)|e('html_attr') }}"
             {% endif %}
     >
+    <button type="button" class="btn btn-success add-item" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Ajouter</button>
         <ul {{ stimulus_target('form-collection', 'collectionContainer') }}>
             {% for child in form.children %}
                 <li {{ stimulus_target('form-collection', 'field') }}>
@@ -47,6 +48,5 @@
                 </li>
             {% endfor %}
         </ul>
-        <button type="button" class="btn btn-success add-item" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Ajouter une ressource</button>
     </div>
 {%- endblock collection_widget -%}
