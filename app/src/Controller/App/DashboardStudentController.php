@@ -3,6 +3,7 @@
 namespace App\Controller\App;
 
 use App\Entity\Training;
+use App\Entity\Teacher;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -15,7 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 class DashboardStudentController extends AbstractController
 {
     #[Route('/dashboard/student', name: 'app_dashboard_student')]
-    public function index(TrainingRepository $trainingRepository): Response
+    public function index(
+        TrainingRepository $trainingRepository,
+    ): Response
     {
         return $this->render('dashboard_student/index.html.twig', [
             'trainings' => $trainingRepository->findAll(),
