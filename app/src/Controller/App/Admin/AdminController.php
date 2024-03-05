@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\App\Admin;
 
 use App\Entity\Admin;
 use App\Form\Type\AdminFilterType;

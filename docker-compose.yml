@@ -44,6 +44,23 @@ services:
       - php
     tty: true
 
+  mercure:
+    image: dunglas/mercure
+    restart: unless-stopped
+    environment:
+      # Uncomment the following line to disable HTTPS
+      #SERVER_NAME: ':80'
+      MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+    # Uncomment the following line to enable the development mode
+    #command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
+    ports:
+      - '8888:80'
+      - '443:443'
+    volumes:
+      - ./infra/volumes/dev/mercure-data:/data
+      - ./infra/volumes/dev/mercure-config:/config
+
   mailcatcher:
     restart: on-failure
     image: schickling/mailcatcher

@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\App\Admin;
 
 use App\Entity\Teacher;
 use App\Form\Type\TeacherFilterType;
 use App\Form\Type\TeacherType;
 use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
