@@ -23,3 +23,9 @@ let forms = Array.from(document.getElementsByTagName("form"))
 forms.forEach(form => {
     form.noValidate = true
 })
+
+const mainNavbar = document.getElementById("main-navbar")
+const contentWithoutFilter = document.getElementById("content-without-footer")
+const mainFooter = document.getElementById("main-footer")
+
+contentWithoutFilter.style.minHeight = `calc(100vh - ${mainNavbar.offsetHeight + mainFooter.offsetHeight + 20}px)`
