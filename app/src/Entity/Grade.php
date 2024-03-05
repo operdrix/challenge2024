@@ -31,7 +31,7 @@ class Grade
     #[ORM\OneToMany(targetEntity: Inscription::class, mappedBy: 'grade')]
     private Collection $inscriptions;
 
-    #[ORM\ManyToMany(targetEntity: Student::class, mappedBy: 'grades')]
+    #[ORM\ManyToMany(targetEntity: Student::class, mappedBy: 'grades', cascade: ['persist'])]
     private Collection $students;
 
     public function __construct()
@@ -134,6 +134,13 @@ class Grade
         if ($this->students->removeElement($student)) {
             $student->removeGrade($this);
         }
+
+        return $this;
+    }
+
+    public function setStudents(Collection $students): static
+    {
+        $this->students = $students;
 
         return $this;
     }
