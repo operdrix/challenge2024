@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Type;
 
 use App\Entity\Quiz;
 use App\Entity\Training;
@@ -40,6 +40,7 @@ class QuizType extends AbstractType
                 'class' => Training::class,
                 'choice_label' => 'title',
                 'autocomplete' => 'true',
+                'label' => 'Formation',
             ])
             ->add('quizQuestions', CollectionType::class, [
                 'entry_type' => QuestionsType::class,
