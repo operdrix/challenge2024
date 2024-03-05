@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Organisme de Formation{% endblock %}
+
+{% block body %}
+    <h1>Liste des organismes de formation</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nom</th>
+                <th>Addresse</th>
+                <th>Email</th>
+                <th>Nom du contact</th>
+                <th>Téléphone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for school in schools %}
+            <tr>
+                <td><img src="{{ asset(school.logoFilename, 'school') }}" alt="{{ school.logoFilename }}"></td>
+                <td>{{ school.name }}</td>
+                <td>{{ school.address }}</td>
+                <td>{{ school.email }}</td>
+                <td>{{ school.contactName }}</td>
+                <td>{{ school.phoneNumber }}</td>
+                <td>
+                    <a href="{{ path('school_show', {'id': school.id}) }}">show</a>
+                    <a href="{{ path('school_edit', {'id': school.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucun organisme</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('school_new') }}">Créer un organisme</a>
+{% endblock %}
