@@ -16,10 +16,3 @@ import 'flowbite/dist/flowbite.turbo.js';
 
 import "./js/sidebar"
 import "./js/dark-mode"
-
-
-let forms = Array.from(document.getElementsByTagName("form"))
-
-forms.forEach(form => {
-    form.noValidate = true
-})
