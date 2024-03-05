@@ -19,8 +19,7 @@ class AppFixtures extends Fixture
      */
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher
-    )
-    {
+    ) {
     }
 
     /**
@@ -39,16 +38,25 @@ class AppFixtures extends Fixture
             $manager->persist($admin);
         }
 
-        for ($i = 0; $i < 40; $i++) {
-            $teacher = new Teacher();
-            $teacher->setFirstname("teacher" . $i);
-            $teacher->setLastname("teacher" . $i);
-            $teacher->setEmail("teacher@teacher" . $i . ".fr");
-            $teacher->setPassword($this->passwordHasher->hashPassword($teacher, "teacher"));
-            $teacher->setBirthdate(new \DateTimeImmutable());
-            $teacher->setPhoneNumber("06 06 06 06 06");
-            $manager->persist($teacher);
-        }
+        $teacher = new Teacher();
+        $teacher->setFirstname("Cyril");
+        $teacher->setLastname("Couffe");
+        $teacher->setRoles(["ROLE_TEACHER"]);
+        $teacher->setEmail("ccouffe@myges.fr");
+        $teacher->setPassword($this->passwordHasher->hashPassword($teacher, "ccouffe"));
+        $teacher->setBirthdate(new \DateTimeImmutable());
+        $teacher->setPhoneNumber("06 06 06 06 06");
+        $manager->persist($teacher);
+
+        $teacher = new Teacher();
+        $teacher->setFirstname("Audrey");
+        $teacher->setLastname("Hossepian");
+        $teacher->setRoles(["ROLE_TEACHER"]);
+        $teacher->setEmail("ahossepian@myges.fr");
+        $teacher->setPassword($this->passwordHasher->hashPassword($teacher, "ahossepian"));
+        $teacher->setBirthdate(new \DateTimeImmutable());
+        $teacher->setPhoneNumber("06 06 06 06 06");
+        $manager->persist($teacher);
 
         $student = new Student();
         $student->setFirstname("Kenza");
