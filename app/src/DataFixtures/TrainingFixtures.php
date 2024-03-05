@@ -7,12 +7,13 @@ use App\Entity\TrainingBlock;
 use App\Entity\TrainingCategory;
 use App\Enum\DifficultyEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
 
-class TrainingFixtures extends Fixture
+class TrainingFixtures extends Fixture implements DependentFixtureInterface
 {
     /**
      * @var \Faker\Generator
@@ -27,8 +28,14 @@ class TrainingFixtures extends Fixture
     }
 
 
-    public const TEACHER1_TRAINING_1 = 'teacher1_training1';
-    public const TEACHER1_TRAINING_2 = 'teacher1_training2';
+    public const TEACHER_1_TRAINING_1 = 'teacher_1_training1';
+    public const TEACHER_1_TRAINING_2 = 'teacher_1_training2';
+    public const TRAINING_1_BLOCK_1 = 'training1_block1';
+    public const TRAINING_1_BLOCK_2 = 'training1_block2';
+    public const TRAINING_1_BLOCK_3 = 'training1_block3';
+    public const TRAINING_1_BLOCK_4 = 'training1_block4';
+    public const TRAINING_1_BLOCK_5 = 'training1_block5';
+    public const TRAINING_1_BLOCK_6 = 'training1_block6';
 
     public function load(ObjectManager $manager): void
     {
@@ -113,8 +120,14 @@ class TrainingFixtures extends Fixture
 
         $manager->flush();
 
-        $this->addReference(self::TEACHER1_TRAINING_1, $training1);
-        $this->addReference(self::TEACHER1_TRAINING_2, $training2);
+        $this->addReference(self::TEACHER_1_TRAINING_1, $training1);
+        $this->addReference(self::TEACHER_1_TRAINING_2, $training2);
+        $this->addReference(self::TRAINING_1_BLOCK_1, $trainingBlock1);
+        $this->addReference(self::TRAINING_1_BLOCK_2, $trainingBlock2);
+        $this->addReference(self::TRAINING_1_BLOCK_3, $trainingBlock3);
+        $this->addReference(self::TRAINING_1_BLOCK_4, $trainingBlock4);
+        $this->addReference(self::TRAINING_1_BLOCK_5, $trainingBlock5);
+        $this->addReference(self::TRAINING_1_BLOCK_6, $trainingBlock6);
     }
 
     public function getDependencies()
