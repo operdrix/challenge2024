@@ -31,9 +31,13 @@ class Grade
     #[ORM\OneToMany(targetEntity: Inscription::class, mappedBy: 'grade')]
     private Collection $inscriptions;
 
+    #[ORM\ManyToMany(targetEntity: Student::class, mappedBy: 'grades')]
+    private Collection $students;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
+        $this->students = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,6 +106,33 @@ class Grade
             if ($inscription->getGrade() === $this) {
                 $inscription->setGrade(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Student>
+     */
+    public function getStudents(): Collection
+    {
+        return $this->students;
+    }
+
+    public function addStudent(Student $student): static
+    {
+        if (!$this->students->contains($student)) {
+            $this->students->add($student);
+            $student->addGrade($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudent(Student $student): static
+    {
+        if ($this->students->removeElement($student)) {
+            $student->removeGrade($this);
         }
 
         return $this;
