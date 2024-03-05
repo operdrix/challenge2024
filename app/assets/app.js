@@ -16,3 +16,9 @@ import 'flowbite/dist/flowbite.turbo.js';
 
 import "./js/sidebar"
 import "./js/dark-mode"
+
+const mainNavbar = document.getElementById("main-navbar")
+const contentWithoutFilter = document.getElementById("content-without-footer")
+const mainFooter = document.getElementById("main-footer")
+
+contentWithoutFilter.style.minHeight = `calc(100vh - ${mainNavbar.offsetHeight + mainFooter.offsetHeight + 20}px)`

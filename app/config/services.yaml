@@ -6,8 +6,8 @@
 parameters:
     student_directory: '%kernel.project_dir%/public/uploads/students'
     school_directory: '%kernel.project_dir%/public/uploads/schools'
-    training_directory: '%kernel.project_dir%/public/uploads/training'
-    quizz_directory: '%kernel.project_dir%/public/uploads/quizzes'
+    training_directory: '%kernel.project_dir%/public/uploads/trainings'
+    quiz_directory: '%kernel.project_dir%/public/uploads/quizzes'
 
 services:
     # default configuration for services in *this* file

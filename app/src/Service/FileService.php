@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -12,7 +13,7 @@ class FileService
 {
     public function __construct(
         private SluggerInterface $slugger,
-        private Logger $logger
+        private LoggerInterface $logger
     ) {
     }
 
