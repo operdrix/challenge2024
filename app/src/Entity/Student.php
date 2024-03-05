@@ -51,6 +51,12 @@ class Student extends AbstractUser
     #[ORM\ManyToMany(targetEntity: Grade::class, inversedBy: 'students')]
     private Collection $grades;
 
+    #[ORM\OneToMany(mappedBy: 'student', targetEntity: Message::class)]
+    private Collection $messages;
+
+    #[ORM\OneToMany(mappedBy: 'student', targetEntity: Conversation::class)]
+    private Collection $conversations;
+
     public function __construct()
     {
         $this->quizQuestionStudentAnswers = new ArrayCollection();
@@ -59,6 +65,8 @@ class Student extends AbstractUser
         $this->trainingSessionStudents = new ArrayCollection();
         $this->progress = new ArrayCollection();
         $this->grades = new ArrayCollection();
+        $this->messages = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
     }
 
     /********************************/
@@ -261,6 +269,36 @@ class Student extends AbstractUser
     public function removeGrade(Grade $grade): static
     {
         $this->grades->removeElement($grade);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Conversation>
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversation $conversation): static
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations->add($conversation);
+            $conversation->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversation $conversation): static
+    {
+        if ($this->conversations->removeElement($conversation)) {
+            // set the owning side to null (unless already changed)
+            if ($conversation->getStudent() === $this) {
+                $conversation->setStudent(null);
+            }
+        }
 
         return $this;
     }
