@@ -32,15 +32,32 @@
                         </li>
                     </ol>
                 </nav>
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Administrateurs</h1>
-            </div>
-            <div class="sm:flex">
-                <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
+                <div class="flex md:space-x-3 md:space-y-0 space-y-3 md:flex-row flex-col">
+                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Administrateurs</h1>
                     <a href="{{ path("admin_administrators_new") }}" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                         Créer
                     </a>
                 </div>
+            </div>
+            <div>
+                <h1 class="w-full text-lg font-medium text-gray-900 sm:text-2xl dark:text-white">Filtre</h1>
+                {{ form_start(form, {"attr": {"class":"w-full", "noValidate": true}}) }}
+                <div class="w-full grid grid-cols-9 gap-6">
+                    <div class="md:col-span-3 col-span-full">
+                        {{ form_row(form.firstname) }}
+                    </div>
+                    <div class="md:col-span-3 col-span-full">
+                        {{ form_row(form.lastname) }}
+                    </div>
+                    <div class="md:col-span-3 col-span-full">
+                        {{ form_row(form.email) }}
+                    </div>
+                    <div class="col-span-full">
+                        <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="submit">{{ button_label|default('Appliquer les filtres') }}</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

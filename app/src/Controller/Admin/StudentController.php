@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Student;
+use App\Form\Type\StudentFilterType;
 use App\Form\Type\StudentType;
+use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,21 +25,19 @@ class StudentController extends AbstractController
      */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        EntityManagerInterface $em,
-        PaginatorInterface $paginator,
+        FilteredListService $filteredListService,
         Request $request
     ): Response
     {
-        $query = $em->getRepository(Student::class)->getBaseQueryBuilder();
-
-        $pagination = $paginator->paginate(
-            $query,
-            $request->query->get("page", 1),
-            20
+        [$pagination, $form] = $filteredListService->prepareFilteredList(
+            $request,
+            StudentFilterType::class,
+            Student::class
         );
 
         return $this->render('admin/student/index.html.twig', [
-            'pagination' => $pagination
+            'pagination' => $pagination,
+            "form" => $form
         ]);
     }
 
