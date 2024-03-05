@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TrainingSession index{% endblock %}
+
+{% block body %}
+    <h1>TrainingSession index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Length</th>
+                <th>StartDate</th>
+                <th>IsOnline</th>
+                <th>SessionLink</th>
+                <th>Place</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for training_session in training_sessions %}
+            <tr>
+                <td>{{ training_session.id }}</td>
+                <td>{{ training_session.length }}</td>
+                <td>{{ training_session.startDate ? training_session.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ training_session.isOnline ? 'Yes' : 'No' }}</td>
+                <td>{{ training_session.sessionLink }}</td>
+                <td>{{ training_session.place }}</td>
+                <td>
+                    <a href="{{ path('app_training_session_show', {'idTraining': training.id, 'idInscription': inscription.id, 'idSession': training_session.id}) }}">show</a>
+                    <a href="{{ path('app_training_session_edit', {'idTraining': training.id, 'idInscription': inscription.id, 'idSession': training_session.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_training_session_new', {'idTraining': training.id, 'idInscription': inscription.id}) }}">Create new</a>
+{% endblock %}
