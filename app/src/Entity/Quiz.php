@@ -36,9 +36,6 @@ class Quiz
     #[ORM\OneToMany(targetEntity: QuizQuestion::class, mappedBy: 'quiz', orphanRemoval: true)]
     private Collection $quizQuestions;
 
-    #[ORM\OneToMany(targetEntity: QuizQuestionAvailableAnswer::class, mappedBy: 'quiz', orphanRemoval: true)]
-    private Collection $quizQuestionAvailableAnswers;
-
     #[ORM\OneToMany(targetEntity: QuizStudentResult::class, mappedBy: 'quiz')]
     private Collection $quizStudentResults;
 
@@ -48,7 +45,6 @@ class Quiz
     public function __construct()
     {
         $this->quizQuestions = new ArrayCollection();
-        $this->quizQuestionAvailableAnswers = new ArrayCollection();
         $this->quizStudentResults = new ArrayCollection();
         $this->trainingBlocks = new ArrayCollection();
     }
@@ -142,36 +138,6 @@ class Quiz
             // set the owning side to null (unless already changed)
             if ($quizQuestion->getQuiz() === $this) {
                 $quizQuestion->setQuiz(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, QuizQuestionAvailableAnswer>
-     */
-    public function getQuizQuestionAvailableAnswers(): Collection
-    {
-        return $this->quizQuestionAvailableAnswers;
-    }
-
-    public function addQuizQuestionAvailableAnswer(QuizQuestionAvailableAnswer $quizQuestionAvailableAnswer): static
-    {
-        if (!$this->quizQuestionAvailableAnswers->contains($quizQuestionAvailableAnswer)) {
-            $this->quizQuestionAvailableAnswers->add($quizQuestionAvailableAnswer);
-            $quizQuestionAvailableAnswer->setQuiz($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuizQuestionAvailableAnswer(QuizQuestionAvailableAnswer $quizQuestionAvailableAnswer): static
-    {
-        if ($this->quizQuestionAvailableAnswers->removeElement($quizQuestionAvailableAnswer)) {
-            // set the owning side to null (unless already changed)
-            if ($quizQuestionAvailableAnswer->getQuiz() === $this) {
-                $quizQuestionAvailableAnswer->setQuiz(null);
             }
         }
 

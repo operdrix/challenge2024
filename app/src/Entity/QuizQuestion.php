@@ -35,9 +35,13 @@ class QuizQuestion
     #[ORM\OneToMany(targetEntity: QuizQuestionStudentAnswer::class, mappedBy: 'quizQuestion', orphanRemoval: true)]
     private Collection $quizQuestionStudentAnswers;
 
+    #[ORM\OneToMany(mappedBy: 'quizQuestion', targetEntity: QuizQuestionAvailableAnswer::class, orphanRemoval: true)]
+    private Collection $quizQuestionAvailableAnswers;
+
     public function __construct()
     {
         $this->quizQuestionStudentAnswers = new ArrayCollection();
+        $this->quizQuestionAvailableAnswers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -116,6 +120,36 @@ class QuizQuestion
             // set the owning side to null (unless already changed)
             if ($quizQuestionStudentAnswer->getQuizQuestion() === $this) {
                 $quizQuestionStudentAnswer->setQuizQuestion(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuizQuestionAvailableAnswer>
+     */
+    public function getQuizQuestionAvailableAnswers(): Collection
+    {
+        return $this->quizQuestionAvailableAnswers;
+    }
+
+    public function addQuizQuestionAvailableAnswer(QuizQuestionAvailableAnswer $quizQuestionAvailableAnswer): static
+    {
+        if (!$this->quizQuestionAvailableAnswers->contains($quizQuestionAvailableAnswer)) {
+            $this->quizQuestionAvailableAnswers->add($quizQuestionAvailableAnswer);
+            $quizQuestionAvailableAnswer->setQuizQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizQuestionAvailableAnswer(QuizQuestionAvailableAnswer $quizQuestionAvailableAnswer): static
+    {
+        if ($this->quizQuestionAvailableAnswers->removeElement($quizQuestionAvailableAnswer)) {
+            // set the owning side to null (unless already changed)
+            if ($quizQuestionAvailableAnswer->getQuizQuestion() === $this) {
+                $quizQuestionAvailableAnswer->setQuizQuestion(null);
             }
         }
 
