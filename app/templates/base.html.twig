@@ -101,7 +101,7 @@
         {% endif %}
 
         <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
-            <main id="content-without-footer" style="max-width: 80vh">
+            <main id="content-without-footer">
                 {% block body %}
 
                 {% endblock %}
@@ -112,9 +112,5 @@
 
         </div>
     </div>
-
-    <script defer>
-        document.getElementById('content-without-footer').style.height = `calc(100vh - ${document.getElementById('main-navbar').offsetHeight + document.getElementById('main-footer').offsetHeight + 30}px)`;
-    </script>
     </body>
 </html>
