@@ -21,6 +21,7 @@ class QuizType extends AbstractType
         $builder
             ->add('label', TextType::class, [
                 'label' => 'Nom du quiz',
+                'required' => true,
             ])
             ->add('isOpened', CheckboxType::class, [
                 'label' => 'Ouvert',
@@ -37,7 +38,8 @@ class QuizType extends AbstractType
             ])
             ->add('training', EntityType::class, [
                 'class' => Training::class,
-                'choice_label' => 'id',
+                'choice_label' => 'title',
+                'autocomplete' => 'true',
             ])
             ->add('quizQuestions', CollectionType::class, [
                 'entry_type' => QuestionsType::class,
@@ -49,6 +51,7 @@ class QuizType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'delete_empty' => true,
             ])
         ;
     }
