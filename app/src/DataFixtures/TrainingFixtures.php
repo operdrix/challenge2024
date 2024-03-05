@@ -2,10 +2,13 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Resource;
 use App\Entity\Training;
 use App\Entity\TrainingBlock;
 use App\Entity\TrainingCategory;
+use App\Entity\TrainingObjective;
 use App\Enum\DifficultyEnum;
+use App\Enum\ResourceTypeEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -88,6 +91,37 @@ class TrainingFixtures extends Fixture implements DependentFixtureInterface
         $trainingBlock6->setPosition(6);
         $manager->persist($trainingBlock6);
 
+        // Ajout des objectifs de formation
+        $trainingObjective1 = new TrainingObjective();
+        $trainingObjective1->setTitle("Savoir installer Symfony");
+        $manager->persist($trainingObjective1);
+
+        $trainingObjective2 = new TrainingObjective();
+        $trainingObjective2->setTitle("Savoir configurer Symfony");
+        $manager->persist($trainingObjective2);
+
+        $trainingObjective3 = new TrainingObjective();
+        $trainingObjective3->setTitle("Savoir utiliser le routing Symfony");
+        $manager->persist($trainingObjective3);
+
+        // Ajout de ressources
+        $resource1 = new Resource();
+        $resource1->setTitle("Symfony pour les nuls");
+        $resource1->setLink("https://www.symfony.com");
+        $resource1->setType(ResourceTypeEnum::LINK);
+        $manager->persist($resource1);
+
+        $resource2 = new Resource();
+        $resource2->setTitle("Symfony avancé par Mathis Rome");
+        $resource2->setLink("assets/pdf/symfony-avance.pdf");
+        $resource2->setType(ResourceTypeEnum::PDF);
+        $manager->persist($resource2);
+
+        $resource3 = new Resource();
+        $resource3->setTitle("Tutoriel apprendre les bases de PHP");
+        $resource3->setLink("assets/video/php-bases.mp4");
+        $resource3->setType(ResourceTypeEnum::VIDEO);
+        $manager->persist($resource3);
 
         // Ajout des formations
         $training1 = new Training();
@@ -98,13 +132,20 @@ class TrainingFixtures extends Fixture implements DependentFixtureInterface
         $training1->setTeacher($this->getReference(UsersFixtures::TEACHER_1));
         $training1->addCategory($categorie1);
         $training1->addCategory($categorie2);
-        $training1->addTrainingBlock($trainingBlock1);
-        $training1->addTrainingBlock($trainingBlock2);
-        $training1->addTrainingBlock($trainingBlock3);
         $training1->addTrainingBlock($trainingBlock4);
         $training1->addTrainingBlock($trainingBlock5);
         $training1->addTrainingBlock($trainingBlock6);
+        $training1->addTrainingObjective($trainingObjective1);
+        $training1->addTrainingObjective($trainingObjective2);
+        $training1->addTrainingObjective($trainingObjective3);
+        $training1->addResource($resource2);
         $manager->persist($training1);
+        $trainingBlock4->addResource($resource2);
+        $manager->persist($trainingBlock4);
+        $trainingBlock5->addResource($resource2);
+        $manager->persist($trainingBlock5);
+        $trainingBlock6->addResource($resource2);
+        $manager->persist($trainingBlock6);
 
         $training2 = new Training();
         $training2->setTitle("Formation Symfony débutant");
@@ -116,6 +157,16 @@ class TrainingFixtures extends Fixture implements DependentFixtureInterface
         $training2->addTrainingBlock($trainingBlock1);
         $training2->addTrainingBlock($trainingBlock2);
         $training2->addTrainingBlock($trainingBlock3);
+        $training2->addTrainingObjective($trainingObjective1);
+        $training2->addTrainingObjective($trainingObjective2);
+        $training2->addResource($resource1);
+        $training2->addResource($resource3);
+        $trainingBlock1->addResource($resource1);
+        $manager->persist($trainingBlock1);
+        $trainingBlock2->addResource($resource3);
+        $manager->persist($trainingBlock2);
+        $trainingBlock3->addResource($resource3);
+        $manager->persist($trainingBlock3);
         $manager->persist($training2);
 
         $manager->flush();
