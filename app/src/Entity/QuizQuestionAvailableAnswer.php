@@ -22,8 +22,7 @@ class QuizQuestionAvailableAnswer
     private ?bool $isCorrect = false;
 
     #[ORM\ManyToOne(inversedBy: 'quizQuestionAvailableAnswers')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Quiz $quiz = null;
+    private ?QuizQuestion $quizQuestion = null;
 
     public function getId(): ?int
     {
@@ -54,14 +53,14 @@ class QuizQuestionAvailableAnswer
         return $this;
     }
 
-    public function getQuiz(): ?Quiz
+    public function getQuizQuestion(): ?QuizQuestion
     {
-        return $this->quiz;
+        return $this->quizQuestion;
     }
 
-    public function setQuiz(?Quiz $quiz): static
+    public function setQuizQuestion(?QuizQuestion $quizQuestion): static
     {
-        $this->quiz = $quiz;
+        $this->quizQuestion = $quizQuestion;
 
         return $this;
     }

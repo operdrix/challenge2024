@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: QuizRepository::class)]
 #[UniqueEntity(fields: ['label', 'training'], message: 'Ce quiz est déjà créé pour cette formation.')]
@@ -18,6 +19,7 @@ class Quiz
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du quiz est obligatoire.')]
     private ?string $label = null;
 
     #[ORM\Column]
@@ -33,11 +35,8 @@ class Quiz
     #[ORM\JoinColumn(nullable: false)]
     private ?Training $training = null;
 
-    #[ORM\OneToMany(targetEntity: QuizQuestion::class, mappedBy: 'quiz', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: QuizQuestion::class, mappedBy: 'quiz', orphanRemoval: true, cascade: ['persist'])]
     private Collection $quizQuestions;
-
-    #[ORM\OneToMany(targetEntity: QuizQuestionAvailableAnswer::class, mappedBy: 'quiz', orphanRemoval: true)]
-    private Collection $quizQuestionAvailableAnswers;
 
     #[ORM\OneToMany(targetEntity: QuizStudentResult::class, mappedBy: 'quiz')]
     private Collection $quizStudentResults;
@@ -48,7 +47,6 @@ class Quiz
     public function __construct()
     {
         $this->quizQuestions = new ArrayCollection();
-        $this->quizQuestionAvailableAnswers = new ArrayCollection();
         $this->quizStudentResults = new ArrayCollection();
         $this->trainingBlocks = new ArrayCollection();
     }
@@ -142,36 +140,6 @@ class Quiz
             // set the owning side to null (unless already changed)
             if ($quizQuestion->getQuiz() === $this) {
                 $quizQuestion->setQuiz(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, QuizQuestionAvailableAnswer>
-     */
-    public function getQuizQuestionAvailableAnswers(): Collection
-    {
-        return $this->quizQuestionAvailableAnswers;
-    }
-
-    public function addQuizQuestionAvailableAnswer(QuizQuestionAvailableAnswer $quizQuestionAvailableAnswer): static
-    {
-        if (!$this->quizQuestionAvailableAnswers->contains($quizQuestionAvailableAnswer)) {
-            $this->quizQuestionAvailableAnswers->add($quizQuestionAvailableAnswer);
-            $quizQuestionAvailableAnswer->setQuiz($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuizQuestionAvailableAnswer(QuizQuestionAvailableAnswer $quizQuestionAvailableAnswer): static
-    {
-        if ($this->quizQuestionAvailableAnswers->removeElement($quizQuestionAvailableAnswer)) {
-            // set the owning side to null (unless already changed)
-            if ($quizQuestionAvailableAnswer->getQuiz() === $this) {
-                $quizQuestionAvailableAnswer->setQuiz(null);
             }
         }
 

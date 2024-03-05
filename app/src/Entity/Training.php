@@ -41,7 +41,7 @@ class Training
     #[ORM\OneToMany(targetEntity: TrainingObjective::class, mappedBy: 'training')]
     private Collection $trainingObjectives;
 
-    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'training')]
+    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'training', cascade: ['persist'])]
     private Collection $quizzes;
 
     #[ORM\OneToMany(targetEntity: Resource::class, mappedBy: 'training', orphanRemoval: true)]
