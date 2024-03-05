@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Type;
 
-use App\Entity\Quiz;
 use App\Entity\QuizQuestion;
 use App\Enum\QuizQuestionTypeEnum;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -21,7 +18,7 @@ class QuestionsType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'Question',
+                'label' => 'Libellé de la question',
             ])
             ->add('type', EnumType::class, [
                 'class' => QuizQuestionTypeEnum::class,
@@ -30,6 +27,9 @@ class QuestionsType extends AbstractType
                     'data-quiz-question-type-target' => 'type',
                     'data-action' => 'change->quiz-question-answer#changeType',
                 ],
+                'choice_label' => function ($choice, $key, $value) {
+                    return $value;
+                },
             ])
             ->add('point', IntegerType::class, [
                 'label' => 'Point(s) de la question',
@@ -39,6 +39,7 @@ class QuestionsType extends AbstractType
                 'entry_options' => [
                     'label' => false,
                 ],
+                'label' => 'Réponses possibles',
                 'row_attr' => [
                     'class' => 'p-4 hidden',
                     'data-quiz-question-answer-target' => 'answers',

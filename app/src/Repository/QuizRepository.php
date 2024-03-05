@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Quiz;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,28 +22,16 @@ class QuizRepository extends ServiceEntityRepository
         parent::__construct($registry, Quiz::class);
     }
 
-    //    /**
-    //     * @return Quiz[] Returns an array of Quiz objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('q')
-    //            ->andWhere('q.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('q.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function getBaseQueryBuilder(array $filters = []): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder("q");
 
-    //    public function findOneBySomeField($value): ?Quiz
-    //    {
-    //        return $this->createQueryBuilder('q')
-    //            ->andWhere('q.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if (!empty($filters["firstname"])) {
+            $queryBuilder->andWhere("q.label LIKE :label")
+                ->setParameter("label", '%' . $filters["label"] . '%');
+        }
+
+        return $queryBuilder;
+
+    }
 }

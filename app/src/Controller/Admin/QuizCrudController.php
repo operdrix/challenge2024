@@ -3,41 +3,77 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Quiz;
-use App\Form\QuizType;
+use App\Form\Type\QuizFilterType;
+use App\Form\Type\QuizType;
+use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/admin/quiz', name: "admin_quiz_")]
 class QuizCrudController extends AbstractController
 {
-    #[Route('/quiz/crud', name: 'app_quiz_crud')]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    #[Route('/', name: 'index', methods: ['GET'])]
+    public function index(
+        FilteredListService $filteredListService,
+        Request                $request,
+    ): Response
     {
-        $quiz = new Quiz();
+        [$pagination, $form] = $filteredListService->prepareFilteredList(
+            $request,
+            QuizFilterType::class,
+            Quiz::class
+        );
 
-        $form = $this->createForm(QuizType::class, $quiz);
+        return $this->render('admin/quiz/index.html.twig', [
+            'pagination' => $pagination,
+            "form" => $form
+        ]);
+    }
+
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(
+        Request                     $request,
+        EntityManagerInterface      $em,
+        ?Quiz $quiz = null
+    ): Response
+    {
+        $formOptions = [];
+        if (empty($quiz)) {
+            $quiz = new Quiz();
+            $formOptions["validation_groups"] = [
+                "Default",
+            ];
+        }
+        $form = $this->createForm(QuizType::class, $quiz, $formOptions);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$quiz` variable also has the same data
-            $quiz = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
+            $em->persist($quiz);
+            $em->flush();
 
-             $em->persist($quiz);
-             $em->flush();
-
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('admin_quiz_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        return $this->render('admin/quiz/edit.html.twig', [
+            'teacher' => $quiz,
 
-        return $this->render('quiz_crud/index.html.twig', [
-            'controller_name' => 'QuizCrudController',
             'form' => $form,
         ]);
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, Quiz $quiz, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $quiz->getId(), $request->request->get('_token'))) {
+            $em->remove($quiz);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('admin_quiz_index', [], Response::HTTP_SEE_OTHER);
     }
 }
