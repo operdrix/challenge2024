@@ -19,9 +19,20 @@ RUN install-php-extensions gd exif pdo_mysql intl zip bcmath && install-php-exte
 #    apt-get update && apt-get install -y --no-install-recommends ./wkhtmltox_0.12.6-1.buster_amd64.deb && \
 #   rm wkhtmltox_0.12.6-1.buster_amd64.deb
 
-
 WORKDIR /var/www/app
+COPY . .
 
+# Ajout des permissions sur les dossiers d'uploads
 RUN HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1)
-RUN setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX public/*
-RUN setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX public/*
+RUN setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX ./public
+RUN setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX ./public
+
+# Installation des dépendances
+ARG  COMPOSER_ALLOW_SUPERUSER=1
+RUN composer install
+RUN npm install
+
+# Création de la base données - Exécution des migrations - Création des données de tests
+# RUN php bin/console doctrine:schema:create
+# RUN php bin/console doctrrine:migrations:migrate --no-interaction
+# RUN php bin/console doctrine:fixtures:load --no-interaction
