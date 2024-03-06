@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Quiz;
 use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionAvailableAnswer;
+use App\Entity\QuizQuestionStudentAnswer;
 use App\Enum\QuizQuestionTypeEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -36,6 +37,19 @@ class QuizFixtures extends Fixture implements DependentFixtureInterface
         $question2 = new QuizQuestion();
         $question2->setTitle("Est-ce que Symfony est un framework PHP ?");
         $question2->setType(QuizQuestionTypeEnum::YESNO);
+
+        $availableAnswers1 = new QuizQuestionAvailableAnswer();
+        $availableAnswers1->setContent("Vrai");
+        $availableAnswers1->setIsCorrect(true);
+        $availableAnswers1->setQuizQuestion($question2);
+        $manager->persist($availableAnswers1);
+
+        $availableAnswers2 = new QuizQuestionAvailableAnswer();
+        $availableAnswers2->setContent("Faux");
+        $availableAnswers2->setIsCorrect(false);
+        $availableAnswers2->setQuizQuestion($question2);
+        $manager->persist($availableAnswers2);
+
         $question2->setPoint(2);
         $question2->setQuiz($quiz1);
         $manager->persist($question2);
@@ -68,7 +82,45 @@ class QuizFixtures extends Fixture implements DependentFixtureInterface
         $quiz2->setIsOpened(false);
         $quiz2->setDuration(30);
         $quiz2->setLimitDate(new \DateTimeImmutable('2024-03-08 18:00:00'));
-        $quiz2->setTraining($this->getReference(TrainingFixtures::TEACHER_1_TRAINING_2));
+        $quiz2->setTraining($this->getReference(TrainingFixtures::TEACHER_1_TRAINING_1));
+
+
+
+        $question3 = new QuizQuestion();
+        $question3->setTitle("Symfony est un framework :");
+        $question3->setType(QuizQuestionTypeEnum::UNIQUE);
+
+        $availableAnswers = new QuizQuestionAvailableAnswer();
+        $availableAnswers->setContent("Python");
+        $availableAnswers->setIsCorrect(false);
+        $availableAnswers->setQuizQuestion($question3);
+        $manager->persist($availableAnswers);
+
+        $availableAnswers = new QuizQuestionAvailableAnswer();
+        $availableAnswers->setContent("PHP");
+        $availableAnswers->setIsCorrect(true);
+        $availableAnswers->setQuizQuestion($question3);
+        $manager->persist($availableAnswers);
+
+        $question3->setPoint(2);
+        $question3->setQuiz($quiz2);
+        $manager->persist($question3);
+
+        $answer1Question3 = new QuizQuestionStudentAnswer();
+        $answer1Question3->setContent("PHP");
+        $answer1Question3->setResult(2);
+        $answer1Question3->setStudent($this->getReference(UsersFixtures::STUDENT_2));
+        $answer1Question3->setQuizQuestion($question3);
+
+        $manager->persist($answer1Question3);
+
+        $answer2Question3 = new QuizQuestionStudentAnswer();
+        $answer2Question3->setContent("Python");
+        $answer2Question3->setResult(0);
+        $answer2Question3->setStudent($this->getReference(UsersFixtures::STUDENT_1));
+        $answer2Question3->setQuizQuestion($question3);
+
+        $manager->persist($answer2Question3);
 
         $manager->persist($quiz2);
 
