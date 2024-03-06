@@ -1,7 +1,7 @@
 {% use 'tailwind_2_layout.html.twig' %}
 
 {%- block form_row -%}
-    {%- set row_class = row_class|default('') -%}
+    {%- set row_class = row_class|default('default classes') -%}
     {{- parent() -}}
 {%- endblock form_row -%}
 
