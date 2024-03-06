@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Controller\App;
+
+use App\Entity\Training;
+use App\Entity\TrainingCategory;
+use App\Form\Type\TrainingFilterType;
+use App\Form\Type\TrainingType;
+use App\Service\FilteredListService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+
+#[Route('/teacher/trainings', name: "teacher_trainings_")]
+class TeacherTrainingController extends AbstractController
+{
+    #[Route('/', name: 'index', methods: ['GET'])]
+    public function index(
+        FilteredListService $filteredListService,
+        Request $request,
+    ): Response
+    {
+        [$pagination, $form] = $filteredListService->prepareFilteredList(
+            $request,
+            TrainingFilterType::class,
+            Training::class
+        );
+
+        return $this->render('teacher/training/index.html.twig', [
+            "pagination" => $pagination,
+            "form" => $form
+        ]);
+    }
+
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $em, ?Training $training = null): Response
+    {
+        if (empty($training)) {
+            $training = new Training();
+            $training->setTeacher($this->getUser());
+        }
+
+        $form = $this->createForm(TrainingType::class, $training);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($training);
+            $em->flush();
+
+            return $this->redirectToRoute('teacher_trainings_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('teacher/training/edit.html.twig', [
+            'training' => $training,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, TrainingCategory $trainingCategory, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $trainingCategory->getId(), $request->request->get('_token'))) {
+            $em->remove($trainingCategory);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('teacher_trainings_index', [], Response::HTTP_SEE_OTHER);
+    }
+}

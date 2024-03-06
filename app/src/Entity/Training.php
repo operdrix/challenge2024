@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrainingRepository::class)]
 #[UniqueEntity(fields: ['title', 'teacher'], message: 'Cette formation existe déjà.')]
@@ -20,22 +21,26 @@ class Training
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank()]
     private ?int $length = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, enumType: DifficultyEnum::class)]
+    #[Assert\NotNull()]
     private ?DifficultyEnum $difficulty = null;
 
     #[ORM\ManyToOne(inversedBy: 'trainings')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Teacher $teacher = null;
 
-    #[ORM\OneToMany(targetEntity: TrainingBlock::class, mappedBy: 'training')]
+    #[ORM\OneToMany(targetEntity: TrainingBlock::class, mappedBy: 'training', cascade: ["persist"])]
     private Collection $trainingBlocks;
 
     #[ORM\OneToMany(targetEntity: TrainingObjective::class, mappedBy: 'training')]
