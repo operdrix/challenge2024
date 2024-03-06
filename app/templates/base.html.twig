@@ -87,30 +87,26 @@
         </div>
     {% endfor %}
 
-
     {% if app.user %}
-        {{ include("layout/_nav.html.twig") }}
-    {% endif %}
-
-    <div class="flex pt-24 overflow-hidden bg-gray-50 dark:bg-gray-900">
-
-        {% if app.user %}
+    {{ include("layout/_nav.html.twig") }}
+        <div class="flex pt-24 overflow-hidden bg-gray-50 dark:bg-gray-900">
             {{ include("layout/_sidebar.html.twig") }}
-
             <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
-        {% endif %}
+            <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900 p-6">
+                <main id="content-without-footer">
+                    {% block body %}
 
-        <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900 p-6">
-            <main id="content-without-footer">
-                {% block body %}
-
-                {% endblock %}
-            </main>
-            {% if app.user %}
+                    {% endblock %}
+                </main>
                 {{ include("layout/_footer.html.twig") }}
-            {% endif %}
-
+            </div>
         </div>
-    </div>
+    {% else %}
+        <main class="w-[100vw] h-[100vh] flex flex-col justify-center items-center">
+            {% block bodyNotLogin %}
+
+            {% endblock %}
+        </main>
+    {% endif %}
     </body>
 </html>
