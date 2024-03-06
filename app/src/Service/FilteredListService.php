@@ -21,7 +21,6 @@ class FilteredListService
         private readonly FormFactoryInterface $formFactory,
         private readonly PaginatorInterface $paginator,
         private readonly EntityManagerInterface $em,
-        private readonly Security $security
     ) {
     }
 
@@ -55,7 +54,7 @@ class FilteredListService
      */
     public function getPagination(Request $request, string $entity, array $filters): PaginationInterface
     {
-        $queryBuilder = $this->em->getRepository($entity)->getBaseQueryBuilder($filters, $this->security->getUser());
+        $queryBuilder = $this->em->getRepository($entity)->getBaseQueryBuilder($filters);
 
         return $this->paginator->paginate(
             $queryBuilder->getQuery(),

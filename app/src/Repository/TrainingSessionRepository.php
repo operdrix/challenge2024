@@ -69,4 +69,32 @@ class TrainingSessionRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Retourne les prochaines sessions de formation d'un formateur
+     * Optionel : rajouter la date au plus tard pour la recherche
+     * @param Teacher $teacher
+     *
+     * @return TrainingSession[]
+     */
+    public function findNextTrainingsSessions(Teacher $teacher): array
+    {
+
+        $qb = $this->createQueryBuilder('ts')
+            ->join('ts.inscription', 'i')
+            ->join('i.training', 't')
+            ->join('t.teacher', 'te')
+            ->where('te.id = :teacherId')
+            ->andWhere('ts.startDate >= :now')
+            ->andWhere('ts.startDate <= :end')
+            ->setParameter('teacherId', $teacher->getId())
+            ->setParameter('now', new \DateTime())
+            ->setParameter('end', new \DateTime('+2 weeks'))
+            ->orderBy('ts.startDate', 'ASC')
+            ->getQuery()
+        ;
+
+        return $qb->getResult();
+
+    }
 }

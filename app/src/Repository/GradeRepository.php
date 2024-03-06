@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Grade;
+use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,28 +23,47 @@ class GradeRepository extends ServiceEntityRepository
         parent::__construct($registry, Grade::class);
     }
 
-    //    /**
-    //     * @return Grade[] Returns an array of Grade objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Recherche des classes liées à un teacher
+     *
+     * @param Teacher $teacher
+     */
+    public function findGradesByTeacher(Teacher $teacher): array
+    {
+        return $this->createQueryBuilder('g')
+            ->join('g.teacher', 't')
+            ->where('t.id = :teacher')
+            ->setParameter('teacher', $teacher->getId())
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Grade
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * Requête de base
+     */
+    public function getBaseQueryBuilder(array $filters): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder("g");
+
+        if (!empty($filters["teacher"])) {
+            $queryBuilder->andWhere("g.teacher = :teacher")
+                ->setParameter("teacher", $filters["teacher"]);
+        }
+        if (!empty($filters["school"])) {
+            $queryBuilder->andWhere("g.school = :school")
+                ->setParameter("school", $filters["school"]);
+        }
+
+        if (!empty($filters["label"])) {
+            $queryBuilder->andWhere("g.label LIKE :label")
+                ->setParameter("label", '%' . $filters["label"] . '%');
+        }
+
+        if (!empty($filters["difficulty"])) {
+            $queryBuilder->andWhere("g.difficulty = :difficulty")
+                ->setParameter("difficulty", $filters["difficulty"]);
+        }
+
+        return $queryBuilder;
+    }
 }

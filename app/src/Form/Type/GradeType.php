@@ -26,7 +26,10 @@ class GradeType extends AbstractType
                 'by_reference' => false,
                 'entry_type' => StudentType::class,
                 'entry_options' => ['label' => false],
-                'allow_add' => true
+                'allow_add' => true,
+                "row_attr" => [
+                    "class" => "space-y-3"
+                ]
             ]);
     }
 

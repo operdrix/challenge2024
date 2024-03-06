@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\App;
+namespace App\Controller\App\Student;
 
 use App\Entity\Training;
 use App\Entity\Teacher;
@@ -13,23 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-
-class DashboardStudentController extends AbstractController
+#[Route('/student', name: 'student_')]
+class DashboardController extends AbstractController
 {
-    #[Route('/dashboard/student', name: 'app_dashboard_student')]
+    #[Route('/', name: 'dashboard')]
     public function index(
         TrainingRepository $trainingRepository
     ): Response
     {
-        return $this->render('dashboard_student/index.html.twig', [
+        return $this->render('student/dashboard/index.html.twig', [
             'trainings' => $trainingRepository->findAll()
         ]);
     }
 
-    #[Route('/dashboard/student/{id}', name: 'show', methods: ['GET'])]
+    #[Route('/trainings/{id}', name: 'show', methods: ['GET'])]
     public function show(Training $training): Response
     {
-        return $this->render('dashboard_student/show.html.twig', [
+        return $this->render('student/dashboard/show.html.twig', [
             'training' => $training,
         ]);
     }
