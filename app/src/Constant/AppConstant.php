@@ -13,4 +13,10 @@ abstract class AppConstant
      * Mailer constants
      */
     const APP_MAIL = "no-reply@edumentor.fr";
+
+    /**
+     * Calendar constants
+     */
+    const HEX_BG_COLOR_ONLINE_SESSION = '#aec597';
+    const HEX_BG_COLOR_DEFAULT_SESSION = '#aec2cf';
 }

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CalendarController!{% endblock %}
+
+{% block body %}
+<div {{ stimulus_controller('calendar') }}
+    {{ stimulus_target('calendar', 'calendar') }}
+    data-calendar-url-value="{{ path('app_calendar_data') }}"
+>
+
+</div>
+{% endblock %}
