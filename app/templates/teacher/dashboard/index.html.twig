@@ -17,74 +17,72 @@
                     </li>
                 </ol>
             </nav>
-            <div class="flex md:space-x-3 md:space-y-0 space-y-3 flex-col">
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Mon Espace formateur</h1>
-                <h2 class="text-base font-semibold text-gray-900 sm:text-xl dark:text-white">Bienvenue sur Edumentor {{ app.user.firstname }} {{ app.user.lastname }}</h2>
-            </div>
+            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Mon Espace formateur</h1>
+            <h2 class="text-base font-semibold text-gray-900 sm:text-xl dark:text-white">Bienvenue sur Edumentor {{ app.user.firstname }} {{ app.user.lastname }}</h2>
         </div>
     </div>
 </div>
-<div class="flex flex-col">
-    <div class="overflow-x-auto">
-        <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden shadow">
+<div class="flex gap-4 p-4 flex-wrap">
 
-                {# Début card prochaines sessions #}
-                <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <div class="flex items-center justify-between mb-4">
-                        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Mes prochaines sessions</h5>
-                        <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                            Voir tout
-                        </a>
+    {# Début card prochaines sessions #}
+    <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-4">
+            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Mes prochaines sessions</h5>
+            <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                Voir tout
+            </a>
+        </div>
+        <div class="flow-root">
+            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+
+                {% for session in nextTrainingsSessions %}
+                <li class="py-3 sm:py-4">
+                    <div class="flex items-center">
+
+                        <div class="flex-1 min-w-0 ms-4">
+                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                {{ session.inscription.training.title }}
+                            </p>
+                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                {{ session.startDate|date('d/m/Y') }} - {{ session.startDate|date('H:i') }}
+                            </p>
+                        </div>
+                        <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                            <a href="{{ path('training_sessions_edit', {'idTraining': session.inscription.training.id, 'idInscription': session.inscription.id,'idSession': session.id}) }}" class="text-primary-600 hover:underline dark:text-primary-400">
+                                Voir
+                            </a>
+                        </div>
                     </div>
-                    <div class="flow-root">
-                        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-
-                            {% for session in nextTrainingsSessions %}
-                            <li class="py-3 sm:py-4">
-                                <div class="flex items-center">
-
-                                    <div class="flex-1 min-w-0 ms-4">
-                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                            {{ session.inscription.training.title }}
-                                        </p>
-                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                            {{ session.startDate|date('d/m/Y') }} - {{ session.startDate|date('H:i') }}
-                                        </p>
-                                    </div>
-                                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                        <a href="{{ path('training_sessions_edit', {'idTraining': session.inscription.training.id, 'idInscription': session.inscription.id,'idSession': session.id}) }}" class="text-primary-600 hover:underline dark:text-primary-400">
-                                            Voir
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-                {# Fin card prochaines sessions #}
-
-                {# Début card Statistiques étudiants #}
-
-
-                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Mes étudiants</h5>
-                    </a>
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        Nombre d'étudiants dans des classes : {{ studentsInGrade|length }}<br>
-                        Nombre d'étudiants hors classes : {{ studentsOutGrade|length }}<br>
-                        Nombre total d'étudiants : {{ studentsInGrade|length + studentsOutGrade|length}}<br>
-                        Nombre de classes : {{ grades|length }}
-                    </p>
-                </div>
-
-                {# Fin card Statistiques étudiants #}
-
-            </div>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
+    {# Fin card prochaines sessions #}
+
+    {# Début card Statistiques étudiants #}
+
+    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <a href="#">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Mes étudiants</h5>
+        </a>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            Nombre d'étudiants dans des classes : {{ studentsInGrade|length }}<br>
+            Nombre d'étudiants hors classes : {{ studentsOutGrade|length }}<br>
+            Nombre total d'étudiants : {{ studentsInGrade|length + studentsOutGrade|length}}<br>
+            Nombre de classes : {{ grades|length }}
+        </p>
+        <a href="{{ path("teacher_schools_index") }}" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
+            </svg>
+            Voir les écoles
+        </a>
+    </div>
+
+    {# Fin card Statistiques étudiants #}
+
 </div>
+
 
 {% endblock %}
