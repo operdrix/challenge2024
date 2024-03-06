@@ -1,42 +1,96 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Organisme de Formation{% endblock %}
+{% block title %}School index{% endblock %}
 
 {% block body %}
-    <h1>Liste des organismes de formation</h1>
+    <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="w-full mb-1">
+            <div class="mb-4">
+                <nav class="flex mb-5" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                        <li class="inline-flex items-center">
+                            <a href="{{ path("teacher_index") }}" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                                <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                <a href="{{ path("teacher_schools_index") }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">
+                                    Organismes / Écoles
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">
+                                    Liste
+                                </span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+                <div class="flex md:space-x-3 md:space-y-0 space-y-3 md:flex-row flex-col">
+                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Organismes / Écoles</h1>
+                    <a href="{{ path("admin_students_new") }}" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                        Créer
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h1 class="w-full text-lg font-medium text-gray-900 sm:text-2xl dark:text-white">Filtre</h1>
+                {{ form_start(form, {"attr": {"class":"w-full", "noValidate": true}}) }}
+                <div class="w-full grid grid-cols-9 gap-6">
+                    <div class="col-span-full">
+                        {{ form_row(form.name) }}
+                    </div>
+                    <div class="col-span-full">
+                        <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="submit">{{ button_label|default('Appliquer les filtres') }}</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col">
+        <div class="overflow-x-auto">
+            <div class="inline-block min-w-full align-middle">
+                <div class="overflow-hidden shadow">
+                    <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                        <thead class="bg-gray-100 dark:bg-gray-700">
+                        <tr>
+                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                {{ knp_pagination_sortable(pagination, 'Nom', 's.name') }}
+                            </th>
+                            <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                Actions
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                        {% for school in pagination %}
+                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                    <div class="text-base text-gray-900 dark:text-white">{{ school.name }}</div>
+                                </td>
+                                <td class="p-4 space-x-2 whitespace-nowrap">
+                                    <a href="{{ path("teacher_schools_edit", {"id": school.id}) }}" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
+                                        Éditer
+                                    </a>
+                                    {{ include("teacher/school/_delete_form.html.twig") }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ knp_pagination_render(pagination) }}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Nom</th>
-                <th>Addresse</th>
-                <th>Email</th>
-                <th>Nom du contact</th>
-                <th>Téléphone</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for school in schools %}
-            <tr>
-                <td><img src="{{ school.logoFilename ? asset(school.logoFilename, 'school') : asset('ecole.png') }}" alt="{{ school.logoFilename }}"></td>
-                <td>{{ school.name }}</td>
-                <td>{{ school.address }}</td>
-                <td>{{ school.email }}</td>
-                <td>{{ school.contactName }}</td>
-                <td>{{ school.phoneNumber }}</td>
-                <td>
-                    <a href="{{ path('teacher_school_edit', {'id': school.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">Aucun organisme</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('teacher_school_new') }}">Créer un organisme</a>
 {% endblock %}

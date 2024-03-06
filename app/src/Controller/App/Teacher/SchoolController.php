@@ -4,9 +4,10 @@ namespace App\Controller\App\Teacher;
 
 use App\Constant\AppConstant;
 use App\Entity\School;
+use App\Form\Type\SchoolFilterType;
 use App\Form\Type\SchoolType;
-use App\Repository\SchoolRepository;
 use App\Service\FileService;
+use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,15 +15,25 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/teacher/school', name: 'teacher_school_')]
+#[Route('/teacher/schools', name: 'teacher_schools_')]
 #[IsGranted("ROLE_TEACHER")]
 class SchoolController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(SchoolRepository $schoolRepository): Response
+    public function index(
+        FilteredListService $filteredListService,
+        Request $request
+    ): Response
     {
+        [$pagination, $form] = $filteredListService->prepareFilteredList(
+            $request,
+            SchoolFilterType::class,
+            School::class
+        );
+
         return $this->render('teacher/school/index.html.twig', [
-            'schools' => $schoolRepository->findBy(['teacher' => $this->getUser()]),
+            "pagination" => $pagination,
+            "form" => $form
         ]);
     }
 
@@ -63,7 +74,7 @@ class SchoolController extends AbstractController
 
             $this->addFlash('success', 'L\'organisme ' . $school->getName() . ' est enregistré avec succès');
 
-            return $this->redirectToRoute('school_show', ['id' => $school->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('teacher_schools_show', ['id' => $school->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('teacher/school/edit.html.twig', [
@@ -88,6 +99,6 @@ class SchoolController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('school_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('teacher_schools_index', [], Response::HTTP_SEE_OTHER);
     }
 }
