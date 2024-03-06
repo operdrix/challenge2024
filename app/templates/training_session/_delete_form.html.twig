@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_training_session_delete', {'idTraining': training.id, 'idInscription': inscription.id, 'idSession': training_session.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('training_sessions_delete', {'idTraining': training.id, 'idInscription': inscription.id, 'idSession': training_session.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ training_session.id) }}">
     <button class="btn">Delete</button>
 </form>

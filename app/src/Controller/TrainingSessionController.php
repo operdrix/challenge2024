@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Inscription;
 use App\Entity\Training;
 use App\Entity\TrainingSession;
-use App\Form\TrainingSessionType;
+use App\Form\Type\TrainingSessionType;
 use App\Repository\TrainingSessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('teacher/trainings/{idTraining}/inscriptions/{idInscription}/sessions', name: 'app_training_session_')]
+#[Route('teacher/trainings/{idTraining}/inscriptions/{idInscription}/sessions', name: 'training_sessions_')]
 class TrainingSessionController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
@@ -48,7 +48,7 @@ class TrainingSessionController extends AbstractController
             $entityManager->persist($trainingSession);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_training_session_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('training_sessions_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('training_session/new.html.twig', [
@@ -59,37 +59,29 @@ class TrainingSessionController extends AbstractController
         ]);
     }
 
-    #[Route('/{idSession}', name: 'show', methods: ['GET'])]
-    public function show(
-        #[MapEntity(id: "idTraining")] Training       $training,
-        #[MapEntity(id: "idInscription")] Inscription $inscription,
-        #[MapEntity(id: "idSession")] TrainingSession $trainingSession,
-    ): Response
-    {
-        return $this->render('training_session/show.html.twig', [
-            'training_session' => $trainingSession,
-            'training' => $training,
-            'inscription' => $inscription,
-        ]);
-    }
-
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{idSession}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         EntityManagerInterface $entityManager,
         #[MapEntity(id: "idTraining")] Training       $training,
         #[MapEntity(id: "idInscription")] Inscription $inscription,
-        #[MapEntity(id: "idSession")] TrainingSession $trainingSession,
+        #[MapEntity(id: "idSession")] ?TrainingSession $trainingSession = null,
     ): Response
     {
+        if (empty($trainingSession)) {
+            $trainingSession = new TrainingSession();
+        }
+
         $form = $this->createForm(TrainingSessionType::class, $trainingSession);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($trainingSession);
             $entityManager->flush();
 
             return $this->redirectToRoute(
-                'app_training_session_index',
+                'training_sessions_index',
                 ['idTraining' => $training->getId(), 'idInscription' => $inscription->getId()],
                 Response::HTTP_SEE_OTHER);
         }
@@ -105,11 +97,10 @@ class TrainingSessionController extends AbstractController
     #[Route('/{idSession}', name: 'delete', methods: ['POST'])]
     public function delete(
         Request $request,
-        TrainingSession $trainingSession,
         EntityManagerInterface $entityManager,
         #[MapEntity(id: "idTraining")] Training       $training,
         #[MapEntity(id: "idInscription")] Inscription $inscription,
-        #[MapEntity(id: "idSession")] TrainingSession $session,
+        #[MapEntity(id: "idSession")] TrainingSession $trainingSession,
     ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trainingSession->getId(), $request->request->get('_token'))) {
@@ -118,7 +109,7 @@ class TrainingSessionController extends AbstractController
         }
 
         return $this->redirectToRoute(
-            'app_training_session_index',
+            'training_sessions_index',
             ['idTraining' => $training->getId(), 'idInscription' => $inscription->getId()],
             Response::HTTP_SEE_OTHER);
     }

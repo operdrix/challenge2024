@@ -27,8 +27,7 @@
                 <td>{{ training_session.sessionLink }}</td>
                 <td>{{ training_session.place }}</td>
                 <td>
-                    <a href="{{ path('app_training_session_show', {'idTraining': training.id, 'idInscription': inscription.id, 'idSession': training_session.id}) }}">show</a>
-                    <a href="{{ path('app_training_session_edit', {'idTraining': training.id, 'idInscription': inscription.id, 'idSession': training_session.id}) }}">edit</a>
+                    <a href="{{ path('training_sessions_edit', {'idTraining': training.id, 'idInscription': inscription.id, 'idSession': training_session.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_training_session_new', {'idTraining': training.id, 'idInscription': inscription.id}) }}">Create new</a>
+    <a href="{{ path('training_sessions_new', {'idTraining': training.id, 'idInscription': inscription.id}) }}">Create new</a>
 {% endblock %}
