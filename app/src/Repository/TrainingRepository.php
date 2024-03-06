@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Teacher;
 use App\Entity\Training;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -25,9 +26,11 @@ class TrainingRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(array $filters): QueryBuilder
+    public function getBaseQueryBuilder(array $filters, Teacher $teacher): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder("t");
+        $queryBuilder = $this->createQueryBuilder("t")
+            ->andWhere("t.teacher = :teacher")
+            ->setParameter("teacher", $teacher);
 
         if (!empty($filters["title"])) {
             $queryBuilder->andWhere("t.title LIKE :title")

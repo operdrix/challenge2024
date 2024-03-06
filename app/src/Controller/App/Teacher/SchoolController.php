@@ -26,15 +26,6 @@ class SchoolController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/show', name: 'show', methods: ['GET'])]
-    #[IsGranted('view', 'school')]
-    public function show(School $school): Response
-    {
-        return $this->render('school/show.html.twig', [
-            'school' => $school,
-        ]);
-    }
-
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit', 'school')]
