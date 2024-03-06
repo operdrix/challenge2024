@@ -36,6 +36,19 @@ class QuizFixtures extends Fixture implements DependentFixtureInterface
         $question2 = new QuizQuestion();
         $question2->setTitle("Est-ce que Symfony est un framework PHP ?");
         $question2->setType(QuizQuestionTypeEnum::YESNO);
+
+        $availableAnswers1 = new QuizQuestionAvailableAnswer();
+        $availableAnswers1->setContent("Vrai");
+        $availableAnswers1->setIsCorrect(true);
+        $availableAnswers1->setQuizQuestion($question2);
+        $manager->persist($availableAnswers1);
+
+        $availableAnswers2 = new QuizQuestionAvailableAnswer();
+        $availableAnswers2->setContent("Faux");
+        $availableAnswers2->setIsCorrect(false);
+        $availableAnswers2->setQuizQuestion($question2);
+        $manager->persist($availableAnswers2);
+
         $question2->setPoint(2);
         $question2->setQuiz($quiz1);
         $manager->persist($question2);

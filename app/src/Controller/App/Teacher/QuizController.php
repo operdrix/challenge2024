@@ -3,6 +3,8 @@
 namespace App\Controller\App\Teacher;
 
 use App\Entity\Quiz;
+use App\Entity\QuizQuestionAvailableAnswer;
+use App\Enum\QuizQuestionTypeEnum;
 use App\Form\Type\QuizFilterType;
 use App\Form\Type\QuizType;
 use App\Service\FilteredListService;
@@ -52,6 +54,25 @@ class QuizController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach ($quiz->getQuizQuestions() as $key => $question) {
+                if (
+                    $question->getType()->value == QuizQuestionTypeEnum::YESNO->value
+                    && empty($question->getQuizQuestionAvailableAnswers())
+                ) {
+                    $availableAnswer1 = new QuizQuestionAvailableAnswer();
+                    $availableAnswer1->setContent("Vrai");
+                    $availableAnswer1->setIsCorrect($form->get('quizQuestions')[$key]->get('yesOrNo')->getData() === true);
+                    $availableAnswer1->setQuizQuestion($question);
+                    $em->persist($availableAnswer1);
+
+                    $availableAnswer2 = new QuizQuestionAvailableAnswer();
+                    $availableAnswer2->setContent("Faux");
+                    $availableAnswer2->setIsCorrect($form->get('quizQuestions')[$key]->get('yesOrNo')->getData() === false);
+                    $availableAnswer2->setQuizQuestion($question);
+                    $em->persist($availableAnswer2);
+                }
+            }
 
             $em->persist($quiz);
             $em->flush();

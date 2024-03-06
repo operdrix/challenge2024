@@ -51,4 +51,17 @@ class StudentRepository extends ServiceEntityRepository
 
         return $queryBuilder;
     }
+
+    public function getQuizByTrainingAndStudent($trainingId, $studentId)
+    {
+        $queryBuilder = $this->createQueryBuilder("s");
+        $queryBuilder->join("s.inscriptions", "i");
+        $queryBuilder->join("i.training", "t");
+        $queryBuilder->join("t.quizzes", "q");
+        $queryBuilder->andWhere("t.id = :trainingId")
+            ->setParameter("trainingId", $trainingId);
+        $queryBuilder->andWhere("s.id = :studentId")
+            ->setParameter("studentId", $studentId);
+        return $queryBuilder->getQuery()->getResult();
+    }
 }
