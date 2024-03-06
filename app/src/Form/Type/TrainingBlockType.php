@@ -28,7 +28,7 @@ class TrainingBlockType extends AbstractType
             ->add('position')
             ->add('resources', EntityType::class, [
                 'class' => Resource::class,
-                'choice_label' => 'id',
+                'choice_label' => 'title',
                 'multiple' => true,
                 "autocomplete" => true,
                 "help" => "Si vous ne voyez pas de resources merci d'en ajouter auparavant"
