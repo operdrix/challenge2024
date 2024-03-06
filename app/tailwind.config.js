@@ -3,7 +3,8 @@ module.exports = {
     content: [
         "./assets/**/*.js",
         "./templates/**/*.html.twig",
-        "./node_modules/flowbite/**/*.js" // set up the path to the flowbite package
+        "./node_modules/flowbite/**/*.js",// set up the path to the flowbite package
+        "./vendor/symfony/twig-bridge/Resources/views/Form/tailwind_2_layout.html.twig"
     ],
     safelist: [
         'w-64',
