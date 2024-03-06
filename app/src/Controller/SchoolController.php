@@ -27,6 +27,7 @@ class SchoolController extends AbstractController
     }
 
     #[Route('/{id}/show', name: 'show', methods: ['GET'])]
+    #[IsGranted('view', 'school')]
     public function show(School $school): Response
     {
         return $this->render('school/show.html.twig', [
@@ -36,6 +37,7 @@ class SchoolController extends AbstractController
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[IsGranted('edit', 'school')]
     public function edit(
         Request $request,
         ?School $school,
@@ -80,6 +82,7 @@ class SchoolController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[IsGranted('delete', 'school')]
     public function delete(
         Request $request,
         School $school,

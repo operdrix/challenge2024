@@ -31,6 +31,7 @@ class GradeController extends AbstractController
     }
 
     #[Route('{school_id}/grade/{id}/show', name: 'show', methods: ['GET'])]
+    #[IsGranted('view', 'grade')]
     public function show(Grade $grade): Response
     {
         return $this->render('grade/show.html.twig', [
@@ -40,6 +41,7 @@ class GradeController extends AbstractController
 
     #[Route('{school_id}/grade/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('{school_id}/grade/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[IsGranted('edit', 'grade')]
     public function edit(
         #[MapEntity(id: 'school_id')] School $school,
         Request $request,
@@ -64,11 +66,11 @@ class GradeController extends AbstractController
             $entityManager->persist($grade);
             $entityManager->flush();
 
-            // return $this->redirectToRoute(
-            //     'app_grade_index',
-            //     ['school_id' => $grade->getSchool()->getId()],
-            //     Response::HTTP_SEE_OTHER
-            // );
+            return $this->redirectToRoute(
+                'app_grade_index',
+                ['school_id' => $grade->getSchool()->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
         return $this->render('grade/edit.html.twig', [
@@ -78,6 +80,7 @@ class GradeController extends AbstractController
     }
 
     #[Route('{school_id}/grade/{id}', name: 'delete', methods: ['POST'])]
+    #[IsGranted('delete', 'grade')]
     public function delete(#[MapEntity(id: 'school_id')] School $school, Request $request, Grade $grade, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $grade->getId(), $request->request->get('_token'))) {
