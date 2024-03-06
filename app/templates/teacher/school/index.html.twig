@@ -20,15 +20,14 @@
         <tbody>
         {% for school in schools %}
             <tr>
-                <td><img src="{{ asset(school.logoFilename, 'school') }}" alt="{{ school.logoFilename }}"></td>
+                <td><img src="{{ school.logoFilename ? asset(school.logoFilename, 'school') : asset('ecole.png') }}" alt="{{ school.logoFilename }}"></td>
                 <td>{{ school.name }}</td>
                 <td>{{ school.address }}</td>
                 <td>{{ school.email }}</td>
                 <td>{{ school.contactName }}</td>
                 <td>{{ school.phoneNumber }}</td>
                 <td>
-                    <a href="{{ path('school_show', {'id': school.id}) }}">show</a>
-                    <a href="{{ path('school_edit', {'id': school.id}) }}">edit</a>
+                    <a href="{{ path('teacher_school_edit', {'id': school.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -39,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('school_new') }}">Créer un organisme</a>
+    <a href="{{ path('teacher_school_new') }}">Créer un organisme</a>
 {% endblock %}
