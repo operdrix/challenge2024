@@ -23,7 +23,7 @@ class QuestionAnswerController extends AbstractController
         ]);
     }
 
-    #[Route('/api/question/answer/{id}', name: 'app_api_question_answer_id', methods: ['POST', 'GET'])]
+    #[Route('/api/question/answer/{id}', name: 'app_api_question_answer_id', methods: ['POST'])]
     public function saveAnswer(Request $request, $id, EntityManagerInterface $em, AnswerCorrector $answerCorrector): JsonResponse
     {
         $post = $request->getPayload();
