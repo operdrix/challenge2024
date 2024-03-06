@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Grade;
+use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,28 +22,18 @@ class GradeRepository extends ServiceEntityRepository
         parent::__construct($registry, Grade::class);
     }
 
-    //    /**
-    //     * @return Grade[] Returns an array of Grade objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Grade
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    /**
+     * Recherche des classes liées à un teacher
+     *
+     * @param Teacher $teacher
+     */
+    public function findGradesByTeacher(Teacher $teacher): array
+    {
+        return $this->createQueryBuilder('g')
+            ->join('g.teacher', 't')
+            ->where('t.id = :teacher')
+            ->setParameter('teacher', $teacher->getId())
+            ->getQuery()
+            ->getResult();
+    }
 }

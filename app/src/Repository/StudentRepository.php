@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Student;
+use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -50,5 +51,38 @@ class StudentRepository extends ServiceEntityRepository
         }
 
         return $queryBuilder;
+    }
+
+    /**
+     * Recherche des élèves qui sont liés à un teacher via une classe
+     *
+     * @param Teacher $teacher
+     */
+    public function findStudentsWithGradeByTeacher(Teacher $teacher): array
+    {
+        return $this->createQueryBuilder("s")
+            ->join("s.grades", "g")
+            ->join("g.teacher", "te")
+            ->where("te.id = :teacherId")
+            ->setParameter("teacherId", $teacher->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Recherche des élèves qui sont liés à un teacher via une inscription et une formation
+     *
+     * @param Teacher $teacher
+     */
+    public function findStudentsWithoutGradeByTeacher(Teacher $teacher): array
+    {
+        return $this->createQueryBuilder("s")
+            ->join("s.inscriptions", "i")
+            ->join("i.training", "t")
+            ->join("t.teacher", "te")
+            ->where("te.id = :teacherId")
+            ->setParameter("teacherId", $teacher->getId())
+            ->getQuery()
+            ->getResult();
     }
 }
