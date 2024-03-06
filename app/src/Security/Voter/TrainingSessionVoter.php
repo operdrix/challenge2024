@@ -2,18 +2,20 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\Admin;
+use App\Entity\Teacher;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TrainingSessionVoter extends Voter
 {
-    public const SESSIONS_VIEW = 'sessions_view';
-    public const SESSION_VIEW = 'session_view';
+    public const VIEW_SESSION = 'VIEW_SESSION';
 
     protected function supports(string $attribute, mixed $trainingSession): bool
     {
-        return in_array($attribute, [self::SESSIONS_VIEW, self::SESSION_VIEW])
+
+        return in_array($attribute, [self::VIEW_SESSION])
             && $trainingSession instanceof \App\Entity\TrainingSession;
     }
 
@@ -21,27 +23,20 @@ class TrainingSessionVoter extends Voter
     {
         $user = $token->getUser();
 
-        // if the user is anonymous, do not grant access
-        if (!$user instanceof UserInterface) {
+        if (!$user instanceof Teacher && !$user instanceof Admin) {
             return false;
         }
 
-        // Vérifie si l'utilisateur n'a pas le rôle ROLE_TEACHER
-        if (!$user->hasRole('ROLE_TEACHER')) {
-            return false;
-        }
-
-        switch ($attribute) {
-            case self::SESSIONS_VIEW:
-                // On vérifie si le cours associé à la session appartient à l'utilisateur
-                if ($trainingSession->getInscription()->getTraining()->getTeacher() === $user) {
-                    return true;
-                }
-                return true;
-            case self::SESSION_VIEW:
-                return true;
-        }
+        return match ($attribute) {
+            self::VIEW_SESSION => $this->canView($trainingSession, $user),
+            default => false,
+        };
 
         return false;
+    }
+
+    private function canView(\App\Entity\TrainingSession $trainingSession, Teacher $teacher): bool
+    {
+        return $teacher->getTrainings()->contains($trainingSession->getInscription()->getTraining());
     }
 }
