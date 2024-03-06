@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\App\Teacher;
 
 use App\Constant\AppConstant;
 use App\Entity\School;
@@ -14,19 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/school', name: 'school_')]
+#[Route('/teacher/school', name: 'teacher_school_')]
 #[IsGranted("ROLE_TEACHER")]
 class SchoolController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(SchoolRepository $schoolRepository): Response
     {
-        return $this->render('school/index.html.twig', [
+        return $this->render('teacher/school/index.html.twig', [
             'schools' => $schoolRepository->findBy(['teacher' => $this->getUser()]),
         ]);
     }
 
     #[Route('/{id}/show', name: 'show', methods: ['GET'])]
+    #[IsGranted('view', 'school')]
     public function show(School $school): Response
     {
         return $this->render('school/show.html.twig', [
@@ -36,6 +37,7 @@ class SchoolController extends AbstractController
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[IsGranted('edit', 'school')]
     public function edit(
         Request $request,
         ?School $school,
@@ -73,13 +75,14 @@ class SchoolController extends AbstractController
             return $this->redirectToRoute('school_show', ['id' => $school->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('school/edit.html.twig', [
+        return $this->render('teacher/school/edit.html.twig', [
             'school' => $school,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[IsGranted('delete', 'school')]
     public function delete(
         Request $request,
         School $school,

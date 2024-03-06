@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\App\Teacher;
 
 use App\Entity\Grade;
 use App\Entity\School;
@@ -15,22 +15,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/school/', name: 'app_grade_')]
+#[Route('/teacher/school/{school_id}/grades', name: 'teacher_grades_')]
 #[IsGranted('ROLE_TEACHER')]
 class GradeController extends AbstractController
 {
-    #[Route('{school_id}/grade', name: 'index', methods: ['GET'])]
+    #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
         #[MapEntity(id: 'school_id')] School $school,
         GradeRepository $gradeRepository
     ): Response {
-        return $this->render('grade/index.html.twig', [
+        return $this->render('teacher/grade/index.html.twig', [
             'grades' => $gradeRepository->findBy(['teacher' => $this->getUser(), 'school' => $school]),
             'school' => $school
         ]);
     }
 
-    #[Route('{school_id}/grade/{id}/show', name: 'show', methods: ['GET'])]
+    #[Route('/{id}/show', name: 'show', methods: ['GET'])]
+    #[IsGranted('view', 'grade')]
     public function show(Grade $grade): Response
     {
         return $this->render('grade/show.html.twig', [
@@ -38,8 +39,9 @@ class GradeController extends AbstractController
         ]);
     }
 
-    #[Route('{school_id}/grade/new', name: 'new', methods: ['GET', 'POST'])]
-    #[Route('{school_id}/grade/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[IsGranted('edit', 'grade')]
     public function edit(
         #[MapEntity(id: 'school_id')] School $school,
         Request $request,
@@ -64,20 +66,21 @@ class GradeController extends AbstractController
             $entityManager->persist($grade);
             $entityManager->flush();
 
-            // return $this->redirectToRoute(
-            //     'app_grade_index',
-            //     ['school_id' => $grade->getSchool()->getId()],
-            //     Response::HTTP_SEE_OTHER
-            // );
+            return $this->redirectToRoute(
+                'app_grade_index',
+                ['school_id' => $grade->getSchool()->getId()],
+                Response::HTTP_SEE_OTHER
+            );
         }
 
-        return $this->render('grade/edit.html.twig', [
+        return $this->render('teacher/grade/edit.html.twig', [
             'grade' => $grade,
             'form' => $form,
         ]);
     }
 
-    #[Route('{school_id}/grade/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[IsGranted('delete', 'grade')]
     public function delete(#[MapEntity(id: 'school_id')] School $school, Request $request, Grade $grade, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $grade->getId(), $request->request->get('_token'))) {

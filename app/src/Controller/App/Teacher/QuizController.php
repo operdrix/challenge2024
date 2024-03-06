@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\App\Teacher;
 
 use App\Entity\Quiz;
 use App\Form\Type\QuizFilterType;
@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/quiz', name: "admin_quiz_")]
-class QuizCrudController extends AbstractController
+#[Route('/teacher/quizzes', name: "teacher_quizzes_")]
+class QuizController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
@@ -27,7 +27,7 @@ class QuizCrudController extends AbstractController
             Quiz::class
         );
 
-        return $this->render('admin/quiz/index.html.twig', [
+        return $this->render('teacher/quiz/index.html.twig', [
             'pagination' => $pagination,
             "form" => $form
         ]);
@@ -56,10 +56,10 @@ class QuizCrudController extends AbstractController
             $em->persist($quiz);
             $em->flush();
 
-            return $this->redirectToRoute('admin_quiz_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('teacher_quiz_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('admin/quiz/edit.html.twig', [
+        return $this->render('teacher/quiz/edit.html.twig', [
             'teacher' => $quiz,
 
             'form' => $form,
@@ -74,6 +74,6 @@ class QuizCrudController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('admin_quiz_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('teacher_quiz_index', [], Response::HTTP_SEE_OTHER);
     }
 }

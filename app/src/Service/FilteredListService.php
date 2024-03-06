@@ -5,6 +5,7 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +20,8 @@ class FilteredListService
     public function __construct(
         private readonly FormFactoryInterface $formFactory,
         private readonly PaginatorInterface $paginator,
-        private readonly EntityManagerInterface $em
+        private readonly EntityManagerInterface $em,
+        private readonly Security $security
     ) {
     }
 
@@ -40,7 +42,6 @@ class FilteredListService
             $filters = $form->getData();
         }
 
-
         $pagination = $this->getPagination($request, $entity, $filters);
 
         return [
@@ -54,7 +55,7 @@ class FilteredListService
      */
     public function getPagination(Request $request, string $entity, array $filters): PaginationInterface
     {
-        $queryBuilder = $this->em->getRepository($entity)->getBaseQueryBuilder($filters);
+        $queryBuilder = $this->em->getRepository($entity)->getBaseQueryBuilder($filters, $this->security->getUser());
 
         return $this->paginator->paginate(
             $queryBuilder->getQuery(),

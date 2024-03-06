@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrainingBlockRepository::class)]
 #[UniqueEntity(fields: ['training', 'content'], message: 'Ce bloc de formation existe déjà pour cette formation.')]
@@ -23,6 +24,7 @@ class TrainingBlock
     private ?Training $training = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
     private ?string $content = null;
 
     #[ORM\ManyToMany(targetEntity: TrainingSession::class, mappedBy: 'trainingBlocks')]
@@ -38,9 +40,11 @@ class TrainingBlock
     private Collection $resources;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $title = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotNull()]
     private ?int $position = null;
 
     public function __construct()

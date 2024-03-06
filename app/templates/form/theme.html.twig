@@ -1,7 +1,7 @@
 {% use 'tailwind_2_layout.html.twig' %}
 
 {%- block form_row -%}
-    {%- set row_class = row_class|default('my row classes') -%}
+    {%- set row_class = row_class|default('') -%}
     {{- parent() -}}
 {%- endblock form_row -%}
 
@@ -35,7 +35,7 @@
                 data-form-collection-prototype-value="{{ form_widget(form.vars.prototype)|e('html_attr') }}"
             {% endif %}
     >
-        <ul {{ stimulus_target('form-collection', 'collectionContainer') }}>
+        <ul {{ stimulus_target('form-collection', 'collectionContainer') }} class="{{ form.vars.row_attr.class }}">
             {% for child in form.children %}
                 <li {{ stimulus_target('form-collection', 'field') }}>
                     {{ form_widget(child) }}

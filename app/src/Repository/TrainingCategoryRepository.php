@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Teacher;
 use App\Entity\TrainingCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,28 +23,20 @@ class TrainingCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, TrainingCategory::class);
     }
 
-    //    /**
-    //     * @return TrainingCategory[] Returns an array of TrainingCategory objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Requête de base
+     */
+    public function getBaseQueryBuilder(array $filters, Teacher $teacher): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder("tc")
+            ->andWhere("tc.teacher = :teacher")
+            ->setParameter("teacher", $teacher);
 
-    //    public function findOneBySomeField($value): ?TrainingCategory
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if (!empty($filters["label"])) {
+            $queryBuilder->andWhere("tc.label LIKE :label")
+                ->setParameter("label", '%' . $filters["label"] . '%');
+        }
+
+        return $queryBuilder;
+    }
 }

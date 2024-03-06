@@ -21,8 +21,6 @@ class HomepageController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $this->addFlash("success", "Bon courage les gars!");
-
         return $this->render('homepage/index.html.twig', [
             'controller_name' => 'HomepageController',
         ]);
