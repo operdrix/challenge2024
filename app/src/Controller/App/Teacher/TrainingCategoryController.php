@@ -21,10 +21,15 @@ class TrainingCategoryController extends AbstractController
         Request $request,
     ): Response
     {
+        $filters = [
+            "teacher" => $this->getUser()
+        ];
+
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             TrainingCategoryFilterType::class,
-            TrainingCategory::class
+            TrainingCategory::class,
+            $filters
         );
 
         return $this->render('teacher/training_category/index.html.twig', [

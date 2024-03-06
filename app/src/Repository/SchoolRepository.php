@@ -26,9 +26,14 @@ class SchoolRepository extends ServiceEntityRepository
     /**
      * Requête par défaut
      */
-    public function getBaseQueryBuilder(array $filters = [], Teacher $teacher): QueryBuilder
+    public function getBaseQueryBuilder(array $filters = []): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder("s");
+
+        if (!empty($filters["teacher"])) {
+            $queryBuilder->andWhere("s.teacher = :teacher")
+                ->setParameter("teacher", $filters["teacher"]);
+        }
 
         if (!empty($filters["name"])) {
             $queryBuilder->andWhere("s.name LIKE :name")

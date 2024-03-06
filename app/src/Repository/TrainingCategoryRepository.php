@@ -26,11 +26,14 @@ class TrainingCategoryRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(array $filters, Teacher $teacher): QueryBuilder
+    public function getBaseQueryBuilder(array $filters): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder("tc")
-            ->andWhere("tc.teacher = :teacher")
-            ->setParameter("teacher", $teacher);
+        $queryBuilder = $this->createQueryBuilder("tc");
+
+        if (!empty($filters["teacher"])) {
+            $queryBuilder->andWhere("tc.teacher = :teacher")
+                ->setParameter("teacher", $filters["teacher"]);
+        }
 
         if (!empty($filters["label"])) {
             $queryBuilder->andWhere("tc.label LIKE :label")
