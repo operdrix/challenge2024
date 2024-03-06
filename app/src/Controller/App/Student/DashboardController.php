@@ -28,11 +28,10 @@ class DashboardController extends AbstractController
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             TrainingFilterType::class,
-            Teacher::class
+            Training::class
         );
 
         return $this->render('student/dashboard/index.html.twig', [
-            'trainings' => $trainingRepository->findAll(),
             'pagination' => $pagination,
             'form' => $form
         ]);

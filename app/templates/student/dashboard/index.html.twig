@@ -43,73 +43,72 @@
         </div>
     </div>
     <div class="bg-white flex">
-        <div class="overflow-x-auto">
-
             <div class="inline-block min-w-full align-middle">
-                <div class="overflow-hidden shadow p-4 flex flex-row gap-x-3">
-                    
-                {% for training in trainings %}
-                <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                    
-                    {% if training.difficulty.value == "Débutant" %}
-                        <span class="mb-4 inline-flex bg-green-100 text-green-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ training.difficulty.value }}</span>
+                <div class="overflow-hidden shadow p-4 flex-row gap-x-3 grid grid-cols-4 gap-6">
+                    {% for training in pagination %}
+                        <div class="col-span-full md:col-span-1 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
-                    {% elseif training.difficulty.value == "Intermédiaire" %}
-                        <span class="mb-4 inline-flex bg-yellow-100 text-yellow-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ training.difficulty.value }}</span>
+                            {% if training.difficulty.value == "Débutant" %}
+                                <span class="mb-4 inline-flex bg-green-100 text-green-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ training.difficulty.value }}</span>
 
-                    {% elseif training.difficulty.value == "Avancé" %}
-                        <span class="mb-4 inline-flex bg-pink-100 text-pink-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">{{ training.difficulty.value }}</span>
+                            {% elseif training.difficulty.value == "Intermédiaire" %}
+                                <span class="mb-4 inline-flex bg-yellow-100 text-yellow-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ training.difficulty.value }}</span>
 
-                    {% elseif training.difficulty.value == "Expert" %}
-                        <span class="mb-4 inline-flex bg-purple-100 text-purple-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">{{ training.difficulty.value }}</span>
+                            {% elseif training.difficulty.value == "Avancé" %}
+                                <span class="mb-4 inline-flex bg-pink-100 text-pink-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">{{ training.difficulty.value }}</span>
 
-                    {% elseif training.difficulty.value == "Dieu" %}
-                        <span class="mb-4 inline-flex bg-red-100 text-red-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ training.difficulty.value }}</span>
+                            {% elseif training.difficulty.value == "Expert" %}
+                                <span class="mb-4 inline-flex bg-purple-100 text-purple-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">{{ training.difficulty.value }}</span>
 
-                    {% else %}
-                        <span class="mb-4 inline-flex bg-blue-100 text-blue-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ training.difficulty.value }}</span>
+                            {% elseif training.difficulty.value == "Dieu" %}
+                                <span class="mb-4 inline-flex bg-red-100 text-red-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ training.difficulty.value }}</span>
 
-                    {% endif %}
-                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ training.title }}</h5>
+                            {% else %}
+                                <span class="mb-4 inline-flex bg-blue-100 text-blue-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ training.difficulty.value }}</span>
 
-                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ training.description }}</p>
+                            {% endif %}
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ training.title }}</h5>
 
-                    
-                    
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ training.description }}</p>
 
-                <ul role="list" class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700">
-                    <li class="py-3 sm:py-4">
-                        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-                            <div class="flex-shrink-0">
-                                <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                    <span class="font-medium text-gray-600 dark:text-gray-300">{{ training.teacher.firstname|first|upper }}{{ training.teacher.lastname|first|upper }}</span>
-                                </div>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-semibold text-gray-900 truncate dark:text-white">
-                                    {{ training.teacher.fullname }}
-                                </p>
-                                <p class="truncate dark:text-gray-400">
-                                    Longeur du module : {{ training.length }}h
-                                </p>
-                            </div>
+
+                            <ul role="list" class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700">
+                                <li class="py-3 sm:py-4">
+                                    <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                                        <div class="flex-shrink-0">
+                                            <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                                                <span class="font-medium text-gray-600 dark:text-gray-300">{{ training.teacher.firstname|first|upper }}{{ training.teacher.lastname|first|upper }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="font-semibold text-gray-900 truncate dark:text-white">
+                                                {{ training.teacher.fullname }}
+                                            </p>
+                                            <p class="truncate dark:text-gray-400">
+                                                Longeur du module : {{ training.length }}h
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <a href="{{ path('student_show', {'id': training.id}) }}"
+                               class="mt-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Voir plus
+                                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                </svg>
+                            </a>
+
                         </div>
-                    </li>
-                </ul>
-                
-                <a href="{{ path('student_show', {'id': training.id}) }}" class="mt-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Voir plus
-                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                        </svg>
-                    </a>
 
-        </div>
-
-                {% endfor %}
-
+                    {% endfor %}
                 </div>
             </div>
+
         </div>
-    </div>
+    {{ knp_pagination_render(pagination) }}
+
 {% endblock %}
