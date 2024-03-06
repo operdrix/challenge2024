@@ -51,7 +51,7 @@ class ChatController extends AbstractController
     /**
      * Conversation
      */
-    #[Route("/{idStudent}/{idTeacher}/conversation")]
+    #[Route("/{idStudent}/{idTeacher}/conversation", name: "conversation")]
     public function conversation(
         Request                $request,
         HubInterface           $hub,
