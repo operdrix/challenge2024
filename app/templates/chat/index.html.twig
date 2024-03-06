@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin index{% endblock %}
+{% block title %}Hello ChatController!{% endblock %}
 
 {% block body %}
     <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -17,24 +17,16 @@
                         <li>
                             <div class="flex items-center">
                                 <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                                <a href="{{ path("admin_administrators_index") }}" class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">
-                                    Administrateurs
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center">
-                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                                 <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">
-                                    Liste
+                                    Chats
                                 </span>
                             </div>
                         </li>
                     </ol>
                 </nav>
                 <div class="flex md:space-x-3 md:space-y-0 space-y-3 md:flex-row flex-col">
-                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Administrateurs</h1>
-                    <a href="{{ path("admin_administrators_new") }}" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 sm:w-auto dark:bg-green-600 dark:hover:bg-green-700">
+                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Chats</h1>
+                    <a href="" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 sm:w-auto dark:bg-green-600 dark:hover:bg-green-700">
                         <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
                         Créer
                     </a>
@@ -83,23 +75,21 @@
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                        {% for administrator in pagination %}
+                        {% for person in pagination %}
                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                    <div class="text-base text-gray-900 dark:text-white">{{ administrator.firstname }}</div>
+                                    <div class="text-base text-gray-900 dark:text-white">{{ person.firstname }}</div>
                                 </td>
                                 <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                    <div class="text-base text-gray-900 dark:text-white">{{ administrator.lastname }}</div>
+                                    <div class="text-base text-gray-900 dark:text-white">{{ person.lastname }}</div>
                                 </td>
                                 <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                    <div class="text-base text-gray-900 dark:text-white">{{ administrator.email }}</div>
+                                    <div class="text-base text-gray-900 dark:text-white">{{ person.email }}</div>
                                 </td>
                                 <td class="p-4 space-x-2 whitespace-nowrap">
-                                    <a href="{{ path("admin_administrators_edit", {"id": administrator.id}) }}" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-700 hover:bg-amber-800 dark:bg-amber-600 dark:hover:bg-amber-700">
-                                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path><path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path></svg>
-                                        Éditer l'utilisateur
+                                    <a href="{{ path('chat_conversation', { idStudent: person.id, idTeacher: app.user.id }) }}" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700">
+                                        Ouvrir la conversation
                                     </a>
-                                    {{ include("admin/administrator/_delete_form.html.twig") }}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -110,5 +100,4 @@
         </div>
     </div>
     {{ knp_pagination_render(pagination) }}
-
 {% endblock %}

@@ -49,7 +49,7 @@ class TeacherFilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            "crsf_protection" => false,
+            "csrf_protection" => false,
             "method" => "GET"
         ]);
     }
