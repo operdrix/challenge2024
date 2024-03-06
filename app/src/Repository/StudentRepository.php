@@ -35,6 +35,17 @@ class StudentRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder("s");
 
+        if (!empty($filters["teacher"])) {
+            $queryBuilder ->join("s.grades", "g")
+                ->join("g.teacher", "gte")
+                ->OrWhere("gte.id = :teacherId")
+                ->join("s.inscriptions", "i")
+                ->join("i.training", "t")
+                ->join("t.teacher", "tte")
+                ->OrWhere("tte.id = :teacherId")
+                ->setParameter("teacherId", $filters["teacher"]->getId());
+        }
+
         if (!empty($filters["firstname"])) {
             $queryBuilder->andWhere("s.firstname LIKE :firstname")
                 ->setParameter("firstname", '%' . $filters["firstname"] . '%');

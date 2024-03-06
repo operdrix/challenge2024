@@ -5,9 +5,11 @@ namespace App\Controller\App\Teacher;
 use App\Constant\AppConstant;
 use App\Entity\Grade;
 use App\Entity\School;
+use App\Entity\Student;
 use App\Form\Type\GradeFilterType;
 use App\Form\Type\SchoolFilterType;
 use App\Form\Type\SchoolType;
+use App\Form\Type\StudentFilterType;
 use App\Service\FileService;
 use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -97,7 +99,7 @@ class SchoolController extends AbstractController
         Request             $request
     )
     {
-        $filters = [
+        $filtersGrade = [
             "teacher" => $this->getUser(),
             "school" => $school
         ];
@@ -106,13 +108,26 @@ class SchoolController extends AbstractController
             $request,
             GradeFilterType::class,
             Grade::class,
-            $filters
+            $filtersGrade
+        );
+
+        $filtersStudent = [
+            "teacher" => $this->getUser(),
+        ];
+
+        [$paginationStudent, $formStudent] = $filteredListService->prepareFilteredList(
+            $request,
+            StudentFilterType::class,
+            Student::class,
+            $filtersStudent
         );
 
         return $this->render('teacher/school/show.html.twig', [
             'school' => $school,
             "paginationGrade" => $paginationGrade,
-            "formGrade" => $formGrade
+            "formGrade" => $formGrade,
+            "paginationStudent" => $paginationStudent,
+            "formStudent" => $formStudent
         ]);
     }
 }
