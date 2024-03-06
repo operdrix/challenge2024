@@ -26,21 +26,19 @@ class ResourceRepository extends ServiceEntityRepository
     /**
      * Requête de base
      */
-    public function getBaseQueryBuilder(array $filters, Teacher $teacher): QueryBuilder
+    public function getBaseQueryBuilder(array $filters): QueryBuilder
     {
-        $queryBuilder = $this->createQueryBuilder("r")
-            ->innerJoin("r.training", "t")
-            ->andWhere("t.teacher = :teacher")
-            ->setParameter("teacher", $teacher);
+        $queryBuilder = $this->createQueryBuilder("r");
 
-        if (!empty($filters["title"])) {
-            $queryBuilder->andWhere("t.title LIKE :title")
-                ->setParameter("title", '%' . $filters["title"] . '%');
+        if (!empty($filters["teacher"])) {
+            $queryBuilder->innerJoin("r.training", "t")
+                ->andWhere("t.teacher = :teacher")
+                ->setParameter("teacher", $filters["teacher"]);
         }
 
-        if (!empty($filters["difficulty"])) {
-            $queryBuilder->andWhere("t.difficulty = :difficulty")
-                ->setParameter("difficulty", $filters["difficulty"]);
+        if (!empty($filters["title"])) {
+            $queryBuilder->andWhere("r.title LIKE :title")
+                ->setParameter("title", '%' . $filters["title"] . '%');
         }
 
         return $queryBuilder;

@@ -1,4 +1,21 @@
-{{ form_start(form, {'attr': {'novalidate' : 'novalidate'}}) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button> 
-{{ form_end(form) }}
+<div class="col-span-full">
+    <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+        <h3 class="mb-4 text-xl font-semibold dark:text-white">Formulaire</h3>
+        {{ form_start(form, {attr: {"noValidate": true}}) }}
+        <div class="grid grid-cols-6 gap-6">
+            <div class="col-span-full">
+                {{ form_row(form.label) }}
+            </div>
+            <div class="col-span-full">
+                {{ form_row(form.students) }}
+            </div>
+            <div class="col-span-full">
+                <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                        type="submit">{{ button_label|default('Enregistrer') }}</button>
+            </div>
+        </div>
+
+
+        {{ form_end(form) }}
+    </div>
+</div>

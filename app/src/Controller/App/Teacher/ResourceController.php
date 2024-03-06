@@ -27,10 +27,15 @@ class ResourceController extends AbstractController
         Request $request
     ): Response
     {
+        $filters = [
+            "teacher" => $this->getUser()
+        ];
+
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             ResourceFilterType::class,
-            Resource::class
+            Resource::class,
+            $filters
         );
 
         return $this->render('teacher/resource/index.html.twig', [

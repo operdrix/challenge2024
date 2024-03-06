@@ -29,4 +29,15 @@ class ResourceFilterType extends AbstractType
                 ]
             );
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            "method" => "GET",
+            "csrf_protection" => false
+        ]);
+    }
 }

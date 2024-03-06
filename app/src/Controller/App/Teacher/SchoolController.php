@@ -3,7 +3,9 @@
 namespace App\Controller\App\Teacher;
 
 use App\Constant\AppConstant;
+use App\Entity\Grade;
 use App\Entity\School;
+use App\Form\Type\GradeFilterType;
 use App\Form\Type\SchoolFilterType;
 use App\Form\Type\SchoolType;
 use App\Service\FileService;
@@ -25,10 +27,15 @@ class SchoolController extends AbstractController
         Request $request
     ): Response
     {
+        $filters = [
+            "teacher" => $this->getUser()
+        ];
+
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             SchoolFilterType::class,
-            School::class
+            School::class,
+            $filters
         );
 
         return $this->render('teacher/school/index.html.twig', [
@@ -83,22 +90,29 @@ class SchoolController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
-    #[IsGranted('delete', 'school')]
-    public function delete(
-        Request $request,
-        School $school,
-        EntityManagerInterface $entityManager,
-        FileService $fileService
-    ): Response {
-        if ($this->isCsrfTokenValid('delete' . $school->getId(), $request->request->get('_token'))) {
-            // Supprimer le logo des fichiers de l'application 
-            $fileService->remove($school->getLogoFilename(), AppConstant::DIRECTORY_SCHOOL);
+    #[Route("/{id}/show", name: "show", methods: ["GET"])]
+    public function show(
+        School              $school,
+        FilteredListService $filteredListService,
+        Request             $request
+    )
+    {
+        $filters = [
+            "teacher" => $this->getUser(),
+            "school" => $school
+        ];
 
-            $entityManager->remove($school);
-            $entityManager->flush();
-        }
+        [$paginationGrade, $formGrade] = $filteredListService->prepareFilteredList(
+            $request,
+            GradeFilterType::class,
+            Grade::class,
+            $filters
+        );
 
-        return $this->redirectToRoute('teacher_schools_index', [], Response::HTTP_SEE_OTHER);
+        return $this->render('teacher/school/show.html.twig', [
+            'school' => $school,
+            "paginationGrade" => $paginationGrade,
+            "formGrade" => $formGrade
+        ]);
     }
 }
