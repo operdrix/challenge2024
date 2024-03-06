@@ -38,6 +38,13 @@ class TrainingFilterType extends AbstractType
                     "required" => false
                 ]
             )
+            ->add(
+                'length',
+                Texttype::class,
+                [
+                    "required" => false
+                ]
+            )
         ;
     }
 
