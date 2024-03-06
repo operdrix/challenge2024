@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz correction  {{ student.firstname ~ ' ' ~ student.lastname}}{% endblock %}
+
+{% block body %}
+    <h1>Correction du quiz de {{ student.firstname ~ ' ' ~ student.lastname }}</h1>
+    {% for key, question in quizAnswers %}
+        {{ dump(question) }}
+        <h2>{{ question.quizQuestion.title }}</h2>
+        <p>{{ question.content }}</p>
+        {{ dump(question.quizQuestion.type.value) }}
+        {% if question.quizQuestion.type.value == 'Libre' %}
+            test
+            {{ form(form) }}
+        {% else %}
+        <div>{{ question.result }} / {{ question.quizQuestion.point }}</div>
+        {% endif %}
+
+    {% endfor %}
+{#    <a href="{{ path('quiz_list') }}" class="btn btn-primary">Retour</a>#}
+{% endblock %}

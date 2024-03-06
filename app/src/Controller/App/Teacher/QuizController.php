@@ -4,8 +4,12 @@ namespace App\Controller\App\Teacher;
 
 use App\Entity\Quiz;
 use App\Entity\QuizQuestionAvailableAnswer;
+use App\Entity\QuizQuestionStudentAnswer;
+use App\Entity\Student;
 use App\Enum\QuizQuestionTypeEnum;
 use App\Form\Type\QuizFilterType;
+use App\Form\Type\QuizQuestionStudentAnswerCollectionType;
+use App\Form\Type\QuizQuestionStudentAnswerType;
 use App\Form\Type\QuizType;
 use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -96,5 +100,44 @@ class QuizController extends AbstractController
         }
 
         return $this->redirectToRoute('teacher_quiz_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/correct', name: 'correct', methods: ['GET'])]
+    public function correct(Quiz $quiz, EntityManagerInterface $em): Response
+    {
+        $students = $em->getRepository(Student::class)->findStudentsByQuizAnswered($quiz->getId());
+
+        return $this->render('teacher/quiz/correction/index.html.twig', [
+            'quiz' => $quiz,
+            'students' => $students
+        ]);
+    }
+
+    #[Route('/{id}/correct/{studentId}', name: 'correct_student', methods: ['GET'])]
+    public function correctStudent(Quiz $quiz, $studentId, EntityManagerInterface $em): Response
+    {
+        $quizAnswers = $em->getRepository(QuizQuestionStudentAnswer::class)->getAllStudentAnswersByQuizId($quiz->getId(), $studentId);
+
+        $manualCorrectionAnswers = [];
+
+        foreach ($quizAnswers as $quizAnswer) {
+            if ($quizAnswer->getQuizQuestion()->getType()->value == QuizQuestionTypeEnum::TEXT->value)
+            {
+                $manualCorrectionAnswers[] = $quizAnswer;
+            }
+        }
+
+        $form = $this->createForm(QuizQuestionStudentAnswerCollectionType::class, $manualCorrectionAnswers);
+
+        dd($form);
+
+        $student = $em->getRepository(Student::class)->find($studentId);
+
+        return $this->render('teacher/quiz/correction/student.html.twig', [
+            'quiz' => $quiz,
+            'student' => $student,
+            'quizAnswers' => $quizAnswers,
+            'form' => $form
+        ]);
     }
 }

@@ -122,6 +122,30 @@ class QuizFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist($answer2Question3);
 
+        $question4 = new QuizQuestion();
+        $question4->setTitle("Pourquoi utiliser Tailwindcss avec Symfony ?");
+        $question4->setType(QuizQuestionTypeEnum::TEXT);
+        $question4->setPoint(6);
+        $question4->setQuiz($quiz2);
+
+        // Generate 2 answers for the question 4
+        $answer1Question4 = new QuizQuestionStudentAnswer();
+        $answer1Question4->setContent("Pour avoir un design plus rapide");
+        $answer1Question4->setResult(0);
+        $answer1Question4->setStudent($this->getReference(UsersFixtures::STUDENT_1));
+        $answer1Question4->setQuizQuestion($question4);
+
+        $manager->persist($answer1Question4);
+
+        $answer2Question4 = new QuizQuestionStudentAnswer();
+        $answer2Question4->setContent("Parce que Bootstrap c'est has been");
+        $answer2Question4->setResult(0);
+        $answer2Question4->setStudent($this->getReference(UsersFixtures::STUDENT_2));
+        $answer2Question4->setQuizQuestion($question4);
+
+        $manager->persist($answer2Question4);
+        $manager->persist($question4);
+
         $manager->persist($quiz2);
 
         $manager->flush();

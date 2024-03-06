@@ -109,4 +109,18 @@ class StudentRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findStudentsByQuizAnswered($quizId)
+    {
+        return $this->createQueryBuilder("s")
+            ->select("s")
+            ->distinct()
+            ->join("s.quizQuestionStudentAnswers", "qa")
+            ->join("qa.quizQuestion", "qq")
+            ->join("qq.quiz", "q")
+            ->where("q.id = :quizId")
+            ->setParameter("quizId", $quizId)
+            ->getQuery()
+            ->getResult();
+    }
 }
