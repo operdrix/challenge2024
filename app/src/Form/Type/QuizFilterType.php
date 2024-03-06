@@ -26,6 +26,13 @@ class QuizFilterType extends AbstractType
                     "required" => false
                 ]
             )
+            ->add(
+                'training',
+                TextType::class,
+                [
+                    "required" => false
+                ]
+            )
         ;
     }
 
