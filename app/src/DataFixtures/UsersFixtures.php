@@ -59,7 +59,7 @@ class UsersFixtures extends Fixture
         // Création des professeurs
         $audrey = new Teacher();
         $audrey->setFirstname("Audrey");
-        $audrey->setLastname("Haussepian");
+        $audrey->setLastname("Hossepian");
         $audrey->setEmail("audrey@teacher.fr");
         $audrey->setPassword($this->passwordHasher->hashPassword($audrey, "teacher"));
         $audrey->setBirthdate(new \DateTimeImmutable());
