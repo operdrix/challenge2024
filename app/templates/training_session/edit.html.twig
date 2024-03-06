@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TrainingSession{% endblock %}
+
+{% block body %}
+    <h1>Edit TrainingSession</h1>
+
+    {{ include('training_session/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('training_sessions_index', {'idTraining': training.id, 'idInscription': inscription.id}) }}">back to list</a>
+{% endblock %}
