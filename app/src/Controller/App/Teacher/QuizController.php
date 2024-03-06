@@ -56,7 +56,7 @@ class QuizController extends AbstractController
             $em->persist($quiz);
             $em->flush();
 
-            return $this->redirectToRoute('teacher_quiz_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('teacher_quizzes_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('teacher/quiz/edit.html.twig', [

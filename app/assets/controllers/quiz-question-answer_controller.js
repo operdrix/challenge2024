@@ -6,16 +6,18 @@ export default class extends Controller {
 
 
     connect() {
-        if (this.typeTarget.value === "Choix multiple" || this.typeTarget.value === "Choix unique") {
-            this.answersTarget.classList.remove("hidden")
-        }
+        this.typeTargets.forEach((element) => {
+            if (element.value === "Choix multiple" || element.value === "Choix unique") {
+                element.parentElement.parentElement.lastChild.classList.remove("hidden")
+            }
+        })
     }
 
     changeType(event) {
         if (event.target.value === "Choix multiple" || event.target.value === "Choix unique") {
-            this.answersTarget.classList.remove("hidden")
+            event.target.parentElement.parentElement.lastChild.classList.remove("hidden")
         } else {
-            this.answersTarget.classList.add("hidden")
+            event.target.parentElement.parentElement.lastChild.classList.add("hidden")
         }
     }
 
