@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\App;
+namespace App\Controller\App\Teacher;
 
 use App\Entity\Training;
 use App\Entity\TrainingCategory;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/teacher/trainings', name: "teacher_trainings_")]
-class TeacherTrainingController extends AbstractController
+class TrainingController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(

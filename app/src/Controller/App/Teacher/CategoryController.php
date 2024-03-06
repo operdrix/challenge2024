@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controller\App;
+namespace App\Controller\App\Teacher;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route("/teacher/categories", name: "teacher_categories")]
-class TeacherCategoryController extends AbstractController
+class CategoryController extends AbstractController
 {
     #[Route('/teacher/category', name: '_')]
     public function index(): Response

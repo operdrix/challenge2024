@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\App\Teacher;
 
 use App\Entity\Inscription;
 use App\Entity\Training;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('teacher/trainings/{idTraining}/inscriptions/{idInscription}/sessions', name: 'training_sessions_')]
+#[Route('/teacher/trainings/{idTraining}/inscriptions/{idInscription}/sessions', name: 'training_sessions_')]
 class TrainingSessionController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
@@ -31,7 +31,7 @@ class TrainingSessionController extends AbstractController
         if (!$securityService->canViewInscription($inscription, $training)) {
             throw $this->createAccessDeniedException();
         }
-        return $this->render('training_session/index.html.twig', [
+        return $this->render('/teacher/training_session/index.html.twig', [
             'training_sessions' => $trainingSessionRepository->findAll(),
             'training' => $training,
             'inscription' => $inscription,
@@ -71,7 +71,7 @@ class TrainingSessionController extends AbstractController
                 Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('training_session/edit.html.twig', [
+        return $this->render('/teacher/training_session/edit.html.twig', [
             'training_session' => $trainingSession,
             'form' => $form,
             'training' => $training,

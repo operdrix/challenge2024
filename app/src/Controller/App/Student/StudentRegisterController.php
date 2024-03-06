@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\App\Student;
 
 use App\Entity\Student;
 use App\Form\Type\StudentRegisterFirstStepType;
 use App\Form\Type\StudentRegisterLastStepType;
 use App\Service\Interface\StudentServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/student/register/', name: 'app_student_register_')]
+#[Route('/student/register/', name: 'student_register_')]
 #[IsGranted('PUBLIC_ACCESS')]
 class StudentRegisterController extends AbstractController
 {
@@ -39,7 +38,7 @@ class StudentRegisterController extends AbstractController
             );
         }
 
-        return $this->render('student_register/first_step.html.twig', [
+        return $this->render('student/student_register/first_step.html.twig', [
             'form' => $form
         ]);
     }
@@ -76,7 +75,7 @@ class StudentRegisterController extends AbstractController
             return $this->redirectToRoute('homepage', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('student_register/last_step.html.twig', [
+        return $this->render('student/student_register/last_step.html.twig', [
             'form' => $form,
             'student' => $student
         ]);

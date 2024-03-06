@@ -92,26 +92,21 @@
         {{ include("layout/_nav.html.twig") }}
     {% endif %}
 
-    <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
 
-        {% if app.user %}
-            {{ include("layout/_sidebar.html.twig") }}
+    {% if app.user %}
+        {{ include("layout/_sidebar.html.twig") }}
 
+        <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
             <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
-            <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900 p-6">
-                <main id="content-without-footer">
-                    {% block body %}
-                    {% endif %}
-
-                    <div id="main-content"
-                         class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-800">
+            <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
                         <main id="content-without-footer" class="relative">
                             {% block body %}
 
-                    {% endblock %}
+                            {% endblock %}
                         </main>
-                        {% if app.user and app.request.attributes.get('_route') != 'chat_conversation' %}
-                {{ include("layout/_footer.html.twig") }}
+                {% if app.request.attributes.get('_route') is not same as 'chat_conversation' %}
+                    {{ include("layout/_footer.html.twig") }}
+                {% endif %}
             </div>
         </div>
     {% else %}

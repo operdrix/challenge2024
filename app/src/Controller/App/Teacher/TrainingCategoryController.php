@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\App;
+namespace App\Controller\App\Teacher;
 
 use App\Entity\TrainingCategory;
 use App\Form\Type\TrainingCategoryFilterType;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/teacher/training-categories', name: "teacher_training_categories_")]
-class TeacherTrainingCategoryController extends AbstractController
+class TrainingCategoryController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
