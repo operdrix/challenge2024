@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Passage aux enfers{% endblock %}
+
+{% block body %}
+    {% for question in quiz.quizQuestions %}
+        <div class="question">
+            {% if question.type.name == 'YESNO' %}
+                <fieldset>
+                    <legend>{{ question.title }}</legend>
+
+                    <div>
+                        <input type="radio" id="true" name="{{ question.id }}" value="true" />
+                        <label for="true">Vrai</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="false" name="{{ question.id }}" value="false" />
+                        <label for="false">Faux</label>
+                    </div>
+                </fieldset>
+            {% elseif question.type.name == 'UNIQUE' %}
+                <fieldset>
+                    <legend>{{ question.title }}</legend>
+                    {% for answer in question.quizQuestionAvailableAnswers %}
+                        <div>
+                            <input type="radio" id="{{ answer.id }}" name="{{ question.id }}" value="{{ answer.id }}" />
+                            <label for="{{ answer.id }}">{{ answer.content }}</label>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            {% elseif question.type.name == 'MULTIPLE' %}
+                <fieldset>
+                    <legend>{{ question.title }}</legend>
+
+                    {% for answer in question.quizQuestionAvailableAnswers %}
+                        <div>
+                            <input type="checkbox" id="{{ answer.id }}" name="{{ question.id }}" value="{{ answer.id }}" />
+                            <label for="{{ answer.id }}">{{ answer.content }}</label>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            {% elseif question.type.name == 'TEXT' %}
+                <fieldset>
+                    <label for="{{ question.id }}">{{ question.title }}</label>
+                    <textarea id="{{ question.id }}" name="{{ question.id }}"></textarea>
+                </fieldset>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

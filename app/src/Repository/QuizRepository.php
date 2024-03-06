@@ -26,9 +26,14 @@ class QuizRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder("q");
 
-        if (!empty($filters["firstname"])) {
+        if (!empty($filters["label"])) {
             $queryBuilder->andWhere("q.label LIKE :label")
                 ->setParameter("label", '%' . $filters["label"] . '%');
+        }
+        if (!empty($filters["training"])) {
+            $queryBuilder->join("q.training", "t");
+            $queryBuilder->andWhere("t.title LIKE :training")
+                ->setParameter("training", '%' . $filters["training"] . '%');
         }
 
         return $queryBuilder;
