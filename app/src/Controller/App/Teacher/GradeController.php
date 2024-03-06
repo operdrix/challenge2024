@@ -50,8 +50,14 @@ class GradeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $alreadyCreatedStudents = $form->get("already_created_students")->getData();
+
             // Récupère une liste d'étudiants contrôllés 
             $grade->setStudents($studentService->bulkHandleNewStudent($grade->getStudents(), $grade));
+
+            foreach ($alreadyCreatedStudents as $student) {
+                $grade->addStudent($student);
+            }
 
             $entityManager->persist($grade);
             $entityManager->flush();
