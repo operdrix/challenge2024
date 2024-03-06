@@ -4,10 +4,10 @@ var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 // Change the icons inside the button based on previous settings
 if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     themeToggleLightIcon.classList.remove('hidden');
-    themeToggleDarkIcon.classList.add('hidden');
+    //themeToggleDarkIcon.classList.add('hidden');
 } else {
     themeToggleDarkIcon.classList.remove('hidden');
-    themeToggleLightIcon.classList.add('hidden');
+    //themeToggleLightIcon.classList.add('hidden');
 }
 
 var themeToggleBtn = document.getElementById('theme-toggle');
