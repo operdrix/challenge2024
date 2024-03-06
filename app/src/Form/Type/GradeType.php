@@ -3,7 +3,9 @@
 namespace App\Form\Type;
 
 use App\Entity\Grade;
+use App\Entity\Student;
 use App\Form\Type\StudentType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,6 +22,14 @@ class GradeType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Nom de la classe'
                 ]
+            ])
+            ->add('already_created_students', EntityType::class, [
+                'label' => 'Étudiants déjà créés',
+                'class' => Student::class,
+                "choice_label" => "email",
+                "mapped" => false,
+                "multiple" => true,
+                "autocomplete" => true
             ])
             ->add('students', CollectionType::class, [
                 'label' => 'Étudiants',
