@@ -2,24 +2,18 @@
     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
         <h3 class="mb-4 text-xl font-semibold dark:text-white">Formulaire</h3>
         {{ form_start(form, {attr: {"noValidate": true}}) }}
-        <div class="grid grid-cols-9 gap-6">
+        <div class="grid grid-cols-6 gap-6">
             <div class="col-span-full">
-                {{ form_row(form.name) }}
+                {{ form_row(form.training) }}
             </div>
-            <div class="col-span-full">
-                {{ form_row(form.address) }}
+            <div class="col-span-6 sm:col-span-3">
+                {{ form_row(form.title) }}
             </div>
-            <div class="col-span-full sm:col-span-3">
-                {{ form_row(form.contactName) }}
-            </div>
-            <div class="col-span-full sm:col-span-3">
-                {{ form_row(form.email) }}
-            </div>
-            <div class="col-span-full sm:col-span-3">
-                {{ form_row(form.phoneNumber) }}
+            <div class="col-span-6 sm:col-span-3">
+                {{ form_row(form.type) }}
             </div>
             <div class="col-span-full">
-                {{ form_row(form.logo) }}
+                {{ form_row(form.link) }}
             </div>
             <div class="col-span-full">
                 <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"

@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\School;
+use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,28 +23,19 @@ class SchoolRepository extends ServiceEntityRepository
         parent::__construct($registry, School::class);
     }
 
-    //    /**
-    //     * @return School[] Returns an array of School objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Requête par défaut
+     */
+    public function getBaseQueryBuilder(array $filters = [], Teacher $teacher): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder("s");
 
-    //    public function findOneBySomeField($value): ?School
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if (!empty($filters["name"])) {
+            $queryBuilder->andWhere("s.name LIKE :name")
+                ->setParameter("name", '%' . $filters["name"] . '%');
+        }
+
+        return $queryBuilder;
+
+    }
 }

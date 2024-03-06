@@ -3,7 +3,7 @@
 {% block body %}
     <h2 class="text-center p-4 m-4 bg-white rounded-xl text-lg dark:text-white dark:bg-gray-700">
         Conversation avec
-        {% if conversation.student.id == app.user.id %}
+        {% if conversation.student is same as app.user %}
             {{ conversation.teacher.firstname }} {{ conversation.teacher.lastname }}
         {% else %}
             {{ conversation.student.firstname }} {{ conversation.student.lastname }}
@@ -11,7 +11,9 @@
     </h2>
 
     <div id="messages" class="flex flex-col items-start" {{ turbo_stream_listen('conversation' ~ conversation.id) }}>
-
+        {% for message in conversation.messages %}
+            {{ include("chat/message.stream.html.twig", {message: message}) }}
+        {% endfor %}
     </div>
 
     <turbo-frame id="message_form" class="flex flex-col items-start">

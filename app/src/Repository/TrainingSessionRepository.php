@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Teacher;
 use App\Entity\TrainingSession;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -21,28 +22,30 @@ class TrainingSessionRepository extends ServiceEntityRepository
         parent::__construct($registry, TrainingSession::class);
     }
 
-    //    /**
-    //     * @return TrainingSession[] Returns an array of TrainingSession objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Retourne les prochaines sessions de formation d'un formateur
+     * Optionel : rajouter la date au plus tard pour la recherche
+     * @param Teacher $teacher
+     *
+     * @return TrainingSession[]
+     */
+    public function findNextTrainingsSessions(Teacher $teacher): array
+    {
 
-    //    public function findOneBySomeField($value): ?TrainingSession
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $qb = $this->createQueryBuilder('ts')
+            ->join('ts.inscription', 'i')
+            ->join('i.training', 't')
+            ->join('t.teacher', 'te')
+            ->where('te.id = :teacherId')
+            ->andWhere('ts.startDate >= :now')
+            ->andWhere('ts.startDate <= :end')
+            ->setParameter('teacherId', $teacher->getId())
+            ->setParameter('now', new \DateTime())
+            ->setParameter('end', new \DateTime('+2 weeks'))
+            ->orderBy('ts.startDate', 'ASC')
+            ->getQuery()
+        ;
+
+        return $qb->getResult();
+    }
 }

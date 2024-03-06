@@ -7,6 +7,7 @@ use App\Repository\ResourceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ResourceRepository::class)]
 #[UniqueEntity(fields: ['title', 'training'], message: 'Cette ressource est déjà créée pour cette formation.')]
@@ -18,12 +19,15 @@ class Resource
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, enumType: ResourceTypeEnum::class)]
+    #[Assert\NotBlank()]
     private ?ResourceTypeEnum $type = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $link = null;
 
     #[ORM\ManyToOne(inversedBy: 'resources')]
@@ -40,7 +44,7 @@ class Resource
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 
@@ -52,7 +56,7 @@ class Resource
         return $this->type;
     }
 
-    public function setType(ResourceTypeEnum $type): static
+    public function setType(?ResourceTypeEnum $type): static
     {
         $this->type = $type;
 
@@ -64,7 +68,7 @@ class Resource
         return $this->link;
     }
 
-    public function setLink(string $link): static
+    public function setLink(?string $link): static
     {
         $this->link = $link;
 
