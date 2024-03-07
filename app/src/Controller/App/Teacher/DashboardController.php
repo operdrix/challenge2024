@@ -2,6 +2,7 @@
 
 namespace App\Controller\App\Teacher;
 
+use App\Entity\Admin;
 use App\Repository\GradeRepository;
 use App\Repository\StudentRepository;
 use App\Repository\TrainingRepository;
@@ -21,6 +22,10 @@ class DashboardController extends AbstractController
         GradeRepository $gradeRepository
     ): Response
     {
+        if($this->getUser() instanceof Admin) {
+            return $this->redirectToRoute('admin_dashboard');
+        }
+
         $teacherTrainings = $trainingRepository->findBy(['teacher' => $this->getUser()]);
         $nextTrainingsSessions = $trainingSessionRepository->findNextTrainingsSessions($this->getUser());
         $studentsInGrade = $studentRepository->findStudentsWithGradeByTeacher($this->getUser());

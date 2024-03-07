@@ -22,6 +22,21 @@ class InscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscription::class);
     }
 
+
+    public function findByStudentAndQuiz($studentId, $quizId)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.students', 's')
+            ->join('i.training', 't')
+            ->join('t.quizzes', 'q')
+            ->where('s.id = :studentId')
+            ->andWhere('q.id = :quizId')
+            ->setParameter('studentId', $studentId)
+            ->setParameter('quizId', $quizId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /**
      * Requête de base
      */
@@ -42,4 +57,5 @@ class InscriptionRepository extends ServiceEntityRepository
 
         return $queryBuilder;
     }
+
 }
