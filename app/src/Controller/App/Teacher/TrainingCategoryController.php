@@ -5,7 +5,7 @@ namespace App\Controller\App\Teacher;
 use App\Entity\TrainingCategory;
 use App\Form\Type\TrainingCategoryFilterType;
 use App\Form\Type\TrainingCategoryType;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +17,9 @@ class TrainingCategoryController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request,
-    ): Response
-    {
+    ): Response {
         $filters = [
             "teacher" => $this->getUser()
         ];

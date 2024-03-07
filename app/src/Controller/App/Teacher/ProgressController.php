@@ -11,7 +11,7 @@ use App\Form\Type\StudentFilterType;
 use App\Form\Type\TeacherStudentType;
 use App\Form\Type\GradeFilterType;
 use App\Repository\StudentRepository;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use App\Service\Interface\ProgressServiceInterface;
 use App\Service\Interface\StudentServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,7 +28,7 @@ class ProgressController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(
         StudentRepository $studentService,
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request
     ): Response {
 

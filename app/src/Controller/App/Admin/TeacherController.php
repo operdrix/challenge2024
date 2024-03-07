@@ -5,7 +5,7 @@ namespace App\Controller\App\Admin;
 use App\Entity\Teacher;
 use App\Form\Type\TeacherFilterType;
 use App\Form\Type\TeacherType;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +24,9 @@ class TeacherController extends AbstractController
      */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request                $request,
-    ): Response
-    {
+    ): Response {
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             TeacherFilterType::class,
@@ -50,8 +49,7 @@ class TeacherController extends AbstractController
         EntityManagerInterface      $em,
         UserPasswordHasherInterface $passwordHasher,
         ?Teacher                    $teacher = null
-    ): Response
-    {
+    ): Response {
         $formOptions = [];
         if (empty($teacher)) {
             $teacher = new Teacher();

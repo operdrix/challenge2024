@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Service\Interface\FileServiceInterface;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class FileService
+class FileService implements FileServiceInterface
 {
     public function __construct(
         private SluggerInterface $slugger,
@@ -17,7 +18,7 @@ class FileService
     ) {
     }
 
-    public function upload(UploadedFile $fileToUpload, string $directory, string $fileToRemove = null)
+    public function upload(UploadedFile $fileToUpload, string $directory, string $fileToRemove = null): string
     {
         $originalFilename = pathinfo($fileToUpload->getClientOriginalExtension(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
@@ -36,7 +37,7 @@ class FileService
         return $filename;
     }
 
-    public function remove(string $fileToRemove, string $directory)
+    public function remove(string $fileToRemove, string $directory): void
     {
         $fileSystem = new Filesystem();
 

@@ -5,7 +5,7 @@ namespace App\Controller\App\Teacher;
 use App\Entity\Resource;
 use App\Form\Type\ResourceFilterType;
 use App\Form\Type\ResourceType;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +23,9 @@ class ResourceController extends AbstractController
      */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request
-    ): Response
-    {
+    ): Response {
         $filters = [
             "teacher" => $this->getUser()
         ];
@@ -76,7 +75,7 @@ class ResourceController extends AbstractController
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Resource $resource, EntityManagerInterface $em): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$resource->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $resource->getId(), $request->request->get('_token'))) {
             $em->remove($resource);
             $em->flush();
         }

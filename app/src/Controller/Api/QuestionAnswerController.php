@@ -5,7 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\QuizQuestion;
 use App\Entity\QuizQuestionStudentAnswer;
 use App\Entity\Student;
-use App\Service\AnswerCorrector;
+use App\Service\Interface\AnswerCorrectorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,7 +24,7 @@ class QuestionAnswerController extends AbstractController
     }
 
     #[Route('/api/question/answer/{id}', name: 'app_api_question_answer_id', methods: ['POST'])]
-    public function saveAnswer(Request $request, $id, EntityManagerInterface $em, AnswerCorrector $answerCorrector): JsonResponse
+    public function saveAnswer(Request $request, $id, EntityManagerInterface $em, AnswerCorrectorInterface $answerCorrector): JsonResponse
     {
         $post = $request->getPayload();
         $studentId = $post->get('student');
@@ -56,6 +56,5 @@ class QuestionAnswerController extends AbstractController
         $em->flush();
 
         return new JsonResponse("Votre réponse a bien été enregistrée", 200);
-
     }
 }

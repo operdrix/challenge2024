@@ -9,7 +9,7 @@ use App\Entity\Teacher;
 use App\Form\Type\ChatType;
 use App\Form\Type\StudentFilterType;
 use App\Form\Type\TeacherFilterType;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,10 +30,9 @@ class ChatController extends AbstractController
      */
     #[Route('/', name: 'index')]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request
-    ): Response
-    {
+    ): Response {
         $user = $this->getUser();
 
         if ($user instanceof Teacher) {
@@ -80,8 +79,7 @@ class ChatController extends AbstractController
         #[MapEntity(id: "idStudent")] Student                $student,
         #[MapEntity(id: "idTeacher")] Teacher                $teacher,
         EntityManagerInterface $em
-    ): Response
-    {
+    ): Response {
         $conversation = $em->getRepository(Conversation::class)->findOneBy([
             "teacher" => $teacher,
             "student" => $student

@@ -10,7 +10,7 @@ use App\Form\Type\InscriptionFilterType;
 use App\Form\Type\TrainingFilterType;
 use App\Repository\TrainingRepository;
 use App\Repository\TrainingBlockRepository;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use App\Service\Interface\ProgressServiceInterface;
 use App\Service\Interface\StudentServiceInterface;
 use App\Service\Interface\TrainingServiceInterface;
@@ -27,7 +27,7 @@ class DashboardController extends AbstractController
 {
     #[Route('/', name: 'dashboard')]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request,
     ): Response {
         $filters = [
