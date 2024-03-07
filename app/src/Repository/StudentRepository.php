@@ -36,14 +36,25 @@ class StudentRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder("s");
 
         if (!empty($filters["teacher"])) {
-            $queryBuilder ->join("s.grades", "g")
-                ->join("g.teacher", "gte")
-                ->OrWhere("gte.id = :teacherId")
-                ->join("s.inscriptions", "i")
-                ->join("i.training", "t")
-                ->join("t.teacher", "tte")
-                ->OrWhere("tte.id = :teacherId")
-                ->setParameter("teacherId", $filters["teacher"]->getId());
+            // Première partie : Jointure via la table Grade
+            $queryBuilder->leftJoin('s.grades', 'grade')
+                ->leftJoin('grade.teacher', 'teacher1');
+
+            // Deuxième partie : Jointure via les Inscriptions et Training
+            $queryBuilder->leftJoin('s.inscriptions', 'inscription')
+                ->leftJoin('inscription.training', 'training')
+                ->leftJoin('training.teacher', 'teacher2');
+
+            // Assure-toi d'ajouter des conditions spécifiques si nécessaire, par exemple un ID de teacher spécifique
+            $queryBuilder->where('teacher1.id = :teacherId OR teacher2.id = :teacherId')
+                ->setParameter('teacherId', $filters["teacher"]->getId());
+        }
+
+        if (!empty($filters["school"])) {
+            $queryBuilder
+                ->leftJoin("s.grades", "g")
+                ->andWhere("g.school = :school")
+                ->setParameter("school", $filters["school"]);
         }
 
         if (!empty($filters["firstname"])) {
@@ -106,6 +117,20 @@ class StudentRepository extends ServiceEntityRepository
             ->join("t.teacher", "te")
             ->where("te.id = :teacherId")
             ->setParameter("teacherId", $teacher->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findStudentsByQuizAnswered($quizId)
+    {
+        return $this->createQueryBuilder("s")
+            ->select("s")
+            ->distinct()
+            ->join("s.quizQuestionStudentAnswers", "qa")
+            ->join("qa.quizQuestion", "qq")
+            ->join("qq.quiz", "q")
+            ->where("q.id = :quizId")
+            ->setParameter("quizId", $quizId)
             ->getQuery()
             ->getResult();
     }

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz correction  {{ student.firstname ~ ' ' ~ student.lastname}}{% endblock %}
+
+{% block body %}
+    <h1>Correction du quiz de {{ student.firstname ~ ' ' ~ student.lastname }}</h1>
+    {{ form_start(form, {attr: {"noValidate": true}}) }}
+    {% for key, question in quizAnswers %}
+        {% if question.quizQuestion.type.value == 'Libre' %}
+            <h2>{{ question.quizQuestion.title }}</h2>
+            {{ form_row(form[question.id]) }}
+            Sur {{ question.quizQuestion.point }} points
+        {% else %}
+        <h2>{{ question.quizQuestion.title }}</h2>
+        <p>{{ question.content }}</p>
+        <div>{{ question.result }} / {{ question.quizQuestion.point }}</div>
+        {% endif %}
+
+    {% endfor %}
+
+    <div class="col-span-full">
+        <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                type="submit">Valider la correction</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

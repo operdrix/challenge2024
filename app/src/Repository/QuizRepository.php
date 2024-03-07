@@ -39,4 +39,15 @@ class QuizRepository extends ServiceEntityRepository
         return $queryBuilder;
 
     }
+
+    public function getTotalPoints(Quiz $quiz): int
+    {
+        $queryBuilder = $this->createQueryBuilder("q");
+        $queryBuilder->select("SUM(qq.point)")
+            ->join("q.quizQuestions", "qq")
+            ->where("q.id = :quizId")
+            ->setParameter("quizId", $quiz->getId());
+
+        return (int) $queryBuilder->getQuery()->getSingleScalarResult();
+    }
 }

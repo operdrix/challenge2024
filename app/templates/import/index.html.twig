@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ImportController!{% endblock %}
+
+{% block body %}
+<h1>Import CSV</h1>
+<div>
+    <h2>Format d'import attendus</h2>
+    <table>
+        <tbody>
+            <tr>
+                <td>Nom école</td>
+            </tr>
+            <tr>
+                <td>Email (requis)</td>
+                <td>Prénom (requis)</td>
+                <td>Nom de famille (requis)</td>
+                <td>Date de naissance</td>
+                <td>Numéro de téléphone</td>
+                <td>Addresse</td>
+            </tr>
+        </tbody>
+        <caption>
+            Le contenu doit être séparé par une virgule
+        </caption>
+    </table>
+    <a href="{{ path('app_import_dummy') }}">
+        <button>
+            Exemple de fichier csv
+        </button>
+    </a>
+</div>
+<div>
+    {{ form_start(form) }}
+        {{ form_widget(form, {attr: {"noValidate": true}}) }}
+        <button type="submit" class="my-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Valider
+        </button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

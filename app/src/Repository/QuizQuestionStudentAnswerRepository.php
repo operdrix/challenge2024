@@ -21,28 +21,17 @@ class QuizQuestionStudentAnswerRepository extends ServiceEntityRepository
         parent::__construct($registry, QuizQuestionStudentAnswer::class);
     }
 
-    //    /**
-    //     * @return QuizQuestionStudentAnswer[] Returns an array of QuizQuestionStudentAnswer objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('q')
-    //            ->andWhere('q.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('q.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?QuizQuestionStudentAnswer
-    //    {
-    //        return $this->createQueryBuilder('q')
-    //            ->andWhere('q.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function getAllStudentAnswersByQuizId(int $quizId, int $studentId): array
+    {
+        return $this->createQueryBuilder('qsa')
+            ->join('qsa.quizQuestion', 'qq')
+            ->join('qq.quiz', 'q')
+            ->join('qsa.student', 's')
+            ->andWhere('s.id = :studentId')
+            ->andWhere('q.id = :quizId')
+            ->setParameter('studentId', $studentId)
+            ->setParameter('quizId', $quizId)
+            ->getQuery()
+            ->getResult();
+    }
 }

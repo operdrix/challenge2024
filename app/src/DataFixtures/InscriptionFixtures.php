@@ -24,6 +24,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $inscription1 = new Inscription();
         $inscription1->setTraining($this->getReference(TrainingFixtures::TEACHER_1_TRAINING_1));
         $inscription1->setGrade($this->getReference(GradeFixtures::TEACHER_1_SCHOOL_1_GRADE_1));
+        $inscription1->setType('grade');
         $manager->persist($inscription1);
         foreach ($inscription1->getGrade()->getStudents() as $student) {
             $progress = new Progress();
@@ -37,6 +38,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $inscription2->addStudent($this->getReference(UsersFixtures::STUDENT_1));
         $inscription2->addStudent($this->getReference(UsersFixtures::STUDENT_2));
         $inscription2->addStudent($this->getReference(UsersFixtures::STUDENT_4));
+        $inscription2->setType('students');
         $manager->persist($inscription2);
         foreach ($inscription2->getStudents() as $student) {
             $progress = new Progress();

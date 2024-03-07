@@ -33,7 +33,7 @@ class Teacher extends AbstractUser
     #[ORM\OneToMany(targetEntity: TrainingCategory::class, mappedBy: 'teacher')]
     private Collection $trainingCategories;
 
-    #[ORM\OneToMany(targetEntity: Grade::class, mappedBy: 'teacher')]
+    #[ORM\OneToMany(targetEntity: Grade::class, mappedBy: 'teacher', fetch: "EAGER")]
     private Collection $grades;
 
     #[ORM\OneToMany(targetEntity: School::class, mappedBy: 'teacher')]
