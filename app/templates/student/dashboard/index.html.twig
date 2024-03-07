@@ -10,13 +10,14 @@
                     <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
                         <li class="inline-flex items-center text-gray-400">
                                 <svg class="w-5 h-5 mr-2.5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-                                Dashboard
+                                Tableau de bord
                             </a>
                         </li>
                     </ol>
                 </nav>
-                <div class="flex md:space-x-3 md:space-y-0 space-y-3 md:flex-row flex-col">
-                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Cours</h1>
+                <div class="flex flex-col">
+                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Cours et formations</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Retrouvez ci-dessous l'ensemble des formations sur lesquelles vous êtes inscrit(e)</p>
                 </div>
             </div>
             <div>
@@ -39,11 +40,11 @@
 
     <div class="bg-white flex">
             <div class="inline-block min-w-full align-middle">
-                <div class="overflow-hidden shadow p-4 flex-row gap-x-3 grid grid-cols-2 gap-6">
+                <div class="overflow-hidden shadow p-4 gap-x-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
 
                     {% for inscription in pagination %}
                         {% set training = inscription.training %}
-                        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <div class="w-full sm:w-auto sm:max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                             {% if training.difficulty.value == "Débutant" %}
                                 <span class="mb-4 inline-flex bg-green-100 text-green-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ training.difficulty.value }}</span>
