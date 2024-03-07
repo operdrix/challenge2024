@@ -2,11 +2,14 @@
 
 namespace App\Controller\App\Teacher;
 
+use App\Entity\Inscription;
 use App\Entity\Quiz;
 use App\Entity\QuizQuestionAvailableAnswer;
 use App\Entity\QuizQuestionStudentAnswer;
+use App\Entity\QuizStudentResult;
 use App\Entity\Student;
 use App\Enum\QuizQuestionTypeEnum;
+use App\Form\QuizStudentResultType;
 use App\Form\Type\QuizFilterType;
 use App\Form\Type\QuizQuestionStudentAnswerCollectionType;
 use App\Form\Type\QuizQuestionStudentAnswerType;
@@ -107,14 +110,18 @@ class QuizController extends AbstractController
     {
         $students = $em->getRepository(Student::class)->findStudentsByQuizAnswered($quiz->getId());
 
+        $totalQuizPoints = $em->getRepository(Quiz::class)->getTotalPoints($quiz);
+
+
         return $this->render('teacher/quiz/correction/index.html.twig', [
             'quiz' => $quiz,
-            'students' => $students
+            'students' => $students,
+            'totalQuizPoints' => $totalQuizPoints
         ]);
     }
 
-    #[Route('/{id}/correct/{studentId}', name: 'correct_student', methods: ['GET'])]
-    public function correctStudent(Quiz $quiz, $studentId, EntityManagerInterface $em): Response
+    #[Route('/{id}/correct/{studentId}', name: 'correct_student')]
+    public function correctStudent(Quiz $quiz, $studentId, EntityManagerInterface $em, Request $request): Response
     {
         $quizAnswers = $em->getRepository(QuizQuestionStudentAnswer::class)->getAllStudentAnswersByQuizId($quiz->getId(), $studentId);
 
@@ -127,9 +134,22 @@ class QuizController extends AbstractController
             }
         }
 
-        $form = $this->createForm(QuizQuestionStudentAnswerCollectionType::class, $manualCorrectionAnswers);
+        $form = $this->createForm(QuizQuestionStudentAnswerCollectionType::class, null, ['manualAnswers' => $manualCorrectionAnswers]);
+        $form->handleRequest($request);
 
-        dd($form);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($manualCorrectionAnswers as $manualCorrectionAnswer) {
+                $points = $form->get($manualCorrectionAnswer->getId())->getData();
+                $points = intval(max(0, min($manualCorrectionAnswer->getQuizQuestion()->getPoint(), $points)));
+                $manualCorrectionAnswer->setResult($points);
+                $em->persist($manualCorrectionAnswer);
+            }
+            $em->flush();
+
+            $this->addFlash('success', 'Les réponses ont été corrigées avec succès pour cet étudiant.');
+            return $this->redirectToRoute('teacher_quizzes_correct_student_feedback', ['id' => $quiz->getId(), 'studentId' => $studentId]);
+        }
 
         $student = $em->getRepository(Student::class)->find($studentId);
 
@@ -139,5 +159,51 @@ class QuizController extends AbstractController
             'quizAnswers' => $quizAnswers,
             'form' => $form
         ]);
+    }
+
+    #[Route('/{id}/correct/{studentId}/feedback', name: 'correct_student_feedback')]
+    public function addFeedback(Quiz $quiz, $studentId, EntityManagerInterface $em, Request $request): Response
+    {
+        $feedBack = $em->getRepository(QuizStudentResult::class)->findOneBy(['student' => $studentId, 'quiz' => $quiz->getId()]);
+        if (empty($feedBack)) {
+            $feedBack = new QuizStudentResult();
+            $feedBack->setStudent($em->getRepository(Student::class)->find($studentId));
+            $feedBack->setQuiz($quiz);
+            $feedBack->setQuizTitle($quiz->getLabel());
+
+            $inscription = $em->getRepository(Inscription::class)->findByStudentAndQuiz($studentId, $quiz->getId());
+
+
+            $feedBack->setInscription($inscription);
+
+            $totalStudentResult = 0;
+            $quizAnswers = $em->getRepository(QuizQuestionStudentAnswer::class)->getAllStudentAnswersByQuizId($quiz->getId(), $studentId);
+            foreach ($quizAnswers as $quizAnswer) {
+                $totalStudentResult += $quizAnswer->getResult();
+            }
+
+
+            $feedBack->setValue($totalStudentResult);
+        }
+        $totalQuizPoints = $em->getRepository(Quiz::class)->getTotalPoints($quiz);
+
+        $form = $this->createForm(QuizStudentResultType::class, $feedBack, ['max_points' => $totalQuizPoints]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $feedBack->setValue(min($totalQuizPoints, max(0, $feedBack->getValue())));
+            $em->persist($feedBack);
+            $em->flush();
+            $this->addFlash('success', 'Le feedback a été ajouté avec succès.');
+            return $this->redirectToRoute('teacher_quizzes_correct', ['id' => $quiz->getId()]);
+        }
+
+        return $this->render('teacher/quiz/correction/feedback.html.twig', [
+            'quiz' => $quiz,
+            'student' => $feedBack->getStudent(),
+            'form' => $form
+        ]);
+
     }
 }

@@ -58,6 +58,12 @@
                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
                                     <div class="text-base text-gray-900 dark:text-white">{{ student.firstname }} {{ student.lastname }}</div>
+                                    {% for result in student.quizStudentResults %}
+                                    {% if result.quiz.id == quiz.id %}
+                                    <div class="text-sm text-gray-500 dark:text-gray-400">{{ result.value }}/{{ totalQuizPoints }}</div>
+                                        Commentaire : {{ result.comment }}
+                                    {% endif %}
+                                    {% endfor %}
                                 </td>
                                 <td class="p-4 space-x-2 whitespace-nowrap">
                                     <a href="{{ path("teacher_quizzes_correct_student", {"id": quiz.id, "studentId" : student.id}) }}" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">

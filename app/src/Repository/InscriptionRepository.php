@@ -21,28 +21,18 @@ class InscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscription::class);
     }
 
-    //    /**
-    //     * @return Inscription[] Returns an array of Inscription objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('i.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findByStudentAndQuiz($studentId, $quizId)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.students', 's')
+            ->join('i.training', 't')
+            ->join('t.quizzes', 'q')
+            ->where('s.id = :studentId')
+            ->andWhere('q.id = :quizId')
+            ->setParameter('studentId', $studentId)
+            ->setParameter('quizId', $quizId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Inscription
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

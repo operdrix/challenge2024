@@ -82,7 +82,7 @@ class QuizFixtures extends Fixture implements DependentFixtureInterface
         $quiz2->setIsOpened(false);
         $quiz2->setDuration(30);
         $quiz2->setLimitDate(new \DateTimeImmutable('2024-03-08 18:00:00'));
-        $quiz2->setTraining($this->getReference(TrainingFixtures::TEACHER_1_TRAINING_1));
+        $quiz2->setTraining($this->getReference(TrainingFixtures::TEACHER_1_TRAINING_2));
 
 
 
