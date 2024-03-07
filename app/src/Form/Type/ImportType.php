@@ -4,6 +4,7 @@ namespace App\Form\Type;
 
 use App\Entity\School;
 use App\Repository\SchoolRepository;
+use App\Validator\Constraint\ImportCsv;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -46,7 +47,8 @@ class ImportType extends AbstractType
                         'maxSize' => '10M',
                         'mimeTypes' => ['text/csv', 'text/plain'],
                         'mimeTypesMessage' => 'Veuillez choisir un fichier csv'
-                    ])
+                    ]),
+                    new ImportCsv()
                 ]
             ]);
     }
