@@ -19,10 +19,9 @@ export default class extends Controller {
         let responseSection = event.target.parentElement.parentElement.lastElementChild
         if (event.target.value === "Choix multiple" || event.target.value === "Choix unique") {
             responseSection.classList.remove("hidden")
-            responseSection.querySelector("div[data-form-collection-prototype-value] > ul").classList.remove("hidden")
         } else {
             responseSection.classList.add("hidden")
-            responseSection.querySelector("div[data-form-collection-prototype-value] > ul").classList.remove("hidden")
         }
+        responseSection.querySelector("div[data-form-collection-prototype-value] > ul").classList.remove("hidden")
     }
 }
