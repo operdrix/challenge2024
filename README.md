@@ -15,6 +15,24 @@ Vous allez créer un outil de gestion pour client formateur freelance permettant
 
 ## Installation du projet en local
 
+### Via l'utilitaire Make
+
+1. clôner le repository
+
+```bash
+mkdir eduMentor
+cd eduMentor
+git clone https://github.com/operdrix/challenge2024.git .
+```
+
+2. Exécuter l'utilitaire [Make](<[Make](https://ioflood.com/blog/install-make-command-linux/#:~:text=In%20most%20Linux%20distributions%2C%20the,command%20sudo%20yum%20install%20make%20.)>)
+
+```bash
+make build
+```
+
+### Via Docker Compose
+
 1. clôner le repository
 
 ```bash
