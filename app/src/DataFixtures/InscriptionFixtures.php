@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Inscription;
+use App\Entity\Progress;
 use App\Entity\TrainingSession;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -24,6 +25,12 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $inscription1->setTraining($this->getReference(TrainingFixtures::TEACHER_1_TRAINING_1));
         $inscription1->setGrade($this->getReference(GradeFixtures::TEACHER_1_SCHOOL_1_GRADE_1));
         $manager->persist($inscription1);
+        foreach ($inscription1->getGrade()->getStudents() as $student) {
+            $progress = new Progress();
+            $progress->setStudent($student);
+            $progress->setInscription($inscription1);
+            $manager->persist($progress);
+        }
 
         $inscription2 = new Inscription();
         $inscription2->setTraining($this->getReference(TrainingFixtures::TEACHER_1_TRAINING_2));
@@ -31,6 +38,12 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $inscription2->addStudent($this->getReference(UsersFixtures::STUDENT_2));
         $inscription2->addStudent($this->getReference(UsersFixtures::STUDENT_4));
         $manager->persist($inscription2);
+        foreach ($inscription2->getStudents() as $student) {
+            $progress = new Progress();
+            $progress->setStudent($student);
+            $progress->setInscription($inscription2);
+            $manager->persist($progress);
+        }
 
         // Ajout des sessions aux inscriptions
         $session1 = new TrainingSession();

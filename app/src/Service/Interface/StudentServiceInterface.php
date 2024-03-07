@@ -33,4 +33,9 @@ interface StudentServiceInterface
      * Fetch inscriptions to generate flash message on student resgistration
      */
     public function generateRegistrationFlashMessages(Student $student): array;
+
+    /**
+     * Merge student individuals inscription and grade inscription
+     */
+    public function getInscriptions(Student $student): Collection;
 }

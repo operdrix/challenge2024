@@ -90,4 +90,17 @@ class StudentService implements StudentServiceInterface
 
         return $messages;
     }
+
+    public function getInscriptions(Student $student): Collection
+    {
+        $inscriptions = $student->getInscriptions();
+
+        foreach ($student->getGrades() as $grade) {
+            $inscriptions = new ArrayCollection(
+                array_merge($inscriptions->toArray(), $grade->getInscriptions()->toArray())
+            );
+        }
+
+        return $inscriptions;
+    }
 }
