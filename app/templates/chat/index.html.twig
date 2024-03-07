@@ -61,13 +61,26 @@
                         <thead class="bg-gray-100 dark:bg-gray-700">
                         <tr>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                {{ knp_pagination_sortable(pagination, 'Prénom', 'a.firstname') }}
+                                {% if user_class  is same as "App\\Entity\\Student" %}
+                                    {{ knp_pagination_sortable(pagination, 'Prénom', 't.firstname') }}
+                                {% else %}
+                                    {{ knp_pagination_sortable(pagination, 'Prénom', 's.firstname') }}
+                                {% endif %}
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                {{ knp_pagination_sortable(pagination, 'Nom', 'a.lastname') }}
+                                {% if user_class  is same as "App\\Entity\\Student" %}
+                                    {{ knp_pagination_sortable(pagination, 'Nom', 't.lastname') }}
+                                {% else %}
+                                    {{ knp_pagination_sortable(pagination, 'Nom', 's.lastname') }}
+                                {% endif %}
+
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                {{ knp_pagination_sortable(pagination, 'Email', 'a.email') }}
+                                {% if user_class  is same as "App\\Entity\\Student" %}
+                                    {{ knp_pagination_sortable(pagination, 'Email', 't.email') }}
+                                {% else %}
+                                    {{ knp_pagination_sortable(pagination, 'Email', 's.email') }}
+                                {% endif %}
                             </th>
                             <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
                                 Actions
@@ -87,7 +100,13 @@
                                     <div class="text-base text-gray-900 dark:text-white">{{ person.email }}</div>
                                 </td>
                                 <td class="p-4 space-x-2 whitespace-nowrap">
-                                    <a href="{{ path('chat_conversation', { idStudent: person.id, idTeacher: app.user.id }) }}" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700">
+                                    {% if user_class  is same as "App\\Entity\\Student" %}
+                                        {% set parameters = { idStudent: app.user.id, idTeacher: person.id } %}
+                                    {% else %}
+                                        {% set parameters = { idStudent: person.id, idTeacher: app.user.id } %}
+                                    {% endif %}
+                                    <a href="{{ path('chat_conversation', parameters) }}" data-modal-toggle="edit-user-modal"
+                                       class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700">
                                         Ouvrir la conversation
                                     </a>
                                 </td>

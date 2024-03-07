@@ -8,6 +8,7 @@ use App\Entity\Student;
 use App\Entity\Teacher;
 use App\Form\Type\ChatType;
 use App\Form\Type\StudentFilterType;
+use App\Form\Type\TeacherFilterType;
 use App\Service\FilteredListService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -33,22 +34,38 @@ class ChatController extends AbstractController
         Request $request
     ): Response
     {
-        $filters = [
-            "teacher" => $this->getUser()
-        ];
+        $user = $this->getUser();
 
-        [$pagination, $form] = $filteredListService->prepareFilteredList(
-            $request,
-            StudentFilterType::class,
-            Student::class,
-            $filters
-        );
+        if ($user instanceof Teacher) {
+            $filters = [
+                "teacher" => $this->getUser()
+            ];
+
+            [$pagination, $form] = $filteredListService->prepareFilteredList(
+                $request,
+                StudentFilterType::class,
+                Student::class,
+                $filters
+            );
+        } else {
+            $filters = [
+                "student" => $this->getUser()
+            ];
+
+            [$pagination, $form] = $filteredListService->prepareFilteredList(
+                $request,
+                TeacherFilterType::class,
+                Teacher::class,
+                $filters
+            );
+        }
 
         return $this->render(
             'chat/index.html.twig',
             [
                 "pagination" => $pagination,
-                "form" => $form
+                "form" => $form,
+                "user_class" => $user::class
             ]
         );
     }
