@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/teacher/trainings/{idTraining}/inscriptions/{idInscription}/sessions', name: 'training_sessions_')]
+#[Route('/teacher/trainings/{idTraining}/inscriptions/{idInscription}/sessions', name: 'teacher_training_sessions_')]
 class TrainingSessionController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
@@ -40,7 +40,6 @@ class TrainingSessionController extends AbstractController
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{idSession}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    #[IsGranted('VIEW_SESSION', subject: 'trainingSession')]
     public function edit(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -52,10 +51,9 @@ class TrainingSessionController extends AbstractController
     {
         if (empty($trainingSession)) {
             $trainingSession = new TrainingSession();
+            $trainingSession->setInscription($inscription);
         } else {
-            if (!$securityService->canViewSession($inscription, $training, $trainingSession)) {
-                throw $this->createAccessDeniedException();
-            }
+            $this->denyAccessUnlessGranted("VIEW_SESSION", $trainingSession);
         }
 
         $form = $this->createForm(TrainingSessionType::class, $trainingSession);

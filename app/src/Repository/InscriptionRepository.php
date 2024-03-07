@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Inscription;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,28 +22,24 @@ class InscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscription::class);
     }
 
-    //    /**
-    //     * @return Inscription[] Returns an array of Inscription objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('i.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     * Requête de base
+     */
+    public function getBaseQueryBuilder(array $filters): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder("i");
 
-    //    public function findOneBySomeField($value): ?Inscription
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if (!empty($filters["teacher"])) {
+            $queryBuilder->join("i.training", "t")
+                ->andWhere("t.teacher = :teacher")
+                ->setParameter("teacher", $filters["teacher"]);
+        }
+
+        if (!empty($filters["training"])) {
+            $queryBuilder->andWhere("i.training = :training")
+                ->setParameter("training", $filters["training"]);
+        }
+
+        return $queryBuilder;
+    }
 }

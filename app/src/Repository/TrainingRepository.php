@@ -45,6 +45,11 @@ class TrainingRepository extends ServiceEntityRepository
                 ->setParameter("difficulty", $filters["difficulty"]);
         }
 
+        if (!empty($filters["length"])) {
+            $queryBuilder->andWhere("t.length = :length")
+                ->setParameter("length", $filters["length"]);
+        }
+
         return $queryBuilder;
     }
 }

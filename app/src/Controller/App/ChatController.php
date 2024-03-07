@@ -33,10 +33,15 @@ class ChatController extends AbstractController
         Request $request
     ): Response
     {
+        $filters = [
+            "teacher" => $this->getUser()
+        ];
+
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             StudentFilterType::class,
             Student::class,
+            $filters
         );
 
         return $this->render(
