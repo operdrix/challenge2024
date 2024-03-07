@@ -36,7 +36,12 @@ class TrainingRepository extends ServiceEntityRepository
         }
 
         if (!empty($filters["student"])) {
-
+            $queryBuilder->leftJoin("t.inscriptions", "inscription")
+                ->leftJoin("inscription.students", "student1")
+                ->leftJoin("inscription.grade", "grade")
+                ->leftJoin("grade.students", "student2")
+                ->where("student1 = :student OR student2 = :student")
+                ->setParameter("student", $filters["student"]);
         }
 
         if (!empty($filters["title"])) {
