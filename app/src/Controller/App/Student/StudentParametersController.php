@@ -31,7 +31,7 @@ class StudentParametersController extends AbstractController
 
 
         $form = $this->createForm(StudentType::class, $student, [
-            'action' => 'isStudentParameterPage',
+            'isStudentParameterPage' => true,
         ]);
         $form->handleRequest($request);
 

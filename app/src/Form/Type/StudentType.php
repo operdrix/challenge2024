@@ -18,7 +18,7 @@ class StudentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $isStudentParameterPage = $options['action'] == 'isStudentParameterPage';
+        $isStudentParameterPage = $options['isStudentParameterPage'] ?? false;
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Email',
@@ -83,6 +83,7 @@ class StudentType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Student::class,
+            'isStudentParameterPage' => false,
         ]);
     }
 }
