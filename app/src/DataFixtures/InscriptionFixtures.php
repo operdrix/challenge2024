@@ -24,6 +24,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $inscription1 = new Inscription();
         $inscription1->setTraining($this->getReference(TrainingFixtures::TEACHER_1_TRAINING_1));
         $inscription1->setGrade($this->getReference(GradeFixtures::TEACHER_1_SCHOOL_1_GRADE_1));
+        $inscription1->setType('grade');
         $manager->persist($inscription1);
         foreach ($inscription1->getGrade()->getStudents() as $student) {
             $progress = new Progress();
@@ -37,6 +38,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $inscription2->addStudent($this->getReference(UsersFixtures::STUDENT_1));
         $inscription2->addStudent($this->getReference(UsersFixtures::STUDENT_2));
         $inscription2->addStudent($this->getReference(UsersFixtures::STUDENT_4));
+        $inscription2->setType('students');
         $manager->persist($inscription2);
         foreach ($inscription2->getStudents() as $student) {
             $progress = new Progress();
@@ -52,6 +54,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $session1->setStartDate(new \DateTimeImmutable('2024-03-08 08:00:00'));
         $session1->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_1));
         $session1->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_2));
+        $session1->setPlace('ESGI - Salle 301');
         $manager->persist($session1);
 
         $session2 = new TrainingSession();
@@ -60,7 +63,8 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $session2->setStartDate(new \DateTimeImmutable('2024-03-08 09:45:00'));
         $session2->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_3));
         $session2->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_4));
-        $session2->isIsOnline(true);
+        $session2->setIsOnline(true);
+        $session2->setSessionLink("https://google.com");
         $manager->persist($session2);
 
         $session3 = new TrainingSession();
@@ -69,6 +73,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $session3->setStartDate(new \DateTimeImmutable('2024-03-08 13:30:00'));
         $session3->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_5));
         $session3->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_6));
+        $session3->setPlace('ESGI - Salle 303');
         $manager->persist($session3);
 
         $manager->flush();

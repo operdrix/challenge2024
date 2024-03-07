@@ -51,9 +51,6 @@ class Student extends AbstractUser
     #[ORM\ManyToMany(targetEntity: Grade::class, inversedBy: 'students')]
     private Collection $grades;
 
-    #[ORM\OneToMany(mappedBy: 'student', targetEntity: Message::class)]
-    private Collection $messages;
-
     #[ORM\OneToMany(mappedBy: 'student', targetEntity: Conversation::class)]
     private Collection $conversations;
 
@@ -65,7 +62,6 @@ class Student extends AbstractUser
         $this->trainingSessionStudents = new ArrayCollection();
         $this->progress = new ArrayCollection();
         $this->grades = new ArrayCollection();
-        $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
     }
 

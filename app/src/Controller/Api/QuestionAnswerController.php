@@ -37,7 +37,9 @@ class QuestionAnswerController extends AbstractController
         // Vérifier que l'étudiant est bien dans le cours qui propose ce quiz
         $studentsInTraining = $em->getRepository(Student::class)->getQuizByTrainingAndStudent($quizQuestion->getQuiz()->getTraining()->getId(), $studentId);
 
-        if (empty($studentsInTraining)) {
+        $gradeStudentsInTraining = $em->getRepository(Student::class)->getQuizByTrainingAndGradeStudent($quizQuestion->getQuiz()->getTraining()->getId(), $studentId);
+
+        if (empty($studentsInTraining) && empty($gradeStudentsInTraining)) {
             return new JsonResponse("Vous n'avez pas accès à ce quiz", 403);
         }
 

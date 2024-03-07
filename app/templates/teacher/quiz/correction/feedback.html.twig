@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Feedback  {{ student.firstname ~ ' ' ~ student.lastname}}{% endblock %}
+
+{% block body %}
+    <h1>Feedback du quiz de {{ student.firstname ~ ' ' ~ student.lastname }}</h1>
+    {{ form_start(form, {attr: {"noValidate": true}}) }}
+    <div class="col-span-full">
+        {{ form_row(form.value) }}
+        {{ form_row(form.comment) }}
+        {{ form_row(form.isValidated) }}
+    </div>
+    <div class="col-span-full">
+        <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                type="submit">Valider le feedback</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

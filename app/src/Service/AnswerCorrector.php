@@ -16,7 +16,7 @@ class AnswerCorrector
             case "MULTIPLE":
                 return $this->correctMultipleAnswer($answer, $question);
             default:
-                return null;
+                return 0;
         }
     }
 

@@ -112,7 +112,7 @@ class SchoolController extends AbstractController
         );
 
         $filtersStudent = [
-            "teacher" => $this->getUser(),
+            "school" => $school,
         ];
 
         [$paginationStudent, $formStudent] = $filteredListService->prepareFilteredList(
