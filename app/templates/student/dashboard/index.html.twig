@@ -40,15 +40,15 @@
                 {{ form_end(form) }}
             </div>
 
-        </div>
-    </div> #}
+        </div> #}
+    </div>
     <div class="bg-white flex">
             <div class="inline-block min-w-full align-middle">
-                <div class="overflow-hidden shadow p-4 flex-row gap-x-3 grid grid-cols-4 gap-6">
+                <div class="overflow-hidden shadow p-4 flex-row gap-x-3 grid grid-cols-2 gap-6">
 
                     {% for inscription in pagination %}
                         {% set training = inscription.training %}
-                        <div class="col-span-full md:col-span-1 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                             {% if training.difficulty.value == "Débutant" %}
                                 <span class="mb-4 inline-flex bg-green-100 text-green-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ training.difficulty.value }}</span>
