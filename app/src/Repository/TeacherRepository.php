@@ -46,6 +46,19 @@ class TeacherRepository extends ServiceEntityRepository
                 ->setParameter("email", '%' . $filters["email"] . '%');
         }
 
+        if (!empty($filters["student"])) {
+            $queryBuilder->leftJoin("t.trainings", "training")
+                ->leftJoin("training.inscriptions", "inscription")
+                ->leftJoin("inscription.students", "student1");
+
+            $queryBuilder->leftJoin("t.grades", "grade")
+                ->leftJoin("grade.students", "student2");
+
+            $queryBuilder->where("student1 = :student OR student2 = :student")
+                ->setParameter("student", $filters["student"]);
+
+        }
+
         return $queryBuilder;
 
     }
