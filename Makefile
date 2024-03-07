@@ -3,7 +3,7 @@ build:
 	clear
 	@echo "Installation de l'application EduMentor..."
 	@echo "🐳 Building Docker containers..."
-	#docker compose build --no-cache
+	docker compose build --no-cache
 	docker compose up -d
 	docker exec -it challenge_fpm composer install
 	docker exec -it challenge_fpm npm install
