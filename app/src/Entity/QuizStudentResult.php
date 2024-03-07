@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuizStudentResultRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -41,6 +43,14 @@ class QuizStudentResult
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Inscription $inscription = null;
+
+    #[ORM\OneToMany(mappedBy: 'quizResult', targetEntity: QuizStudentEvent::class, orphanRemoval: true)]
+    private Collection $quizStudentEvents;
+
+    public function __construct()
+    {
+        $this->quizStudentEvents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +149,36 @@ class QuizStudentResult
     public function setInscription(?Inscription $inscription): static
     {
         $this->inscription = $inscription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, QuizStudentEvent>
+     */
+    public function getQuizStudentEvents(): Collection
+    {
+        return $this->quizStudentEvents;
+    }
+
+    public function addQuizStudentEvent(QuizStudentEvent $quizStudentEvent): static
+    {
+        if (!$this->quizStudentEvents->contains($quizStudentEvent)) {
+            $this->quizStudentEvents->add($quizStudentEvent);
+            $quizStudentEvent->setQuizResult($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizStudentEvent(QuizStudentEvent $quizStudentEvent): static
+    {
+        if ($this->quizStudentEvents->removeElement($quizStudentEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($quizStudentEvent->getQuizResult() === $this) {
+                $quizStudentEvent->setQuizResult(null);
+            }
+        }
 
         return $this;
     }

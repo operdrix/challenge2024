@@ -23,9 +23,10 @@ class QuizStudentEvent
     #[ORM\Column(type: Types::STRING, length: 255, enumType: EventTypeEnum::class)]
     private ?EventTypeEnum $eventType = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'quizStudentEvents')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Student $student = null;
+    private ?QuizStudentResult $quizResult = null;
+
 
     public function getId(): ?int
     {
@@ -56,14 +57,14 @@ class QuizStudentEvent
         return $this;
     }
 
-    public function getStudent(): ?Student
+    public function getQuizResult(): ?QuizStudentResult
     {
-        return $this->student;
+        return $this->quizResult;
     }
 
-    public function setStudent(?Student $student): static
+    public function setQuizResult(?QuizStudentResult $quizResult): static
     {
-        $this->student = $student;
+        $this->quizResult = $quizResult;
 
         return $this;
     }
