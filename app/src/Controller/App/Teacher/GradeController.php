@@ -23,7 +23,7 @@ class GradeController extends AbstractController
     #[IsGranted('view', 'grade')]
     public function show(Grade $grade): Response
     {
-        return $this->render('grade/show.html.twig', [
+        return $this->render('teacher/grade/show.html.twig', [
             'grade' => $grade,
         ]);
     }

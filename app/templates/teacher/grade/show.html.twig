@@ -3,24 +3,21 @@
 {% block title %}Grade{% endblock %}
 
 {% block body %}
-    <h1>Grade</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ grade.id }}</td>
-            </tr>
-            <tr>
-                <th>Label</th>
-                <td>{{ grade.label }}</td>
-            </tr>
-        </tbody>
+// Ajout du breadcrum ici Home (lien) > Ecole (lien) > Nom de la classe
+
+    <h1>
+        {% if grade.school.logoFilename %}
+            <img src="{{ asset(grade.school.logoFilename, 'school') }}" alt="Logo de l'école">
+        {% else %}
+            <img src="{{ asset('ecole.png') }}" alt="Logo par défaut">    
+        {% endif %}
+        
+        {{ grade.school.name }} - {{ grade.label }}
+    </h1>
+        TODO: Afficher la liste des élèves + lien vers leur page de progression (à venir)
     </table>
 
-    <a href="{{ path('app_grade_index', {'school_id': grade.school.id}) }}">back to list</a>
+    <a href="{{ path('teacher_grades_edit', {'school_id': grade.school.id, 'id': grade.id}) }}">edit</a>
 
-    <a href="{{ path('app_grade_edit', {'school_id': grade.school.id, 'id': grade.id}) }}">edit</a>
-
-    {{ include('grade/_delete_form.html.twig') }}
 {% endblock %}
