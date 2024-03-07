@@ -19,7 +19,7 @@ class StudentService implements StudentServiceInterface
     ) {
     }
 
-    public function handleNewStudent(Student $student, ?Grade $grade): Student
+    public function handleNewStudent(Student $student, ?Grade $grade = null): Student
     {
         $existingStudent = $this->retrieveStudentByEmail($student);
 
@@ -29,12 +29,14 @@ class StudentService implements StudentServiceInterface
             $this->sendNewStudentRegisterMail($student);
         }
 
-        $student->addGrade($grade);
+        if (!empty($grade)) {
+            $student->addGrade($grade);
+        }
 
         return $student;
     }
 
-    public function bulkHandleNewStudent(Collection $students, ?Grade $grade): Collection
+    public function bulkHandleNewStudent(Collection $students, ?Grade $grade = null): Collection
     {
         $controlledStudents = new ArrayCollection();
         /**

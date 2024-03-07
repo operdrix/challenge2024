@@ -17,7 +17,7 @@ class Inscription
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Student::class, inversedBy: 'inscriptions')]
+    #[ORM\ManyToMany(targetEntity: Student::class, inversedBy: 'inscriptions', cascade: ["persist"])]
     private Collection $students;
 
     #[ORM\ManyToOne(inversedBy: 'inscriptions')]
@@ -28,6 +28,9 @@ class Inscription
 
     #[ORM\OneToMany(targetEntity: TrainingSession::class, mappedBy: 'inscription')]
     private Collection $trainingSessions;
+
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
 
     public function __construct()
     {
@@ -114,6 +117,18 @@ class Inscription
                 $trainingSession->setInscription(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
