@@ -39,9 +39,6 @@ class Teacher extends AbstractUser
     #[ORM\OneToMany(targetEntity: School::class, mappedBy: 'teacher')]
     private Collection $schools;
 
-    #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Message::class)]
-    private Collection $messages;
-
     #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Conversation::class)]
     private Collection $conversations;
 
@@ -51,7 +48,6 @@ class Teacher extends AbstractUser
         $this->trainingCategories = new ArrayCollection();
         $this->grades = new ArrayCollection();
         $this->schools = new ArrayCollection();
-        $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
     }
 
