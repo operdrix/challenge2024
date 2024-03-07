@@ -1,41 +1,167 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ImportController!{% endblock %}
+{% block title %}Import CSV{% endblock %}
 
 {% block body %}
-<h1>Import CSV</h1>
-<div>
-    <h2>Format d'import attendus</h2>
-    <table>
-        <tbody>
-            <tr>
-                <td>Nom école</td>
-            </tr>
-            <tr>
-                <td>Email (requis)</td>
-                <td>Prénom (requis)</td>
-                <td>Nom de famille (requis)</td>
-                <td>Date de naissance</td>
-                <td>Numéro de téléphone</td>
-                <td>Addresse</td>
-            </tr>
-        </tbody>
-        <caption>
-            Le contenu doit être séparé par une virgule
-        </caption>
-    </table>
-    <a href="{{ path('app_import_dummy') }}">
-        <button>
-            Exemple de fichier csv
-        </button>
-    </a>
+
+<div class="grid grid-cols-1 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+    <div class="mb-4 col-span-full xl:mb-2">
+        <div class="px-4 pt-6 bg-white block border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div class="w-full mb-1 sm:flex items-center justify-between">
+                <div class="mb-4">
+                    <nav class="flex mb-5" aria-label="Breadcrumb">
+                        <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                            <li class="inline-flex items-center text-gray-400">
+                                <svg class="w-5 h-5 mr-2.5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        </ol>
+                    </nav>
+                    <div class="flex md:space-x-3 md:space-y-0 space-y-3 md:flex-row flex-col">
+                        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Import CSV</h1>
+                    </div>
+                </div>
+        </div> 
+    </div>
+
+    <!-- contenu -->
+        <div class="flex px-4 pt-6 xl:grid-cols-2 xl:gap-4 dark:bg-gray-900">
+            <!-- Right Content -->
+            <div class="w-full">
+                <div class="p-4 mb-4 h-full bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <h3 class="mb-4 text-2xl font-semibold dark:text-white">Informations générales</h3>
+                    <h4 class="mb-4 text-xl text-red-600 font-semibold dark:text-white">Format d'import attendus</h4>
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                        <span class="font-medium">Attention !</span> Le contenu doit être séparé par une virgule.
+                    </div>
+
+                    
+
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Nom école
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Email (requis)
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Prénom (requis)
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Nom de famille (requis)
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Date de naissance
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Numéro de téléphone
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Adresse
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        École 1
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        Luc@myges.fr
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Luc
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Dumont
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        14/05/2001
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        07 07 07 07 07
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        7 rue de l'arc-en-ciel
+                                    </td>
+                                </tr>
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        École 2
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        Diego@myges.fr
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Diego
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Dumont
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        14/05/2001
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        07 07 07 07 07
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        7 rue de l'arc-en-ciel
+                                    </td>
+                                </tr>
+                                <tr class="bg-white dark:bg-gray-800">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        École 3
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        Yves@myges.fr
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Yves
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Dumont
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        14/05/2001
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        07 07 07 07 07
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        7 rue de l'arc-en-ciel
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <a href="{{ path('app_import_dummy') }}">
+                        <button type="button" class="my-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                            <svg class="mr-4 w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M9 2.2V7H4.2l.4-.5 3.9-4 .5-.3Zm2-.2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7c0 1.1.9 2 2 2 0 1.1.9 2 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm1 8.8A2.3 2.3 0 0 0 9.6 13a2.3 2.3 0 0 0 2.1 2.5h.7a.3.3 0 0 1 .2.4l-.4.1h-1a1 1 0 1 0 0 2h1c.5 0 1 0 1.4-.3a2 2 0 0 0 1-1.1 2.3 2.3 0 0 0-2.2-3l-.5-.1a.3.3 0 0 1-.3-.4.3.3 0 0 1 .4-.3h1a1 1 0 1 0 0-2h-1Zm8 1.5a1 1 0 1 0-2-.6l-.5 1.7-.5-1.7a1 1 0 0 0-2 .6l1.5 4.8a1 1 0 0 0 1.9 0l1.6-4.8Zm-13.8.9.4-.2h1a1 1 0 1 0 0-2h-1A2.6 2.6 0 0 0 4 13.6v1.8A2.6 2.6 0 0 0 6.6 18h1a1 1 0 1 0 0-2h-1a.6.6 0 0 1-.6-.6v-1.8c0-.1 0-.3.2-.4Z" clip-rule="evenodd"/>
+                            </svg>                            
+                            Exemple de fichier CSV
+                        </button>
+                    </a>
+                    <div>
+                        {{ form_start(form) }}
+                            {{ form_widget(form, {attr: {"noValidate": true}}) }}
+                            <button type="submit" class="my-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Valider
+                            </button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!-- fin contenu -->
+
 </div>
-<div>
-    {{ form_start(form) }}
-        {{ form_widget(form, {attr: {"noValidate": true}}) }}
-        <button type="submit" class="my-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Valider
-        </button>
-    {{ form_end(form) }}
-</div>
+
 {% endblock %}
