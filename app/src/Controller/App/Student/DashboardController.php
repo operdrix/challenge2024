@@ -47,6 +47,15 @@ class DashboardController extends AbstractController
         ]);
     }
 
+    #[Route('/trainings/progress', name: 'progress', methods: ['GET'])]
+    public function progress(
+        ProgressServiceInterface $progressService
+    ): Response {
+        return $this->render('student/dashboard/progress.html.twig', [
+            'progressArray' => $progressService->getProgressArrayForStudent($this->getUser())
+        ]);
+    }
+
     #[Route('/trainings/{id}', name: 'inscription_training', methods: ['GET'])]
     public function show(
         Inscription $inscription
@@ -54,6 +63,19 @@ class DashboardController extends AbstractController
         return $this->render('student/dashboard/show.html.twig', [
             'training' => $inscription->getTraining(),
             'inscription' => $inscription
+        ]);
+    }
+
+    #[Route('/trainings/{id}/progress', name: 'inscription_progress', methods: ['GET'])]
+    public function inscriptionprogress(
+        Inscription $inscription,
+        ProgressServiceInterface $progressService
+    ): Response {
+        return $this->render('student/dashboard/inscription_progress.html.twig', [
+            'progressArray' => $progressService->getProgressArrayForStudentByInscription(
+                $this->getUser(),
+                $inscription
+            )
         ]);
     }
 
