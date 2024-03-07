@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/teacher/schools/{school_id}/students', name: "teacher_students_")]
+#[Route('/teacher/students', name: "teacher_students_")]
 class StudentController extends AbstractController
 {
 
@@ -25,7 +25,6 @@ class StudentController extends AbstractController
     public function edit(
         Request                              $request,
         EntityManagerInterface               $em,
-        #[MapEntity(id: "school_id")] School $school,
         ?Student                             $student = null
     ): Response
     {
