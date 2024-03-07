@@ -24,12 +24,9 @@ class TrainingSessionType extends AbstractType
             ->add('place')
             ->add('trainingBlocks', EntityType::class, [
                 'class' => TrainingBlock::class,
-                'choice_label' => 'id',
+                'choice_label' => 'title',
                 'multiple' => true,
-            ])
-            ->add('inscription', EntityType::class, [
-                'class' => Inscription::class,
-                'choice_label' => 'id',
+                "autocomplete" => true
             ])
         ;
     }

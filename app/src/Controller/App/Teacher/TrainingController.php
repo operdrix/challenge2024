@@ -2,8 +2,10 @@
 
 namespace App\Controller\App\Teacher;
 
+use App\Entity\Inscription;
 use App\Entity\Training;
 use App\Entity\TrainingCategory;
+use App\Form\Type\InscriptionFilterType;
 use App\Form\Type\TrainingFilterType;
 use App\Form\Type\TrainingType;
 use App\Service\FilteredListService;
@@ -62,6 +64,35 @@ class TrainingController extends AbstractController
             'training' => $training,
             'form' => $form,
         ]);
+    }
+
+    #[Route("/{id}/show", name: "show", methods: ["GET"])]
+    public function show(
+        Training $training,
+        FilteredListService $filteredListService,
+        Request $request
+    ): Response
+    {
+        $filters = [
+            "teacher" => $this->getUser(),
+            "training" => $training
+        ];
+
+        [$pagination, $form] = $filteredListService->prepareFilteredList(
+            $request,
+            InscriptionFilterType::class,
+            Inscription::class,
+            $filters
+        );
+
+        return $this->render(
+            "teacher/training/show.html.twig",
+            [
+                "training" => $training,
+                "pagination" => $pagination,
+                "form" => $form
+            ]
+        );
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]

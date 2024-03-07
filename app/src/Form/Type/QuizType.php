@@ -24,7 +24,13 @@ class QuizType extends AbstractType
                 'required' => true,
             ])
             ->add('isOpened', CheckboxType::class, [
-                'label' => 'Ouvert',
+                'label' => 'Disponible aux élèves',
+                'label_attr' => [
+                    'class' => 'm-0'
+                ],
+                'attr' => [
+                    'class' => "w-4 h-4 mr-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                ],
                 'required' => false,
             ])
             ->add('duration', IntegerType::class, [
@@ -53,6 +59,7 @@ class QuizType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'delete_empty' => true,
+                'label' => false,
             ])
         ;
     }

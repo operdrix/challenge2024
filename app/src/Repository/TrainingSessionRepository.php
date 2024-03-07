@@ -6,6 +6,7 @@ use App\Entity\Student;
 use App\Entity\Teacher;
 use App\Entity\TrainingSession;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,6 +22,26 @@ class TrainingSessionRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, TrainingSession::class);
+    }
+
+    /**
+     * Requête de base
+     */
+    public function getBaseQueryBuilder(array $filters): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder("ts");
+
+        if (!empty($filters["inscription"])) {
+            $queryBuilder->andWhere("ts.inscription = :inscription")
+                ->setParameter("inscription", $filters["inscription"]);
+        }
+
+        if (!empty($filters["startDate"])) {
+            $queryBuilder->andWhere("ts.startDate >= :startDate")
+                ->setParameter("startDate", $filters["startDate"]);
+        }
+
+        return $queryBuilder;
     }
 
     public function findByStudent(Student $student, array $params)

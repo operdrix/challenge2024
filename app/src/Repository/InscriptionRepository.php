@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Inscription;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,6 +22,7 @@ class InscriptionRepository extends ServiceEntityRepository
         parent::__construct($registry, Inscription::class);
     }
 
+
     public function findByStudentAndQuiz($studentId, $quizId)
     {
         return $this->createQueryBuilder('i')
@@ -33,6 +35,27 @@ class InscriptionRepository extends ServiceEntityRepository
             ->setParameter('quizId', $quizId)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * Requête de base
+     */
+    public function getBaseQueryBuilder(array $filters): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder("i");
+
+        if (!empty($filters["teacher"])) {
+            $queryBuilder->join("i.training", "t")
+                ->andWhere("t.teacher = :teacher")
+                ->setParameter("teacher", $filters["teacher"]);
+        }
+
+        if (!empty($filters["training"])) {
+            $queryBuilder->andWhere("i.training = :training")
+                ->setParameter("training", $filters["training"]);
+        }
+
+        return $queryBuilder;
     }
 
 }
