@@ -2,6 +2,11 @@
 
 {% block title %}Hello CalendarController!{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/calendar.css') }}">
+{% endblock %}
+
 {% block body %}
 <div class="py-4 ms-2">
     <span class="px-2.5 py-0.5 me-1 rounded bg-[#aec597]"></span> Session distancielle 
@@ -9,7 +14,10 @@
     <span class="px-2.5 py-0.5 me-1 rounded bg-[#aec2cf]"></span> Session présentielle
 </div>
 
-<div {{ stimulus_controller('calendar') }} data-calendar-url-value="{{ path('app_calendar_data') }}"
+<div
+        class="p-5"
+        {{ stimulus_controller('calendar') }}
+        data-calendar-url-value="{{ path('app_calendar_data') }}"
 >
     {# Calendar container #}
     <div {{ stimulus_target('calendar', 'calendar') }}>

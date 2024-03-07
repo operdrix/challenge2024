@@ -28,7 +28,7 @@
     <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <div class="flex items-center justify-between mb-4">
             <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Mes prochaines sessions</h5>
-            <a href="#" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+            <a href="{{ path('teacher_trainings_index') }}" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
                 Voir tout
             </a>
         </div>
@@ -46,6 +46,20 @@
                             <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                                 {{ session.startDate|date('d/m/Y') }} - {{ session.startDate|date('H:i') }}
                             </p>
+                            {% if session.inscription.type == 'grade' %}
+                                <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                    Classe: <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                        {{ session.inscription.grade.label }}
+                                    </span> {{ session.inscription.grade.students|length }} élèves inscrits<br>
+                                    Etablissement: <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                                        {{ session.inscription.grade.school.name }}
+                                    </span>
+                                </p>
+                            {% else %}
+                                <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                    Nombre d'élèves: {{ session.inscription.students|length }}<br>
+                                </p>
+                            {% endif %}
                         </div>
                         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                             <a href="{{ path('teacher_training_sessions_edit', {'idTraining': session.inscription.training.id, 'idInscription': session.inscription.id,'idSession': session.id}) }}" class="text-primary-600 hover:underline dark:text-primary-400">
@@ -63,9 +77,9 @@
     {# Début card Statistiques étudiants #}
 
     <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
+
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Mes étudiants</h5>
-        </a>
+
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
             Nombre d'étudiants dans des classes : {{ studentsInGrade|length }}<br>
             Nombre d'étudiants hors classes : {{ studentsOutGrade|length }}<br>

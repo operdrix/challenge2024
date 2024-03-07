@@ -17,6 +17,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
     public const INSCRIPTION_1_SESSION_1 = 'inscription1_session1';
     public const INSCRIPTION_1_SESSION_2 = 'inscription1_session2';
     public const INSCRIPTION_1_SESSION_3 = 'inscription1_session3';
+    public const INSCRIPTION_2_SESSION_1 = 'inscription2_session4';
 
     public function load(ObjectManager $manager): void
     {
@@ -76,6 +77,12 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $session3->setPlace('ESGI - Salle 303');
         $manager->persist($session3);
 
+        $session4 = new TrainingSession();
+        $session4->setInscription($inscription2);
+        $session4->setLength(120);
+        $session4->setStartDate(new \DateTimeImmutable('2024-03-09 08:30:00'));
+        $manager->persist($session4);
+
         $manager->flush();
 
         $this->addReference(self::TRAINING_1_INSCRIPTION, $inscription1);
@@ -83,6 +90,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $this->addReference(self::INSCRIPTION_1_SESSION_1, $session1);
         $this->addReference(self::INSCRIPTION_1_SESSION_2, $session2);
         $this->addReference(self::INSCRIPTION_1_SESSION_3, $session3);
+        $this->addReference(self::INSCRIPTION_2_SESSION_1, $session4);
     }
 
     public function getDependencies()
