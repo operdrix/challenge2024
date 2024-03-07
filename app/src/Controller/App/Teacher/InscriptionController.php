@@ -60,7 +60,9 @@ class InscriptionController extends AbstractController
             $entityManager->persist($inscription);
             $entityManager->flush();
 
-            return $this->redirectToRoute('teacher_inscriptions_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('teacher_trainings_index', [
+                "id" => $inscription->getTraining()->getId()
+            ], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('teacher/inscription/edit.html.twig', [
