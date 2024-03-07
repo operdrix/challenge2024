@@ -88,6 +88,20 @@ class StudentRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()->getResult();
     }
 
+    public function getQuizByTrainingAndGradeStudent($trainingId, $studentId)
+    {
+        $queryBuilder = $this->createQueryBuilder("s");
+        $queryBuilder->join("s.grades", "g");
+        $queryBuilder->join("g.inscriptions", "i");
+        $queryBuilder->join("i.training", "t");
+        $queryBuilder->join("t.quizzes", "q");
+        $queryBuilder->andWhere("t.id = :trainingId")
+            ->setParameter("trainingId", $trainingId);
+        $queryBuilder->andWhere("s.id = :studentId")
+            ->setParameter("studentId", $studentId);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     /**
      * Recherche des élèves qui sont liés à un teacher via une classe
      *
@@ -130,6 +144,35 @@ class StudentRepository extends ServiceEntityRepository
             ->join("qa.quizQuestion", "qq")
             ->join("qq.quiz", "q")
             ->where("q.id = :quizId")
+            ->setParameter("quizId", $quizId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function isStudentInTrainingByQuiz($studentId, $quizId)
+    {
+        return $this->createQueryBuilder("s")
+            ->join("s.inscriptions", "i")
+            ->join("i.training", "t")
+            ->join("t.quizzes", "q")
+            ->where("s.id = :studentId")
+            ->andWhere("q.id = :quizId")
+            ->setParameter("studentId", $studentId)
+            ->setParameter("quizId", $quizId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function isGradeStudentInTrainingByQuiz($studentId, $quizId)
+    {
+        return $this->createQueryBuilder("s")
+            ->join("s.grades", "g")
+            ->join("g.inscriptions", "i")
+            ->join("i.training", "t")
+            ->join("t.quizzes", "q")
+            ->where("s.id = :studentId")
+            ->andWhere("q.id = :quizId")
+            ->setParameter("studentId", $studentId)
             ->setParameter("quizId", $quizId)
             ->getQuery()
             ->getResult();
