@@ -105,4 +105,8 @@ export default class extends Controller {
 
         this.indexValue++;
     }
+
+    questionRemoveItem(event) {
+        event.target.parentElement.parentElement.remove()
+    }
 }
