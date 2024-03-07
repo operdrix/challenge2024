@@ -3,9 +3,10 @@
 namespace App\Service;
 
 use App\Entity\QuizQuestion;
+use App\Service\Interface\AnswerCorrectorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-class AnswerCorrector
+class AnswerCorrector implements AnswerCorrectorInterface
 {
     public function correctAnswer(array|string $answer, QuizQuestion $question): ?float
     {
@@ -20,7 +21,7 @@ class AnswerCorrector
         }
     }
 
-    public function correctUniqueAnswer(string $answer, QuizQuestion $quizQuestion): float
+    private function correctUniqueAnswer(string $answer, QuizQuestion $quizQuestion): float
     {
         $correctAnswer = false;
         foreach ($quizQuestion->getQuizQuestionAvailableAnswers() as $availableAnswer) {
@@ -32,7 +33,7 @@ class AnswerCorrector
         return $answer == $correctAnswer ? $quizQuestion->getPoint() : 0;
     }
 
-    public function correctMultipleAnswer(array $answers, QuizQuestion $quizQuestion): float
+    private function correctMultipleAnswer(array $answers, QuizQuestion $quizQuestion): float
     {
         $correctAnswers = [];
         foreach ($quizQuestion->getQuizQuestionAvailableAnswers() as $availableAnswer) {

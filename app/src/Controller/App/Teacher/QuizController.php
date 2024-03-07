@@ -14,7 +14,7 @@ use App\Form\Type\QuizFilterType;
 use App\Form\Type\QuizQuestionStudentAnswerCollectionType;
 use App\Form\Type\QuizQuestionStudentAnswerType;
 use App\Form\Type\QuizType;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,10 +26,9 @@ class QuizController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request                $request,
-    ): Response
-    {
+    ): Response {
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             QuizFilterType::class,
@@ -48,8 +47,7 @@ class QuizController extends AbstractController
         Request                     $request,
         EntityManagerInterface      $em,
         ?Quiz $quiz = null
-    ): Response
-    {
+    ): Response {
         $formOptions = [];
         if (empty($quiz)) {
             $quiz = new Quiz();
@@ -127,8 +125,7 @@ class QuizController extends AbstractController
         $manualCorrectionAnswers = [];
 
         foreach ($quizAnswers as $quizAnswer) {
-            if ($quizAnswer->getQuizQuestion()->getType()->value == QuizQuestionTypeEnum::TEXT->value)
-            {
+            if ($quizAnswer->getQuizQuestion()->getType()->value == QuizQuestionTypeEnum::TEXT->value) {
                 $manualCorrectionAnswers[] = $quizAnswer;
             }
         }
@@ -203,6 +200,5 @@ class QuizController extends AbstractController
             'student' => $feedBack->getStudent(),
             'form' => $form
         ]);
-
     }
 }

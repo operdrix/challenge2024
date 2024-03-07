@@ -10,8 +10,8 @@ use App\Form\Type\GradeFilterType;
 use App\Form\Type\SchoolFilterType;
 use App\Form\Type\SchoolType;
 use App\Form\Type\StudentFilterType;
-use App\Service\FileService;
-use App\Service\FilteredListService;
+use App\Service\Interface\FileServiceInterface;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,10 +25,9 @@ class SchoolController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request
-    ): Response
-    {
+    ): Response {
         $filters = [
             "teacher" => $this->getUser()
         ];
@@ -53,7 +52,7 @@ class SchoolController extends AbstractController
         Request $request,
         ?School $school,
         EntityManagerInterface $entityManager,
-        FileService $fileService
+        FileServiceInterface $fileService
     ): Response {
         if (is_null($school)) {
             $school = new School();
@@ -95,10 +94,9 @@ class SchoolController extends AbstractController
     #[Route("/{id}/show", name: "show", methods: ["GET"])]
     public function show(
         School              $school,
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request             $request
-    )
-    {
+    ) {
         $filtersGrade = [
             "teacher" => $this->getUser(),
             "school" => $school

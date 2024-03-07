@@ -29,8 +29,7 @@ class InscriptionController extends AbstractController
         EntityManagerInterface $entityManager,
         StudentServiceInterface $studentService,
         ?Inscription $inscription = null,
-    ): Response
-    {
+    ): Response {
         if (empty($inscription)) {
             $inscription = new Inscription();
             $inscription->setTraining($training);
@@ -50,9 +49,9 @@ class InscriptionController extends AbstractController
                 $createdStudents = $form->get("created_students")->getData();
 
                 $collection = new ArrayCollection($createdStudents);
-                $students = $studentService->bulkHandleNewStudent($collection);
+                $students = $studentService->bulkHandleNewStudent($collection, null);
 
-                foreach ($students as $student) {
+                foreach ($students->getValues() as $student) {
                     $inscription->addStudent($student);
                 }
             }
@@ -77,8 +76,7 @@ class InscriptionController extends AbstractController
         Inscription $inscription,
         FilteredListService $filteredListService,
         Request $request
-    )
-    {
+    ) {
         $filters = [
             "inscription" => $inscription
         ];

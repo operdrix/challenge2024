@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Service de préparation des listes filtrées
  */
-class FilteredListService
+class FilteredListService implements FilteredListServiceInterface
 {
     /**
      * Constructor
