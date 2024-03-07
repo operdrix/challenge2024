@@ -2,7 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Grade;
 use App\Entity\Progress;
+use App\Entity\Student;
+use App\Entity\Teacher;
+use App\Entity\Training;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,28 +25,45 @@ class ProgressRepository extends ServiceEntityRepository
         parent::__construct($registry, Progress::class);
     }
 
-    //    /**
-    //     * @return Progress[] Returns an array of Progress objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findProgressForTeacherByStudent(Teacher $teacher, Student $student)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.student', 's')
+            ->join('s.inscriptions', 'i')
+            ->join('i.training', 't')
+            ->where('s.id = :student')
+            ->setParameter('student', $student)
+            ->andWhere('t.teacher = :teacher')
+            ->setParameter('teacher', $teacher)
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Progress
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findProgressForTeacherByGrade(Teacher $teacher, Grade $grade)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.inscription', 'i')
+            ->join('i.training', 't')
+            ->join('i.grade', 'g')
+            ->where('t.teacher = :teacher')
+            ->andWhere('g.teacher = :teacher')
+            ->setParameter('teacher', $teacher)
+            ->andWhere('i.grade = :grade')
+            ->setParameter(':grade', $grade)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findProgressForTeacherByTraining(Teacher $teacher, Training $training)
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.inscription', 'i')
+            ->join('i.training', 't')
+            ->where('t.teacher = :teacher')
+            ->setParameter('teacher', $teacher)
+            ->andWhere('i.training = :training')
+            ->setParameter('training', $training)
+            ->getQuery()
+            ->getResult();
+    }
 }
