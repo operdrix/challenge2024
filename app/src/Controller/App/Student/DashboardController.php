@@ -6,6 +6,7 @@ use App\Entity\Inscription;
 use App\Entity\Training;
 use App\Entity\Teacher;
 use App\Entity\TrainingBlock;
+use App\Form\Type\InscriptionFilterType;
 use App\Form\Type\TrainingFilterType;
 use App\Repository\TrainingRepository;
 use App\Repository\TrainingBlockRepository;
@@ -28,19 +29,21 @@ class DashboardController extends AbstractController
     public function index(
         FilteredListService $filteredListService,
         Request $request,
-        TrainingRepository $trainingRepository,
-        StudentServiceInterface $studentService
     ): Response {
-        // [$pagination, $form] = $filteredListService->prepareFilteredList(
-        //     $request,
-        //     TrainingFilterType::class,
-        //     Training::class
-        // );
+        $filters = [
+            "student" => $this->getUser()
+        ];
+
+        [$pagination, $form] = $filteredListService->prepareFilteredList(
+            $request,
+            InscriptionFilterType::class,
+            Inscription::class,
+            $filters
+        );
 
         return $this->render('student/dashboard/index.html.twig', [
-            // 'pagination' => $pagination,
-            // 'form' => $form
-            'pagination' => $studentService->getInscriptions($this->getUser())
+            'pagination' => $pagination,
+            'form' => $form
         ]);
     }
 

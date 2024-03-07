@@ -35,6 +35,10 @@ class TrainingRepository extends ServiceEntityRepository
                 ->setParameter("teacher", $filters["teacher"]);
         }
 
+        if (!empty($filters["student"])) {
+
+        }
+
         if (!empty($filters["title"])) {
             $queryBuilder->andWhere("t.title LIKE :title")
                 ->setParameter("title", '%' . $filters["title"] . '%');

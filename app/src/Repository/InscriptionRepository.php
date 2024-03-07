@@ -55,6 +55,14 @@ class InscriptionRepository extends ServiceEntityRepository
                 ->setParameter("training", $filters["training"]);
         }
 
+        if (!empty($filters["student"])) {
+            $queryBuilder->leftJoin("i.students", "s")
+                ->leftJoin("i.grade", "grade")
+                ->leftJoin("grade.students", "students")
+                ->where("s = :student OR students = :student")
+            ->setParameter("student", $filters["student"]);
+        }
+
         return $queryBuilder;
     }
 
