@@ -24,13 +24,5 @@ export default class extends Controller {
             responseSection.classList.add("hidden")
             responseSection.querySelector("div[data-form-collection-prototype-value] > ul").classList.remove("hidden")
         }
-
-        let nextSibling = event.target.parentElement.nextElementSibling
-        console.log(nextSibling)
-        // if (event.target.value === "Vrai/Faux") {
-        //     nextSibling.classList.remove("hidden")
-        // } else {
-        //     nextSibling.classList.add("hidden")
-        // }
     }
 }
