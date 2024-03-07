@@ -49,12 +49,12 @@
 
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white my-4">Objectifs</h1>
                 <ol class="space-y-4 w-72">
-                    {% for trainingBlock in training.getTrainingObjectives %}  
+                    {% for objective in training.getTrainingObjectives %}  
                     <li>
                         <div class="w-full p-4 text-blue-700 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:border-blue-800 dark:text-blue-400" role="alert">
                             <div class="flex items-center justify-between">
-                                <span class="sr-only">{{ trainingBlock.title }}</span>
-                                <h3 class="font-medium">{{ trainingBlock.title }}</h3>
+                                <span class="sr-only">{{ objective.title }}</span>
+                                <h3 class="font-medium">{{ objective.title }}</h3>
                                 <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
                                     <path d="M16 14V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 0 0 0-2h-1v-2a2 2 0 0 0 2-2ZM4 2h2v12H4V2Zm8 16H3a1 1 0 0 1 0-2h9v2Z"/>
                                 </svg>
@@ -64,12 +64,12 @@
                     {% endfor %}
                 </ol>
 
-                {% for trainingBlock in training.getCategories %}
+                {% for categorie in training.getCategories %}
                 <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white my-4">Catégories</h1>
                 <div class="grid w-2/4 grid-cols-1 gap-4 mt-4 xl:grid-cols-2 2xl:grid-cols-3 mb-4">
                     <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                       <div class="w-full">
-                        <span class="font-bold leading-none text-gray-900 dark:text-white">{{ trainingBlock.label }}</span>
+                        <span class="font-bold leading-none text-gray-900 dark:text-white">{{ categorie.label }}</span>
                       </div>
                       <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14"/>
@@ -81,9 +81,9 @@
             </div>
 
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-block" role="tabpanel" aria-labelledby="block-tab">
-                <a href="{{ path('student_details', {'id': training.id}) }}">
-                    <ol class="relative border-s border-gray-200 dark:border-gray-700">                  
-                        {% for trainingBlock in training.getTrainingBlocks %}                
+                <ol class="relative border-s border-gray-200 dark:border-gray-700">                  
+                    {% for trainingBlock in training.getTrainingBlocks %}                
+                    <a href="{{ path('student_inscription_training_block', {'id': inscription.id, 'id_training_block': trainingBlock.id}) }}">
                         <!-- Changer le css lorsqu'il y a un progrés et que l'élève a validé le bloc -->
                         <li class="mb-2 ms-6 p-4 rounded-lg hover:bg-gray-100">            
                             <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
@@ -98,23 +98,23 @@
                             {% endif %}
                             <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ trainingBlock.title }}</time>
                             <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ trainingBlock.content }}</p>
+                        </a>
                             {% endfor %}
                             {% for trainingBlock in training.getQuizzes %} 
                             <a href="{{ path('student_student_answer_all', {'id': trainingBlock.id}) }}" class="inline-flex items-center px-4 py-2 font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">{{ trainingBlock.label }} <svg class="w-3 h-3 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
                             </svg></a>
-                            {% endfor %}
+                    {% endfor %}
                         </li>
                     </ol>
-                </a>
             </div>
 
                 <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-resources" role="tabpanel" aria-labelledby="resources-tab">
-                {% for trainingBlock in training.getResources %}
+                {% for resource in training.getResources %}
                 
                 
 
-                {% if trainingBlock.type.value == 'PDF' %}
+                {% if resource.type.value == 'PDF' %}
                 
                 <div class="flex items-start gap-2.5 mb-6">
                     <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
@@ -142,7 +142,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                {{ trainingBlock.title }}
+                                {{ resource.title }}
                                 </span>
                                 <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">
                                 12 Pages 
@@ -172,7 +172,7 @@
  
                 {% endif %}
 
-                {% if trainingBlock.type.value == 'Lien' %}
+                {% if resource.type.value == 'Lien' %}
                 
                 <div class="flex items-start gap-2.5 mb-6">
                     <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
@@ -182,10 +182,10 @@
                         <span class="text-sm font-normal text-gray-500 dark:text-gray-400">11:46</span>
                     </div>
                     <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                        <p class="text-sm font-normal pb-2.5 text-gray-900 dark:text-white"><a href="{{ trainingBlock.link }}" class="text-blue-700 dark:text-blue-500 underline hover:no-underline font-medium break-all">{{ trainingBlock.link }}</a></p>
-                        <a href="{{ trainingBlock.link }}" class="bg-gray-50 dark:bg-gray-600 rounded-xl p-4 mb-2 hover:bg-gray-200 dark:hover:bg-gray-500">
+                        <p class="text-sm font-normal pb-2.5 text-gray-900 dark:text-white"><a href="{{ resource.link }}" class="text-blue-700 dark:text-blue-500 underline hover:no-underline font-medium break-all">{{ resource.link }}</a></p>
+                        <a href="{{ resource.link }}" class="bg-gray-50 dark:bg-gray-600 rounded-xl p-4 mb-2 hover:bg-gray-200 dark:hover:bg-gray-500">
                             <img src="https://flowbite.com/docs/images/og-image.png" class="rounded-lg mb-2" />
-                            <span class="text-sm font-medium text-gray-900 dark:text-white mb-2">{{ trainingBlock.title }}</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-white mb-2">{{ resource.title }}</span>
                             <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">12 min</span>
                         </a>
                     </div>
@@ -195,7 +195,7 @@
  
                 {% endif %}
 
-                {% if trainingBlock.type.value == 'Vidéo' %}
+                {% if resource.type.value == 'Vidéo' %}
                 <div class="flex items-start gap-2.5 mb-6">
                     <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
                     <div class="flex flex-col gap-1">
@@ -222,7 +222,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                {{ trainingBlock.title }}
+                                {{ resource.title }}
                                 </span>
                                 <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">
                                 12 Pages 
