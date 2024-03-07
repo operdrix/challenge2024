@@ -16,20 +16,13 @@ export default class extends Controller {
     }
 
     changeType(event) {
-        let lastChild = event.target.parentElement.parentElement.lastChild
+        let responseSection = event.target.parentElement.parentElement.lastElementChild
         if (event.target.value === "Choix multiple" || event.target.value === "Choix unique") {
-            lastChild.classList.remove("hidden")
-            lastChild.querySelector("div[data-form-collection-prototype-value] > ul").classList.remove("hidden")
+            responseSection.classList.remove("hidden")
+            responseSection.querySelector("div[data-form-collection-prototype-value] > ul").classList.remove("hidden")
         } else {
-            lastChild.classList.add("hidden")
-            lastChild.querySelector("div[data-form-collection-prototype-value] > ul").classList.remove("hidden")
-        }
-
-        let nextSibling = event.target.parentElement.nextElementSibling
-        if (event.target.value === "Vrai/Faux") {
-            nextSibling.classList.remove("hidden")
-        } else {
-            nextSibling.classList.add("hidden")
+            responseSection.classList.add("hidden")
+            responseSection.querySelector("div[data-form-collection-prototype-value] > ul").classList.remove("hidden")
         }
     }
 

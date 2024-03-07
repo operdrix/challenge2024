@@ -60,11 +60,49 @@ export default class extends Controller {
     }
 
     removeItem(event) {
-        this.fieldTargets.forEach(element => {
-            if (element.contains(event.target)) {
-                element.remove()
-                this.itemsCountValue--
+        event.originalTarget.parentElement.remove()
+    }
+
+    addQuestionsCollectionElement(event) {
+        const item = document.createElement('li');
+        item.className = "grow basis-80 max-w-sm dark:bg-gray-800"
+        item.setAttribute('data-form-collection-target', 'field');
+        item.innerHTML = this.prototypeValue.replace(/__name__/g, this.indexValue);
+        this.collectionContainerTarget.appendChild(item);
+
+        let sourcedScript;
+        let scripts = Array.from(item.querySelectorAll("script"))
+        let newScripts = []
+        scripts.forEach(element => {
+            let data = (element.text || element.textContent || element.innerHTML || "" ),
+                script = document.createElement("script");
+            script.type = "text/javascript";
+            if (element.hasAttribute('src')) {
+                script.setAttribute('src', element.getAttribute('src'));
+                sourcedScript = script;
+            } else {
+                try {
+                    script.appendChild(document.createTextNode(data));
+                } catch(e) {
+                    script.text = data;
+                }
+                newScripts.push(script);
             }
         })
+
+        if (sourcedScript === undefined) {
+            newScripts.forEach(script => {
+                item.appendChild(script);
+            });
+        } else {
+            item.appendChild(sourcedScript);
+            sourcedScript.addEventListener('load', function() {
+                newScripts.forEach(script => {
+                    item.appendChild(script);
+                });
+            });
+        }
+
+        this.indexValue++;
     }
 }

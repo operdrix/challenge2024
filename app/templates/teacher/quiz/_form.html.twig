@@ -1,7 +1,20 @@
+{% import _self as formMacros %}
+
+{% macro printQuestionForm(genusScientistForm, index) %}
+    <li class="grow basis-80 max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700" {{ stimulus_target('form-collection', 'field') }} {{ stimulus_controller('quiz-question-answer') }}>
+        <h5 class="text-xl text-center font-medium text-gray-900 dark:text-white mb-4">Question n°{{ index + 1  }}</h5>
+        {{ form_row(genusScientistForm.title) }}
+        {{ form_row(genusScientistForm.type, { 'attr': { 'data-quiz-question-answer-target': 'type', 'data-action': 'change->quiz-question-answer#changeType' } }) }}
+        {{ form_row(genusScientistForm.point) }}
+        {{ form_row(genusScientistForm.quizQuestionAvailableAnswers) }}
+        <button type="button" {{ stimulus_action('form-collection', "removeItem") }} class="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700">Supprimer</button>
+    </li>
+{% endmacro %}
+
 <div class="col-span-full">
+    {{ form_start(form, {attr: {"noValidate": true}}) }}
     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-        <h3 class="mb-4 text-xl font-semibold dark:text-white">Formulaire</h3>
-        {{ form_start(form, {attr: {"noValidate": true}}) }}
+        <h3 class="mb-4 text-xl font-semibold dark:text-white">Informations générales</h3>
         <div class="grid grid-cols-6 gap-6">
             <div class="col-span-full">
                 {{ form_row(form.label) }}
@@ -18,14 +31,26 @@
             <div class="col-span-full">
                 {{ form_row(form.training) }}
             </div>
-            <div class="col-span-full">
-                {{ form_row(form.quizQuestions) }}
-            </div>
-            <div class="col-span-full">
-                <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="submit">{{ button_label|default('Enregistrer') }}</button>
-            </div>
         </div>
-
-        {{ form_end(form) }}
     </div>
+    <div {{ stimulus_controller("form-collection") }} data-form-collection-index-value="{{ form.quizQuestions|length > 0 ? form.quizQuestions|last.vars.name + 1 : 0 }}" data-form-collection-prototype-value="{{ formMacros.printQuestionForm(form.quizQuestions.vars.prototype)|e('html_attr') }}" class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+        <h3 class="mb-4 text-xl font-semibold dark:text-white flex items-center gap-4">
+            Questions
+            <button {{ stimulus_action("form-collection", "addQuestionsCollectionElement") }} type="button" class="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-green-600 dark:hover:bg-green-700">
+                <svg class="w-6 h-6 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm11-4.2a1 1 0 1 0-2 0V11H7.8a1 1 0 1 0 0 2H11v3.2a1 1 0 1 0 2 0V13h3.2a1 1 0 1 0 0-2H13V7.8Z" clip-rule="evenodd"/>
+                </svg>
+                <span class="sr-only">Ajouter une question</span>
+            </button>
+        </h3>
+        <ul class="flex justify-center items-center flex-wrap gap-4" id="questionsList" {{ stimulus_target('form-collection', 'collectionContainer') }}>
+            {% for index, questionForm in form.quizQuestions %}
+                {{ formMacros.printQuestionForm(questionForm, index) }}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-span-full">
+        <button class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="submit">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+    {{ form_end(form) }}
 </div>
