@@ -29,9 +29,9 @@ RUN setfacl -R -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX ./public
 
 # Installation des dépendances
 ARG  COMPOSER_ALLOW_SUPERUSER=1
-RUN composer install
-RUN npm install
-RUN npm run dev
+#RUN composer install
+#RUN npm install
+#RUN npm run dev
 
 # Création de la base données - Exécution des migrations - Création des données de tests
 # RUN php bin/console doctrine:schema:create
