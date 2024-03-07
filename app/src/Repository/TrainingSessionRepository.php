@@ -70,7 +70,7 @@ class TrainingSessionRepository extends ServiceEntityRepository
             ->setParameter('student', $student)
             ->andWhere('ts.startDate >= :start')
             ->setParameter('start', $params['startDate'])
-            ->andWhere('ts.endDate <= :end')
+            ->andWhere('ts.startDate <= :end')
             ->setParameter('end', $params['endDate'])
             ->getQuery()
             ->getResult();
@@ -112,10 +112,8 @@ class TrainingSessionRepository extends ServiceEntityRepository
             ->setParameter('now', new \DateTime())
             ->setParameter('end', new \DateTime('+2 weeks'))
             ->orderBy('ts.startDate', 'ASC')
-            ->getQuery()
-        ;
+            ->getQuery();
 
         return $qb->getResult();
-
     }
 }

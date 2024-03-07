@@ -74,17 +74,21 @@ class CalendarService implements CalendarServiceInterface
                     ? AppConstant::HEX_BG_COLOR_ONLINE_SESSION
                     : AppConstant::HEX_BG_COLOR_DEFAULT_SESSION,
                 'textColor' => 'black',
+                'borderColor' => '#6b7280',
                 'extentedProps' => [
-                    'training_id' => $training->getId(),
-                    'trainin_title' => $training->getTitle(),
-                    'teacher_name' => $training->getTeacher()->getLastname() . ' '
-                        . $training->getTeacher()->getFirstname()
+                    'trainingId' => $training->getId(),
+                    'traininTitle' => $training->getTitle(),
+                    'teacherName' => $training->getTeacher()->getLastname() . ' '
+                        . $training->getTeacher()->getFirstname(),
+                    'isOnline' => $session->isIsOnline(),
+                    'sessionLink' => $session->getSessionLink(),
+                    'place' => $session->getPlace()
                 ]
             ];
 
             if (!is_null($grade)) {
-                $sessionjson['extentedProps']['grade_id'] = $grade->getId();
-                $sessionjson['extentedProps']['grade_label'] = $grade->getLabel();
+                $sessionjson['extentedProps']['gradeId'] = $grade->getId();
+                $sessionjson['extentedProps']['gradeLabel'] = $grade->getLabel();
             } else {
                 $students = [];
                 foreach ($session->getInscription()->getStudents() as $student) {
