@@ -1,20 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription Étudiante - Première étape</title>
-</head>
-<body>
-    {% block body %}
-        <div class="example-wrapper">
-            <h1>Inscription Étudiante</h1>
+{% extends "base.html.twig" %}
+
+{% block bodyNotLogin %}
+    <div class="px-4 pt-6">
+        <a href="https://flowbite-admin-dashboard.vercel.app/"
+           class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
+            <img src="{{ asset("Edumentor.png") }}" class="mr-4 h-11"
+                 alt="EduMentor Logo">
+        </a>
+        <!-- Card -->
+        <div class="p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                Inscription à la plateforme
+            </h2>
+
             {{ form_start(form, {'attr': {'novalidate' : 'novalidate'}}) }}
                 {{ form_widget(form) }}
-                <button type="submit">Valider</button>
+                <button type="submit" class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    Valider
+                </button>
             {{ form_end(form) }}
         </div>
-    {% endblock %}
-</body>
-</html>
-
+    </div>
+{% endblock %}
