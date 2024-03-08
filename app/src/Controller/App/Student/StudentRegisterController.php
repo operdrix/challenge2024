@@ -15,7 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/student/register/', name: 'student_register_')]
+#[Route('/register/', name: 'student_register_')]
 #[IsGranted('PUBLIC_ACCESS')]
 class StudentRegisterController extends AbstractController
 {
@@ -32,7 +32,7 @@ class StudentRegisterController extends AbstractController
             $student = $entityManager->getRepository(Student::class)->findOneBy(['email' => $email]);
 
             return $this->redirectToRoute(
-                'app_student_register_last_step',
+                'student_register_last_step',
                 ['id' => $student->getId()],
                 Response::HTTP_SEE_OTHER
             );
