@@ -3,48 +3,48 @@
 {% block title %}Passage aux enfers{% endblock %}
 
 {% block body %}
-    {% for question in quiz.quizQuestions %}
-        <div class="question">
-            {% if question.type.name == 'YESNO' %}
-                <fieldset>
-                    <legend>{{ question.title }}</legend>
+    <h2 class="text-center p-4 m-4 bg-white rounded-xl text-lg dark:text-white dark:bg-gray-700">
+        {{ quiz.label }}
+    </h2>
+    <section class="flex items-center justify-center gap-10 px-4">
+        {% for index, question in quiz.quizQuestions %}
 
+            <div {{ stimulus_controller("quiz-student-answer") }} data-quiz-student-answer-student-value="{{ app.user.id }}" data-quiz-student-answer-question-value="{{ question.id }}" class="grow basis-[400px] flex flex-col items-center max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 question relative">
+                <h5 class="mb-2 mt-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {{ question.title }}
+                    <span class="bg-primary-50 text-primary-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300 absolute top-2 left-2">question n°{{ index + 1 }}</span>
+                    <span class="bg-secondary-50 text-secondary-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-secondary-900 dark:text-secondary-300 absolute top-2 right-0">{{ question.point }} points</span>
+                </h5>
+                {% if question.type.name == 'YESNO' %}
                     <div>
-                        <input type="radio" id="true" name="{{ question.id }}" value="true" />
+                        <input type="radio" id="true" name="{{ question.id }}" value="Vrai" {{ stimulus_target("quiz-student-answer", "input")}} class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                         <label for="true">Vrai</label>
                     </div>
                     <div>
-                        <input type="radio" id="false" name="{{ question.id }}" value="false" />
+                        <input type="radio" id="false" name="{{ question.id }}" value="Faux" {{ stimulus_target("quiz-student-answer", "input")}} class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                         <label for="false">Faux</label>
                     </div>
-                </fieldset>
-            {% elseif question.type.name == 'UNIQUE' %}
-                <fieldset>
-                    <legend>{{ question.title }}</legend>
+                {% elseif question.type.name == 'UNIQUE' %}
                     {% for answer in question.quizQuestionAvailableAnswers %}
                         <div>
-                            <input type="radio" id="{{ answer.id }}" name="{{ question.id }}" value="{{ answer.id }}" />
+                            <input type="radio" id="{{ answer.id }}" name="{{ question.id }}" value="{{ answer.content }}" {{ stimulus_target("quiz-student-answer", "input")}} class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                             <label for="{{ answer.id }}">{{ answer.content }}</label>
                         </div>
                     {% endfor %}
-                </fieldset>
-            {% elseif question.type.name == 'MULTIPLE' %}
-                <fieldset>
-                    <legend>{{ question.title }}</legend>
-
+                {% elseif question.type.name == 'MULTIPLE' %}
                     {% for answer in question.quizQuestionAvailableAnswers %}
                         <div>
-                            <input type="checkbox" id="{{ answer.id }}" name="{{ question.id }}" value="{{ answer.id }}" />
+                            <input type="checkbox" id="{{ answer.id }}" name="{{ question.id }}" value="{{ answer.content }}" {{ stimulus_target("quiz-student-answer", "input")}} class="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                             <label for="{{ answer.id }}">{{ answer.content }}</label>
                         </div>
                     {% endfor %}
-                </fieldset>
-            {% elseif question.type.name == 'TEXT' %}
-                <fieldset>
-                    <label for="{{ question.id }}">{{ question.title }}</label>
-                    <textarea id="{{ question.id }}" name="{{ question.id }}"></textarea>
-                </fieldset>
-            {% endif %}
-        </div>
-    {% endfor %}
+                {% elseif question.type.name == 'TEXT' %}
+                    <textarea id="{{ question.id }}" name="{{ question.id }}" {{ stimulus_target("quiz-student-answer", "input")}} class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"></textarea>
+                {% endif %}
+                <button {{ stimulus_action("quiz-student-answer", "sendAnswer") }} type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700 mt-4">
+                    Soumettre ma réponse
+                </button>
+            </div>
+        {% endfor %}
+    </section>
 {% endblock %}
