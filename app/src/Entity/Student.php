@@ -40,7 +40,6 @@ class Student extends AbstractUser
     private Collection $trainingSessionStudents;
 
     #[ORM\OneToMany(targetEntity: Progress::class, mappedBy: 'student')]
-    #[ORM\OrderBy(['training' => 'ASC'])]
     private Collection $progress;
 
     #[ORM\Column(length: 255, nullable: true)]
