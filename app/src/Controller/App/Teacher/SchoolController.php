@@ -47,7 +47,6 @@ class SchoolController extends AbstractController
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    #[IsGranted('edit', 'school')]
     public function edit(
         Request $request,
         ?School $school,
@@ -56,6 +55,8 @@ class SchoolController extends AbstractController
     ): Response {
         if (is_null($school)) {
             $school = new School();
+        } else {
+            $this->denyAccessUnlessGranted('edit', $school);
         }
 
         $school->setTeacher($this->getUser());
