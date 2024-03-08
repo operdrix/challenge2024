@@ -179,6 +179,7 @@ class QuizController extends AbstractController
             $feedBack->setInscription($inscription);
 
         }
+
         $totalStudentResult = 0;
         foreach ($quizAnswers as $quizAnswer) {
             $totalStudentResult += $quizAnswer->getResult();

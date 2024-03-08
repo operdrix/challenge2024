@@ -42,7 +42,7 @@ class QuestionsType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'row_attr' => [
-                    'class' => 'hidden',
+                    'class' => '',
                     'data-quiz-question-answer-target' => 'yesOrNo',
                 ],
                 'mapped' => false,
@@ -58,6 +58,7 @@ class QuestionsType extends AbstractType
                 'label' => 'Réponses possibles',
                 'row_attr' => [
                     'data-quiz-question-answer-target' => 'answers',
+//                    'class' => 'hidden'
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,

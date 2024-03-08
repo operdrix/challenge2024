@@ -47,11 +47,11 @@
             <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ question.quizQuestion.title }}</h3>
             <p class="font-normal text-gray-700 dark:text-gray-400">Réponse : {{ question.content }}</p>
             {{ form_widget(form[question.id]) }}
-            <p class="mt-2">Sur {{ question.quizQuestion.point }} points maximum</p>
+            <p class="mt-2 dark:text-white">Sur {{ question.quizQuestion.point }} points maximum</p>
         {% else %}
         <h3 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ question.quizQuestion.title }}</h3>
         <p class="font-normal text-gray-700 dark:text-gray-400">Réponse : {{ question.content }}</p>
-        <div>{{ question.result }} / {{ question.quizQuestion.point }} </div>
+        <div class="dark:text-white">{{ question.result }} / {{ question.quizQuestion.point }} </div>
         {% endif %}
 
         </div>
