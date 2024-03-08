@@ -29,10 +29,15 @@ class QuizController extends AbstractController
         FilteredListServiceInterface $filteredListService,
         Request                $request,
     ): Response {
+
+        $filters = [
+            "teacher" => $this->getUser()
+        ];
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             QuizFilterType::class,
-            Quiz::class
+            Quiz::class,
+            $filters
         );
 
         return $this->render('teacher/quiz/index.html.twig', [
