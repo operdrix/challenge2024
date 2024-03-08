@@ -166,6 +166,7 @@ class QuizController extends AbstractController
     public function addFeedback(Quiz $quiz, $studentId, EntityManagerInterface $em, Request $request): Response
     {
         $feedBack = $em->getRepository(QuizStudentResult::class)->findOneBy(['student' => $studentId, 'quiz' => $quiz->getId()]);
+        $quizAnswers = $em->getRepository(QuizQuestionStudentAnswer::class)->getAllStudentAnswersByQuizId($quiz->getId(), $studentId);
         if (empty($feedBack)) {
             $feedBack = new QuizStudentResult();
             $feedBack->setStudent($em->getRepository(Student::class)->find($studentId));
@@ -177,15 +178,14 @@ class QuizController extends AbstractController
 
             $feedBack->setInscription($inscription);
 
-            $totalStudentResult = 0;
-            $quizAnswers = $em->getRepository(QuizQuestionStudentAnswer::class)->getAllStudentAnswersByQuizId($quiz->getId(), $studentId);
-            foreach ($quizAnswers as $quizAnswer) {
-                $totalStudentResult += $quizAnswer->getResult();
-            }
-
-
-            $feedBack->setValue($totalStudentResult);
         }
+        $totalStudentResult = 0;
+        foreach ($quizAnswers as $quizAnswer) {
+            $totalStudentResult += $quizAnswer->getResult();
+        }
+
+
+        $feedBack->setValue($totalStudentResult);
         $totalQuizPoints = $em->getRepository(Quiz::class)->getTotalPoints($quiz);
 
         $form = $this->createForm(QuizStudentResultType::class, $feedBack, ['max_points' => $totalQuizPoints]);
