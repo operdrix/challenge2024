@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ChatController!{% endblock %}
+{% block title %}Liste des conversation{% endblock %}
 
 {% block body %}
     <div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -38,7 +38,7 @@
             <div>
                 <h1 class="w-full text-lg font-medium text-gray-900 sm:text-2xl dark:text-white">Filtre</h1>
                 {{ form_start(form, {"attr": {"class":"w-full", "noValidate": true}}) }}
-                <div class="w-full grid grid-cols-9 gap-6">
+                <div class="w-full grid grid-cols-9 gap-x-6">
                     <div class="md:col-span-3 col-span-full">
                         {{ form_row(form.firstname) }}
                     </div>
