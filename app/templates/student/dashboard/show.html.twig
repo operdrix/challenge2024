@@ -83,7 +83,28 @@
 
             <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-block" role="tabpanel" aria-labelledby="block-tab">
                 <ol class="relative border-s border-gray-200 dark:border-gray-700">                  
-                    {% for trainingBlock in training.getTrainingBlocks %}                
+                    {% for trainingBlock in training.getTrainingBlocks %} 
+                    {#{% if %}
+                    <!-- Changer le css lorsqu'il y a un progrés et que l'élève a validé le bloc -->                    
+                    <a href="{{ path('student_inscription_training_block', {'id': inscription.id, 'id_training_block': trainingBlock.id}) }}">
+                        <li class="mb-2 ms-6 p-4 rounded-lg hover:bg-green-100">            
+                            <span class="absolute flex items-center justify-center w-6 h-6 bg-green-100 rounded-full -start-3 ring-8 ring-white dark:ring-green-900 dark:bg-green-900">
+                                <svg class="w-2.5 h-2.5 text-green-800 dark:text-green-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                </svg>
+                            </span>
+                            {% if trainingBlock.position == 1 %}
+                            <h3 class="flex items-center mb-1 text-lg font-semibold text-green-900 dark:text-white">{{ trainingBlock.title }} <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 ms-3">{{ trainingBlock.position}}<sup>er</sup> chapitre</span></h3>
+                            {% else %}
+                            <h3 class="flex items-center mb-1 text-lg font-semibold text-green-900 dark:text-white">{{ trainingBlock.title }} <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300 ms-3">{{ trainingBlock.position}}<sup>e</sup> chapitre</span></h3>
+                            {% endif %}
+                            <time class="block mb-2 text-sm font-normal leading-none text-green-400 dark:text-green-500">{{ trainingBlock.title }}</time>
+                            <p class="mb-4 text-base font-normal text-green-500 dark:text-green-400">{{ trainingBlock.content }}</p>
+                            <svg class="w-12 h-12 text-green-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M2 12a10 10 0 1 1 20 0 10 10 0 0 1-20 0Zm13.7-1.3a1 1 0 0 0-1.4-1.4L11 12.6l-1.8-1.8a1 1 0 0 0-1.4 1.4l2.5 2.5c.4.4 1 .4 1.4 0l4-4Z" clip-rule="evenodd"/>
+                            </svg>
+                    </a>
+                #}               
                     <a href="{{ path('student_inscription_training_block', {'id': inscription.id, 'id_training_block': trainingBlock.id}) }}">
                         <!-- Changer le css lorsqu'il y a un progrés et que l'élève a validé le bloc -->
                         <li class="mb-2 ms-6 p-4 rounded-lg hover:bg-gray-100">            
