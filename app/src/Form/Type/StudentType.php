@@ -19,6 +19,7 @@ class StudentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isStudentParameterPage = $options['isStudentParameterPage'] ?? false;
+        $isTeacherView = $options['isTeacherView'] ?? false;
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Email',

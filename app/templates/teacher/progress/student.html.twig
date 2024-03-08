@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suivi des progressions{% endblock %}
+
+{% block body %}
+<div class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    <div class="w-full mb-1 sm:flex items-center justify-between">
+        <div class="mb-4">
+            <nav class="flex mb-5" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                    <li class="inline-flex items-center">
+                        <a href="{{ path("teacher_index") }}" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                            <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="inline-flex items-center">
+                        <a href="{{ path("teacher_progress_index") }}" class="inline-flex items-center ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">
+                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                               Suivi des progressions
+                            </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                            <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">
+                                Suivi de {{ progressArray[0].studentName }}
+                            </span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+            <div class="flex md:space-x-3 md:space-y-0 space-y-3 md:flex-row flex-col">
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Suivi de {{ progressArray[0].studentName }}</h1>
+            </div>
+
+
+            <!-- cards -->
+            <div class="flex min-w-full align-middle">
+                <div class="overflow-hidden p-4 gap-x-3 flex gap-4">
+
+                    {% for data in progressArray %}
+                        <div class="w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+                            {% if data.trainingDifficulty.value == "Débutant" %}
+                            <span class="mb-4 inline-flex bg-green-100 text-green-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ data.trainingDifficulty.value }}</span>
+
+                            {% elseif data.trainingDifficulty.value == "Intermédiaire" %}
+                                <span class="mb-4 inline-flex bg-yellow-100 text-yellow-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ data.trainingDifficulty.value }}</span>
+
+                            {% elseif data.trainingDifficulty.value == "Avancé" %}
+                                <span class="mb-4 inline-flex bg-pink-100 text-pink-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-pink-900 dark:text-pink-300">{{ data.trainingDifficulty.value }}</span>
+
+                            {% elseif data.trainingDifficulty.value == "Expert" %}
+                                <span class="mb-4 inline-flex bg-purple-100 text-purple-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">{{ data.trainingDifficulty.value }}</span>
+
+                            {% elseif data.trainingDifficulty.value == "Dieu" %}
+                                <span class="mb-4 inline-flex bg-red-100 text-red-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ data.trainingDifficulty.value }}</span>
+
+                            {% else %}
+                                <span class="mb-4 inline-flex bg-blue-100 text-blue-800 text-base font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{ data.trainingDifficulty.value }}</span>
+
+                            {% endif %}    
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ data.trainingTitle }}</h5>    
+
+                            <ul role="list" class="max-w-sm divide-y divide-gray-200 dark:divide-gray-700">
+                                <li class="py-3 sm:py-4">
+                                    <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                                        <div class="flex-1 min-w-0">
+                                            {% if data.gradeLabel is same as null %}
+                                            {% else %}
+                                            <div class="flex gap-2 items-center">
+                                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path fill-rule="evenodd" d="M4 4c0-.6.4-1 1-1h14a1 1 0 1 1 0 2v14a1 1 0 1 1 0 2H5a1 1 0 1 1 0-2V5a1 1 0 0 1-1-1Zm5 2a1 1 0 0 0-1 1v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1V7c0-.6-.4-1-1-1H9Zm5 0a1 1 0 0 0-1 1v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1V7c0-.6-.4-1-1-1h-1Zm-5 4a1 1 0 0 0-1 1v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-1c0-.6-.4-1-1-1H9Zm5 0a1 1 0 0 0-1 1v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1v-1c0-.6-.4-1-1-1h-1Zm-3 4a2 2 0 0 0-2 2v3h2v-3h2v3h2v-3a2 2 0 0 0-2-2h-2Z" clip-rule="evenodd"/>
+                                                </svg>                                                
+                                                <p class="font-semibold text-xl text-gray-900 truncate dark:text-white">
+                                                    {{ data.gradeLabel }}
+                                                </p>
+                                            </div>
+                                            {% endif %}
+                                            <div class="flex gap-2 items-center">
+                                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path fill-rule="evenodd" d="M12 2a3 3 0 0 0-2.1.9l-.9.9a1 1 0 0 1-.7.3H7a3 3 0 0 0-3 3v1.2c0 .3 0 .5-.2.7l-1 .9a3 3 0 0 0 0 4.2l1 .9c.2.2.3.4.3.7V17a3 3 0 0 0 3 3h1.2c.3 0 .5 0 .7.2l.9 1a3 3 0 0 0 4.2 0l.9-1c.2-.2.4-.3.7-.3H17a3 3 0 0 0 3-3v-1.2c0-.3 0-.5.2-.7l1-.9a3 3 0 0 0 0-4.2l-1-.9a1 1 0 0 1-.3-.7V7a3 3 0 0 0-3-3h-1.2a1 1 0 0 1-.7-.2l-.9-1A3 3 0 0 0 12 2Zm3.7 7.7a1 1 0 1 0-1.4-1.4L10 12.6l-1.3-1.3a1 1 0 0 0-1.4 1.4l2 2c.4.4 1 .4 1.4 0l5-5Z" clip-rule="evenodd"/>
+                                                </svg>                                                    
+                                                <p class="font-semibold text-xl text-gray-900 truncate dark:text-white">
+                                                    Nombre de blocs validés : {{ data.numberOfValidatedBlocks }}
+                                                </p>
+                                            </div>
+                                            <div class="flex gap-2 items-center">
+                                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path fill-rule="evenodd" d="M5 3a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V7c0-.6-.4-1-1-1h-1a1 1 0 1 0 0 2v11h-2V5a2 2 0 0 0-2-2H5Zm7 4c0-.6.4-1 1-1h.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1Zm0 3c0-.6.4-1 1-1h.5a1 1 0 1 1 0 2H13a1 1 0 0 1-1-1Zm-6 4c0-.6.4-1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1Zm0 3c0-.6.4-1 1-1h6a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1ZM7 6a1 1 0 0 0-1 1v3c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V7c0-.6-.4-1-1-1H7Zm1 3V8h1v1H8Z" clip-rule="evenodd"/>
+                                                </svg>                                                
+                                                <p class="truncate text-xl dark:text-gray-400">
+                                                    Nombre total de blocs : {{ data.numberOfTotalBlocks }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+    
+            <!-- fin cards -->
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
