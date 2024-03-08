@@ -52,7 +52,8 @@ class ProgressRepository extends ServiceEntityRepository
             ->setParameter('teacher', $teacher)
             ->andWhere('i.grade = :grade')
             ->setParameter(':grade', $grade)
-            ->orderBy('s.lastname', 'ASC')
+            ->orderBy('i.training', 'ASC')
+            ->addOrderBy('s.lastname', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -67,6 +68,7 @@ class ProgressRepository extends ServiceEntityRepository
             ->andWhere('i.training = :training')
             ->setParameter('training', $training)
             ->orderBy('t.title', 'ASC')
+            ->addOrderBy('i.grade', 'ASC')
             ->getQuery()
             ->getResult();
     }
