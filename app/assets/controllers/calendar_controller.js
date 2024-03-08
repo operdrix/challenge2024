@@ -9,10 +9,12 @@ import listPlugin from '@fullcalendar/list';
 // Modal
 import { Modal } from 'flowbite'
 import { EventImpl } from "@fullcalendar/core/internal";
-let modal;
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
+
+    modal;
+
     static targets = [
         'calendar',
         'modal',
@@ -47,7 +49,7 @@ export default class extends Controller {
             override: true
         };
 
-        modal = new Modal(this.modalTarget, options, instanceOption);
+        this.modal = new Modal(this.modalTarget, options, instanceOption);
     }
 
     initCalendar() {
@@ -69,36 +71,39 @@ export default class extends Controller {
                 url: this.urlValue,
                 method: 'POST'
             },
-            eventClick: function (info) {
-                console.log(info.event);
-                // this.modalTitleTarget.innerText = info.event.extendedProps.trainingTitle;
-                // this.modalDateTarget.innerText = info.event.startStr;
+            eventClick: (info) => {
+                console.log(info.event.extendedProps);
+                console.log(info.event.extendedProps.trainingId);
+                this.modalTitleTarget.innerText = info.event.extendedProps['trainingTitle'];
+                this.modalDateTarget.innerText = info.event.startStr;
 
-                // // Cours pour une classe ou des étudiants individuels
-                // if (info.event.extendedProps.gradeLabel) {
-                //     this.modalGradeTarget.innerText = info.event.extendedProps.gradeLabel;
-                //     this.modalGradeTarget.classList.remove('hidden');
+                // Cours pour une classe ou des étudiants individuels
+                if (info.event.extendedProps.gradeLabel) {
+                    this.modalGradeTarget.innerText = info.event.extendedProps.gradeLabel;
+                    this.modalGradeTarget.classList.remove('hidden');
 
-                //     this.modalStudents.classList.add('hidden');
-                // } else {
-                //     this.modalGradeTarget.classList.add('hidden');
-                //     this.modalStudents.classList.remove('hidden');
-                // }
+                    this.modalStudents.classList.add('hidden');
+                } else {
+                    this.modalGradeTarget.classList.add('hidden');
+                    this.modalStudentsTarget.classList.remove('hidden');
+                }
 
-                // // Session distancielle ou présentielle
-                // if (info.event.extendedProps.isOnline) {
-                //     this.modalOnlineTarget.innerText = "Distanciel";
-                //     this.modalSessionLinkTarget.classList.remove('hidden');
-                //     this.modalSessionLinkTarget.innerText = info.event.extendedProps.sessionLink;
-                //     this.modalPlaceTarget.classList.add('hidden');
-                //     this.modalPlaceTarget.innerText = '';
-                // } else {
-                //     this.modalOnlineTarget.innerText = "Présentiel";
-                //     this.modalSessionLinkTarget.classList.add('hidden');
-                //     this.modalSessionLinkTarget.innerText = '';
-                //     this.modalPlaceTarget.innerText = info.event.extendedProps.place;
-                //     this.modalPlaceTarget.classList.remove('hidden');
-                // }
+                // Session distancielle ou présentielle
+                if (info.event.extendedProps.isOnline) {
+                    this.modalOnlineTarget.innerText = "Distanciel";
+                    this.modalSessionLinkTarget.classList.remove('hidden');
+                    this.modalSessionLinkTarget.innerText = info.event.extendedProps.sessionLink;
+                    this.modalPlaceTarget.classList.add('hidden');
+                    this.modalPlaceTarget.innerText = '';
+                } else {
+                    this.modalOnlineTarget.innerText = "Présentiel";
+                    this.modalSessionLinkTarget.classList.add('hidden');
+                    this.modalSessionLinkTarget.innerText = '';
+                    this.modalPlaceTarget.innerText = info.event.extendedProps.place;
+                    this.modalPlaceTarget.classList.remove('hidden');
+                }
+
+                this.modal.show();
             }
         });
 
@@ -106,6 +111,6 @@ export default class extends Controller {
     }
 
     closeModal() {
-        modal.hide();
+        this.modal.hide();
     }
 }

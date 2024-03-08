@@ -77,7 +77,7 @@ class CalendarService implements CalendarServiceInterface
                 'borderColor' => '#6b7280',
                 'extentedProps' => [
                     'trainingId' => $training->getId(),
-                    'traininTitle' => $training->getTitle(),
+                    'trainingTitle' => $training->getTitle(),
                     'teacherName' => $training->getTeacher()->getLastname() . ' '
                         . $training->getTeacher()->getFirstname(),
                     'isOnline' => $session->isIsOnline(),
