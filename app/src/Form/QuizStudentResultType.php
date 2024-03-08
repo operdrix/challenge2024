@@ -23,14 +23,29 @@ class QuizStudentResultType extends AbstractType
             ->add('value', NumberType::class, [
                 'required' => true,
                 'label' => 'Note obtenue (sur ' . $options['max_points'] . ' au total)',
+                'label_attr' => [
+                    'class' => 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                ],
             ])
             ->add('comment', TextareaType::class, [
                 'required' => false,
                 'label' => 'Commentaire',
+                'label_attr' => [
+                    'class' => 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                ],
             ])
             ->add('isValidated', CheckboxType::class , [
                 'required' => false,
                 'label' => 'Valider la note',
+                'row_attr' => [
+                    'class' => 'flex items-center mb-4'
+                ],
+                'label_attr' => [
+                    'class' => 'ms-2 text-sm font-medium text-gray-900 dark:text-gray-300'
+                ],
+                'attr' => [
+                    'class' => 'w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                ]
             ])
         ;
     }
