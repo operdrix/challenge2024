@@ -52,7 +52,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $session1 = new TrainingSession();
         $session1->setInscription($inscription1);
         $session1->setLength(60);
-        $session1->setStartDate(new \DateTimeImmutable('2024-03-08 08:00:00'));
+        $session1->setStartDate(new \DateTimeImmutable('2024-03-08 14:00:00'));
         $session1->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_1));
         $session1->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_2));
         $session1->setPlace('ESGI - Salle 301');
@@ -61,7 +61,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $session2 = new TrainingSession();
         $session2->setInscription($inscription1);
         $session2->setLength(60);
-        $session2->setStartDate(new \DateTimeImmutable('2024-03-08 09:45:00'));
+        $session2->setStartDate(new \DateTimeImmutable('2024-03-08 15:15:00'));
         $session2->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_3));
         $session2->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_4));
         $session2->setIsOnline(true);
@@ -71,7 +71,7 @@ class InscriptionFixtures extends Fixture implements DependentFixtureInterface
         $session3 = new TrainingSession();
         $session3->setInscription($inscription1);
         $session3->setLength(60);
-        $session3->setStartDate(new \DateTimeImmutable('2024-03-08 13:30:00'));
+        $session3->setStartDate(new \DateTimeImmutable('2024-03-08 16:30:00'));
         $session3->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_5));
         $session3->addTrainingBlock($this->getReference(TrainingFixtures::TRAINING_1_BLOCK_6));
         $session3->setPlace('ESGI - Salle 303');
