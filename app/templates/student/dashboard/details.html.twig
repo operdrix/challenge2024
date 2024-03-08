@@ -71,14 +71,12 @@
                     </a>
                 </button>
             {% else %}
-                <button type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                    <a href="{{ path('student_inscription_training_block_validate', {'id': inscription.id, 'id_training_block': trainingBlock.id}) }}">
-                    Valider le bloc
-                    <svg class="w-6 h-6 rtl:rotate-180 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
-                    </svg>
-                    </a>
-                </button>
+                <a class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" href="{{ path('student_inscription_training_block_validate', {'id': inscription.id, 'id_training_block': trainingBlock.id}) }}">
+                Valider le bloc
+                <svg class="w-6 h-6 rtl:rotate-180 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4.7 4.5 9.3-9"/>
+                </svg>
+                </a>
             {% endif %}
             
 
