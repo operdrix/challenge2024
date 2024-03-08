@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Grade{% endblock %}
+
+{% block body %}
+
+// Ajout du breadcrum ici Home (lien) > Ecole (lien) > Nom de la classe
+
+    <h1>
+        {% if grade.school.logoFilename %}
+            <img src="{{ asset(grade.school.logoFilename, 'school') }}" alt="Logo de l'école">
+        {% else %}
+            <img src="{{ asset('ecole.png') }}" alt="Logo par défaut">    
+        {% endif %}
+        
+        {{ grade.school.name }} - {{ grade.label }}
+    </h1>
+        TODO: Afficher la liste des élèves + lien vers leur page de progression (à venir)
+    </table>
+
+    <a href="{{ path('teacher_grades_edit', {'school_id': grade.school.id, 'id': grade.id}) }}">edit</a>
+
+{% endblock %}

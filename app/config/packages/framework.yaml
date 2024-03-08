@@ -17,9 +17,20 @@ framework:
     #fragments: true
     php_errors:
         log: true
+    assets:
+        packages:
+            school:
+                base_path: '%school_directory%'
+            student:
+                base_path: '%student_directory%'
+            training:
+                base_path: '%training_directory%'
+            quiz:
+                base_path: '%quiz_directory%'
 
 when@test:
     framework:
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
+

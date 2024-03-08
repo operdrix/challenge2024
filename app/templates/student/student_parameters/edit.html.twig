@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paramètres utilisateur{% endblock %}
+
+{% block body %}
+<div class="grid grid-cols-1 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+    <div class="mb-4 col-span-full xl:mb-2">
+        <div class="px-4 pt-6 bg-white block border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div class="w-full mb-1 sm:flex items-center justify-between">
+                <div class="mb-4">
+                    <nav class="flex mb-5" aria-label="Breadcrumb">
+                        <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                            <li class="inline-flex items-center">
+                                <a href="{{ path("student_dashboard") }}" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                                    <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                                    Tableau de bord
+                                </a>
+                            </li>
+                            <li>
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                    <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">
+                                        Paramètres
+                                    </span>
+                                </div>
+                            </li>
+                        </ol>
+                    </nav>
+                    <div class="flex flex-col">
+                        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Paramètres utilisateurs</h1>
+                        <p class="text-gray-500 dark:text-gray-400 mt-2">Modifiez vos informations personnelles</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- contenu -->
+        <div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-2 xl:gap-4 dark:bg-gray-900">
+            <!-- Right Content -->
+            <div class="col-span-1 xl:col-auto">
+                <div class="p-4 mb-4 h-full bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <div class="grid justify-items-center justify-center align-center text-center gap-6" style="justify-items: center;">
+                        <img class="w-auto mb-4 py-4 sm:mb-0 xl:mb-4 2xl:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" style="height: 500px;">
+                        <div>
+                            <h3 class="mb-1 text-xl font-bold text-gray-900 dark:text-white">Photo de profil</h3>
+                            <div class="mb-4 text-sm text-gray-500 dark:text-gray-400">
+                                JPG, GIF ou PNG. Taille max de 800K
+                            </div>
+                            <div class="flex items-center space-x-4 gap-4">
+                                <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                    <svg class="w-4 h-4 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z"></path><path d="M9 13h2v5a1 1 0 11-2 0v-5z"></path></svg>
+                                    Importer une photo
+                                </button>
+                                <button type="button" class="py-2 px-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-span-1">
+                <div class="p-4 mb-4 h-full bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                    <h3 class="mb-4 text-xl font-semibold dark:text-white">Informations générales</h3>
+                    {{ include('student/student_parameters/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+                </div>
+            </div>
+            
+        </div>
+        <!-- fin contenu -->
+
+</div>
+
+{% endblock %}

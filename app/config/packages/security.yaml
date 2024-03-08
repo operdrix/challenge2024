@@ -15,9 +15,14 @@ security:
             class: App\Entity\Teacher
             property: email
 
+        app_admin_provider:
+          entity:
+            class: App\Entity\Admin
+            property: email
+
         all_users:
           chain:
-            providers: [ 'app_student_provider', 'app_teacher_provider' ]
+            providers: [ 'app_student_provider', 'app_teacher_provider', 'app_admin_provider' ]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -33,6 +38,7 @@ security:
               login_path: login
               check_path: login
               enable_csrf: true
+              default_target_path: /
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -48,7 +54,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-      - { path: ^/admin, roles: IS_AUTHENTICATED_FULLY }
+      - { path: ^/admin, roles: ROLE_ADMIN }
+      - { path: ^/teacher, roles: ROLE_TEACHER }
+      - { path: ^/student, roles: ROLE_STUDENT }
+      - { path: ^/chat, roles: [ROLE_STUDENT, ROLE_TEACHER] }
       - { path: ^/login, roles: PUBLIC_ACCESS }
 
 when@test:

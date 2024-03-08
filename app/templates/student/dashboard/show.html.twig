@@ -1,0 +1,264 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ training.title }}{% endblock %}
+
+{% block body %}
+    <div class="p-4 bg-white block border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div class="w-full mb-1 sm:flex items-center justify-between">
+            <div class="mb-4">
+                <nav class="flex mb-5" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                        <li class="inline-flex items-center">
+                            <a href="{{ path("student_dashboard") }}" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                                <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">
+                                    {{ training.title }}
+                                </span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+                <div class="flex flex-col">
+                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">{{ training.title }}</h1>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2">Consultez ici le contenu de cette formation</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white mb-4 border-b border-gray-200 dark:border-gray-700">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+                <li class="me-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="objectives-styled-tab" data-tabs-target="#styled-objectives" type="button" role="tab" aria-controls="objectives" aria-selected="false">Objectifs/Catégories</button>
+                </li>
+                <li class="me-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="block-styled-tab" data-tabs-target="#styled-block" type="button" role="tab" aria-controls="block" aria-selected="false">Blocs</button>
+                </li>
+                <li role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="resources-styled-tab" data-tabs-target="#styled-resources" type="button" role="tab" aria-controls="resources" aria-selected="false">Ressources</button>
+                </li>
+            </ul>
+        </div>
+        
+        <div id="default-styled-tab-content" class="bg-white">
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-objectives" role="tabpanel" aria-labelledby="objectives-tab">
+
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white my-4">Objectifs</h1>
+                <ol class="space-y-4 w-72">
+                    {% for objective in training.getTrainingObjectives %}  
+                    <li>
+                        <div class="w-full p-4 text-blue-700 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:border-blue-800 dark:text-blue-400" role="alert">
+                            <div class="flex items-center justify-between">
+                                <span class="sr-only">{{ objective.title }}</span>
+                                <h3 class="font-medium">{{ objective.title }}</h3>
+                                <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                    <path d="M16 14V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 0 0 0-2h-1v-2a2 2 0 0 0 2-2ZM4 2h2v12H4V2Zm8 16H3a1 1 0 0 1 0-2h9v2Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ol>
+
+                {% for categorie in training.getCategories %}
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white my-4">Catégories</h1>
+                <div class="grid w-2/4 grid-cols-1 gap-4 mt-4 xl:grid-cols-2 2xl:grid-cols-3 mb-4">
+                    <div class="items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                      <div class="w-full">
+                        <span class="font-bold leading-none text-gray-900 dark:text-white">{{ categorie.label }}</span>
+                      </div>
+                      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14"/>
+                      </svg>
+                    </div>
+                  </div>
+                {% endfor %}  
+
+            </div>
+
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-block" role="tabpanel" aria-labelledby="block-tab">
+                <ol class="relative border-s border-gray-200 dark:border-gray-700">                  
+                    {% for trainingBlock in training.getTrainingBlocks %}                
+                    <a href="{{ path('student_inscription_training_block', {'id': inscription.id, 'id_training_block': trainingBlock.id}) }}">
+                        <!-- Changer le css lorsqu'il y a un progrés et que l'élève a validé le bloc -->
+                        <li class="mb-2 ms-6 p-4 rounded-lg hover:bg-gray-100">            
+                            <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                                <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                </svg>
+                            </span>
+                            {% if trainingBlock.position == 1 %}
+                            <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">{{ trainingBlock.title }} <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ trainingBlock.position}}<sup>er</sup> chapitre</span></h3>
+                            {% else %}
+                            <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">{{ trainingBlock.title }} <span class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">{{ trainingBlock.position}}<sup>e</sup> chapitre</span></h3>
+                            {% endif %}
+                            <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ trainingBlock.title }}</time>
+                            <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ trainingBlock.content }}</p>
+                        </a>
+                            {% endfor %}
+                            {% for trainingBlock in training.getQuizzes %} 
+                            <a href="{{ path('student_student_answer_all', {'id': trainingBlock.id}) }}" class="inline-flex items-center px-4 py-2 font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-100 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">{{ trainingBlock.label }} <svg class="w-3 h-3 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg></a>
+                    {% endfor %}
+                        </li>
+                    </ol>
+            </div>
+
+                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="styled-resources" role="tabpanel" aria-labelledby="resources-tab">
+                {% for resource in training.getResources %}
+                
+                
+
+                {% if resource.type.value == 'PDF' %}
+                
+                <div class="flex items-start gap-2.5 mb-6">
+                    <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
+                    <div class="flex flex-col gap-1">
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ training.teacher.fullname }}</span>
+                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">12:40</span>
+                    </div>
+                    <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                        <div class="flex items-start bg-gray-50 dark:bg-gray-600 rounded-xl p-2">
+                            <div class="me-2">
+                                <span class="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white pb-2">
+                                <svg fill="none" aria-hidden="true" class="w-5 h-5 flex-shrink-0" viewBox="0 0 20 21">
+                                    <g clip-path="url(#clip0_3173_1381)">
+                                        <path fill="#E2E5E7" d="M5.024.5c-.688 0-1.25.563-1.25 1.25v17.5c0 .688.562 1.25 1.25 1.25h12.5c.687 0 1.25-.563 1.25-1.25V5.5l-5-5h-8.75z"/>
+                                        <path fill="#B0B7BD" d="M15.024 5.5h3.75l-5-5v3.75c0 .688.562 1.25 1.25 1.25z"/>
+                                        <path fill="#CAD1D8" d="M18.774 9.25l-3.75-3.75h3.75v3.75z"/>
+                                        <path fill="#F15642" d="M16.274 16.75a.627.627 0 01-.625.625H1.899a.627.627 0 01-.625-.625V10.5c0-.344.281-.625.625-.625h13.75c.344 0 .625.281.625.625v6.25z"/>
+                                        <path fill="#fff" d="M3.998 12.342c0-.165.13-.345.34-.345h1.154c.65 0 1.235.435 1.235 1.269 0 .79-.585 1.23-1.235 1.23h-.834v.66c0 .22-.14.344-.32.344a.337.337 0 01-.34-.344v-2.814zm.66.284v1.245h.834c.335 0 .6-.295.6-.605 0-.35-.265-.64-.6-.64h-.834zM7.706 15.5c-.165 0-.345-.09-.345-.31v-2.838c0-.18.18-.31.345-.31H8.85c2.284 0 2.234 3.458.045 3.458h-1.19zm.315-2.848v2.239h.83c1.349 0 1.409-2.24 0-2.24h-.83zM11.894 13.486h1.274c.18 0 .36.18.36.355 0 .165-.18.3-.36.3h-1.274v1.049c0 .175-.124.31-.3.31-.22 0-.354-.135-.354-.31v-2.839c0-.18.135-.31.355-.31h1.754c.22 0 .35.13.35.31 0 .16-.13.34-.35.34h-1.455v.795z"/>
+                                        <path fill="#CAD1D8" d="M15.649 17.375H3.774V18h11.875a.627.627 0 00.625-.625v-.625a.627.627 0 01-.625.625z"/>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_3173_1381">
+                                            <path fill="#fff" d="M0 0h20v20H0z" transform="translate(0 .5)"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                {{ resource.title }}
+                                </span>
+                                <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">
+                                12 Pages 
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
+                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
+                                </svg>
+                                18 MB 
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
+                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
+                                </svg>
+                                PDF
+                                </span>
+                            </div>
+                            <div class="inline-flex self-center items-center">
+                                <a href="{{ resource.link }}" class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600">
+                                <svg class="w-4 h-4 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
+                                    <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
+                                </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+ 
+                {% endif %}
+
+                {% if resource.type.value == 'Lien' %}
+                
+                <div class="flex items-start gap-2.5 mb-6">
+                    <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
+                    <div class="flex flex-col gap-1 w-full max-w-[320px]">
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ training.teacher.fullname }}</span>
+                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">11:46</span>
+                    </div>
+                    <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                        <p class="text-sm font-normal pb-2.5 text-gray-900 dark:text-white"><a href="{{ resource.link }}" class="text-blue-700 dark:text-blue-500 underline hover:no-underline font-medium break-all">{{ resource.link }}</a></p>
+                        <a href="{{ resource.link }}" class="bg-gray-50 dark:bg-gray-600 rounded-xl p-4 mb-2 hover:bg-gray-200 dark:hover:bg-gray-500">
+                            <img src="https://flowbite.com/docs/images/og-image.png" class="rounded-lg mb-2" />
+                            <span class="text-sm font-medium text-gray-900 dark:text-white mb-2">{{ resource.title }}</span>
+                            <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">12 min</span>
+                        </a>
+                    </div>
+                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Envoyé</span>
+                    </div>
+                </div>
+ 
+                {% endif %}
+
+                {% if resource.type.value == 'Vidéo' %}
+                <div class="flex items-start gap-2.5 mb-6">
+                    <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
+                    <div class="flex flex-col gap-1">
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                        <span class="text-sm font-semibold text-gray-900 dark:text-white">{{ training.teacher.fullname }}</span>
+                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">13:30</span>
+                    </div>
+                    <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+                        <div class="flex items-start bg-gray-50 dark:bg-gray-600 rounded-xl p-2">
+                            <div class="me-2">
+                                <span class="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white pb-2">
+                                <svg fill="none" aria-hidden="true" class="w-5 h-5 flex-shrink-0" viewBox="0 0 20 21">
+                                    <g clip-path="url(#clip0_3173_1381)">
+                                        <path fill="#E2E5E7" d="M5.024.5c-.688 0-1.25.563-1.25 1.25v17.5c0 .688.562 1.25 1.25 1.25h12.5c.687 0 1.25-.563 1.25-1.25V5.5l-5-5h-8.75z"/>
+                                        <path fill="#B0B7BD" d="M15.024 5.5h3.75l-5-5v3.75c0 .688.562 1.25 1.25 1.25z"/>
+                                        <path fill="#CAD1D8" d="M18.774 9.25l-3.75-3.75h3.75v3.75z"/>
+                                        <path fill="#F15642" d="M16.274 16.75a.627.627 0 01-.625.625H1.899a.627.627 0 01-.625-.625V10.5c0-.344.281-.625.625-.625h13.75c.344 0 .625.281.625.625v6.25z"/>
+                                        <path fill="#fff" d="M3.998 12.342c0-.165.13-.345.34-.345h1.154c.65 0 1.235.435 1.235 1.269 0 .79-.585 1.23-1.235 1.23h-.834v.66c0 .22-.14.344-.32.344a.337.337 0 01-.34-.344v-2.814zm.66.284v1.245h.834c.335 0 .6-.295.6-.605 0-.35-.265-.64-.6-.64h-.834zM7.706 15.5c-.165 0-.345-.09-.345-.31v-2.838c0-.18.18-.31.345-.31H8.85c2.284 0 2.234 3.458.045 3.458h-1.19zm.315-2.848v2.239h.83c1.349 0 1.409-2.24 0-2.24h-.83zM11.894 13.486h1.274c.18 0 .36.18.36.355 0 .165-.18.3-.36.3h-1.274v1.049c0 .175-.124.31-.3.31-.22 0-.354-.135-.354-.31v-2.839c0-.18.135-.31.355-.31h1.754c.22 0 .35.13.35.31 0 .16-.13.34-.35.34h-1.455v.795z"/>
+                                        <path fill="#CAD1D8" d="M15.649 17.375H3.774V18h11.875a.627.627 0 00.625-.625v-.625a.627.627 0 01-.625.625z"/>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_3173_1381">
+                                            <path fill="#fff" d="M0 0h20v20H0z" transform="translate(0 .5)"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                {{ resource.title }}
+                                </span>
+                                <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">
+                                12 Pages 
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
+                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
+                                </svg>
+                                18 MB 
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
+                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
+                                </svg>
+                                PDF
+                                </span>
+                            </div>
+                            <div class="inline-flex self-center items-center">
+                                <button class="inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600" type="button">
+                                <svg class="w-4 h-4 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
+                                    <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
+                                </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Envoyé</span>
+                    </div>
+                </div> 
+                {% endif %}
+          
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+
+</div>
+
+{% endblock %}

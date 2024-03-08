@@ -1,14 +1,14 @@
 {% use 'tailwind_2_layout.html.twig' %}
 
 {%- block form_row -%}
-    {%- set row_class = row_class|default('my row classes') -%}
+    {%- set row_class = row_class|default('default classes') -%}
     {{- parent() -}}
 {%- endblock form_row -%}
 
 {%- block widget_attributes -%}
     {%- set widget_class = widget_class|default('bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500') -%}
     {%- set widget_disabled_class = widget_disabled_class|default('cursor-not-allowed bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500') -%}
-    {%- set widget_errors_class = widget_errors_class|default('my widget with error classes') -%}
+    {%- set widget_errors_class = widget_errors_class|default('bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500') -%}
     {{- parent() -}}
 {%- endblock widget_attributes -%}
 
@@ -18,11 +18,35 @@
 {%- endblock form_label -%}
 
 {%- block form_help -%}
-    {%- set help_class = help_class|default('my label classes') -%}
+    {%- set help_class = help_class|default('mt-2 text-sm text-gray-500 dark:text-gray-400') -%}
     {{- parent() -}}
 {%- endblock form_help -%}
 
 {%- block form_errors -%}
-    {%- set error_item_class = error_item_class|default('my error item classes') -%}
+    {%- set error_item_class = error_item_class|default('mt-2 text-sm text-red-600 dark:text-red-500') -%}
     {{- parent() -}}
 {%- endblock form_errors -%}
+
+{%- block collection_widget -%}
+    <div
+            {{ stimulus_controller('form-collection') }}
+            data-form-collection-index-value="{{ form|length > 0 ? form|last.vars.name + 1 : 0 }}"
+            {% if form.vars['allow_add'] == true %}
+                data-form-collection-prototype-value="{{ form_widget(form.vars.prototype)|e('html_attr') }}"
+            {% endif %}
+    >
+        <ul {{ stimulus_target('form-collection', 'collectionContainer') }} class="{{ form.vars.row_attr.class|default('') }}">
+            {% for child in form.children %}
+                <li {{ stimulus_target('form-collection', 'field') }}>
+                    {{ form_widget(child) }}
+                    {% if form.vars['allow_delete'] == true %}
+                        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" {{ stimulus_action('form-collection', 'removeItem' ) }}>
+                            Retirer
+                        </button>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Ajouter</button>
+    </div>
+{%- endblock collection_widget -%}

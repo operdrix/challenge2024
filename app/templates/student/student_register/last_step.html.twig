@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Étudiante - Dernière étape</title>
+</head>
+<body>
+    {% block body %}
+        <div class="example-wrapper">
+            <h1>Inscription Étudiante</h1>
+            <div>
+                Votre mot de passe doit répondre aux exigences de sécurité suviantes:
+                <ul>
+                    <li>8 caractères minimum</li>
+                    <li>255 caractères maximum</li>
+                    <li>Une lettre majuscule</li>
+                    <li>Un chiffre</li>
+                    <li>Un symbole</li>
+                </ul>
+            </div>
+            {{ form_start(form, {'attr': {'novalidate' : 'novalidate'}}) }}
+                {{ form_widget(form) }}
+                <button type="submit">Valider</button>
+            {{ form_end(form) }}
+        </div>
+    {% endblock %}
+</body>
+</html>
+

@@ -7,6 +7,7 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+import './styles/calendar.css';
 
 // start the Stimulus application
 import './bootstrap';
@@ -14,5 +15,8 @@ import './bootstrap';
 // enable the interactive UI components from Flowbite with Turbo
 import 'flowbite/dist/flowbite.turbo.js';
 
-import "./js/sidebar"
-import "./js/dark-mode"
+const mainNavbar = document.getElementById("main-navbar")
+const contentWithoutFilter = document.getElementById("content-without-footer")
+const mainFooter = document.getElementById("main-footer")
+
+contentWithoutFilter.style.minHeight = `calc(100vh - ${mainNavbar.offsetHeight + mainFooter.offsetHeight + 35}px)`

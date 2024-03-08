@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CalendarController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/calendar.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="grid grid-cols-1 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+    <div class="mb-4 col-span-full xl:mb-2">
+        <div class="px-4 pt-6 bg-white block border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <div class="w-full mb-1 sm:flex items-center justify-between">
+                <div class="mb-4">
+                    <nav class="flex mb-5" aria-label="Breadcrumb">
+                        <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+                            <li class="inline-flex items-center">
+                                {% if is_granted("ROLE_STUDENT") %}
+                                    <a href="{{ path("student_dashboard") }}" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                                        <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                                        Tableau de bord
+                                    </a>
+                                {% elseif is_granted("ROLE_TEACHER")  %}
+                                    <a href="{{ path("teacher_index") }}" class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                                        <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                                        Tableau de bord
+                                    </a>
+                                {% endif %}
+                            </li>
+                            <li>
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                    <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">
+                                        Calendrier
+                                    </span>
+                                </div>
+                            </li>
+                        </ol>
+                    </nav>
+                    <div class="flex flex-col">
+                        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Calendrier des sessions de cours</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-4 ms-2">
+    <span class="px-2.5 py-0.5 me-1 rounded bg-[#aec597]"></span> Session distancielle 
+    <span class="mx-4"></span>
+    <span class="px-2.5 py-0.5 me-1 rounded bg-[#aec2cf]"></span> Session présentielle
+</div>
+
+<div
+        class="p-5"
+        {{ stimulus_controller('calendar') }}
+        data-calendar-url-value="{{ path('app_calendar_data') }}"
+>
+    {# Calendar container #}
+    <div {{ stimulus_target('calendar', 'calendar') }}>
+
+    </div>
+
+    {# Modal d'information sur une session #}
+    <div id="default-modal" {{ stimulus_target('calendar', 'modal') }} tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 {{ stimulus_target('calendar', 'modalTitle') }} class="text-xl font-semibold text-gray-900 dark:text-white">
+                        
+                    </h3>
+                    <button {{ stimulus_action('calendar', 'closeModal', 'click') }} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 space-y-4">
+                    <span {{ stimulus_target('calendar', 'modalGrade') }} class="hidden"></span>
+                    <span {{ stimulus_target('calendar', 'modalStudents') }} class="hidden"></span>
+                    <span {{ stimulus_target('calendar', 'modalDate') }}></span>
+                    <span {{ stimulus_target('calendar', 'modalOnline') }}></span>
+                    <span {{ stimulus_target('calendar', 'modalSessionLink') }} class="hidden"></span>
+                    <span {{ stimulus_target('calendar', 'modalPlace') }} class="hidden"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+<turbo-stream action="append" target="messages">
+    <template>
+        {% if message.id is not same as null %}
+            <div class="flex items-start gap-2.5 w-full mb-6">
+                {% if message.createdBy is same as message.conversation.teacher.email %}
+                    {% set color = "bg-[#aec597]" %}
+                {% else %}
+                    {% set color = "bg-[#aec2cf]" %}
+                {% endif %}
+                <div class="flex flex-col w-full leading-1.5 p-4 border-gray-200 {{ color }}">
+                    <div class="flex items-center space-x-2 rtl:space-x-reverse">
+                        <span class="text-sm font-semibold">
+                            {% if message.createdBy is same as message.conversation.teacher.email %}
+                                {{ message.conversation.teacher.fullname }}
+                            {% else %}
+                                {{ message.conversation.student.fullname }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <p class="text-sm font-normal py-2.5">{{ message.content }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </template>
+</turbo-stream>

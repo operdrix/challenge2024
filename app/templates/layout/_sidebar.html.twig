@@ -4,6 +4,154 @@
             <div class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                 <ul class="pb-2 space-y-2">
                     {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                        {% if is_granted("ROLE_TEACHER") %}
+                            <li>
+                                <a href="{{ path("teacher_index") }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                         aria-hidden="true">
+                                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                    </svg>
+                                    <span class="ml-3" sidebar-toggle-item="">Tableau de bord</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("teacher_schools_index") }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                         aria-hidden="true">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.496 2.13201C10.3449 2.04572 10.174 2.00034 10 2.00034C9.82603 2.00034 9.65506 2.04572 9.504 2.13201L2.504 6.13201C2.31267 6.24147 2.16287 6.41107 2.07788 6.61446C1.99289 6.81784 1.97749 7.0436 2.03405 7.25665C2.09062 7.46969 2.216 7.65807 2.39068 7.79251C2.56537 7.92694 2.77957 7.99989 3 8.00001V15C2.73478 15 2.48043 15.1054 2.29289 15.2929C2.10536 15.4804 2 15.7348 2 16C2 16.2652 2.10536 16.5196 2.29289 16.7071C2.48043 16.8947 2.73478 17 3 17H17C17.2652 17 17.5196 16.8947 17.7071 16.7071C17.8946 16.5196 18 16.2652 18 16C18 15.7348 17.8946 15.4804 17.7071 15.2929C17.5196 15.1054 17.2652 15 17 15V8.00001C17.2204 7.99989 17.4346 7.92694 17.6093 7.79251C17.784 7.65807 17.9094 7.46969 17.9659 7.25665C18.0225 7.0436 18.0071 6.81784 17.9221 6.61446C17.8371 6.41107 17.6873 6.24147 17.496 6.13201L10.496 2.13201ZM6 9.00001C5.73478 9.00001 5.48043 9.10537 5.29289 9.29291C5.10536 9.48044 5 9.7348 5 10V13C5 13.2652 5.10536 13.5196 5.29289 13.7071C5.48043 13.8947 5.73478 14 6 14C6.26522 14 6.51957 13.8947 6.70711 13.7071C6.89464 13.5196 7 13.2652 7 13V10C7 9.7348 6.89464 9.48044 6.70711 9.29291C6.51957 9.10537 6.26522 9.00001 6 9.00001ZM9 10C9 9.7348 9.10536 9.48044 9.29289 9.29291C9.48043 9.10537 9.73478 9.00001 10 9.00001C10.2652 9.00001 10.5196 9.10537 10.7071 9.29291C10.8946 9.48044 11 9.7348 11 10V13C11 13.2652 10.8946 13.5196 10.7071 13.7071C10.5196 13.8947 10.2652 14 10 14C9.73478 14 9.48043 13.8947 9.29289 13.7071C9.10536 13.5196 9 13.2652 9 13V10ZM14 9.00001C13.7348 9.00001 13.4804 9.10537 13.2929 9.29291C13.1054 9.48044 13 9.7348 13 10V13C13 13.2652 13.1054 13.5196 13.2929 13.7071C13.4804 13.8947 13.7348 14 14 14C14.2652 14 14.5196 13.8947 14.7071 13.7071C14.8946 13.5196 15 13.2652 15 13V10C15 9.7348 14.8946 9.48044 14.7071 9.29291C14.5196 9.10537 14.2652 9.00001 14 9.00001Z"/>
+                                    </svg>
+                                    <span class="ml-3" sidebar-toggle-item="">Organismes / Ecoles</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("teacher_trainings_index") }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                         aria-hidden="true">
+                                        <path d="M9 4.804C7.90971 4.27316 6.71265 3.99818 5.5 4C4.245 4 3.057 4.29 2 4.804V14.804C3.0903 14.2732 4.28736 13.9982 5.5 14C7.169 14 8.718 14.51 10 15.385C11.3261 14.4802 12.8947 13.9975 14.5 14C15.755 14 16.943 14.29 18 14.804V4.804C16.9097 4.27316 15.7126 3.99818 14.5 4C13.245 4 12.057 4.29 11 4.804V12C11 12.2652 10.8946 12.5196 10.7071 12.7071C10.5196 12.8946 10.2652 13 10 13C9.73478 13 9.48043 12.8946 9.29289 12.7071C9.10536 12.5196 9 12.2652 9 12V4.804Z"/>
+                                    </svg>
+
+                                    <span class="ml-3" sidebar-toggle-item="">Cours / Formations</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("teacher_resources_index") }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                         aria-hidden="true">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4C7.20435 4 6.44129 4.31607 5.87868 4.87868C5.31607 5.44129 5 6.20435 5 7V11C5 12.3261 5.52678 13.5979 6.46447 14.5355C7.40215 15.4732 8.67392 16 10 16C11.3261 16 12.5979 15.4732 13.5355 14.5355C14.4732 13.5979 15 12.3261 15 11V7C15 6.73478 15.1054 6.48043 15.2929 6.29289C15.4804 6.10536 15.7348 6 16 6C16.2652 6 16.5196 6.10536 16.7071 6.29289C16.8946 6.48043 17 6.73478 17 7V11C17 11.9193 16.8189 12.8295 16.4672 13.6788C16.1154 14.5281 15.5998 15.2997 14.9497 15.9497C14.2997 16.5998 13.5281 17.1154 12.6788 17.4672C11.8295 17.8189 10.9193 18 10 18C9.08075 18 8.1705 17.8189 7.32122 17.4672C6.47194 17.1154 5.70026 16.5998 5.05025 15.9497C4.40024 15.2997 3.88463 14.5281 3.53284 13.6788C3.18106 12.8295 3 11.9193 3 11V7C3 5.67392 3.52678 4.40215 4.46447 3.46447C5.40215 2.52678 6.67392 2 8 2C9.32608 2 10.5979 2.52678 11.5355 3.46447C12.4732 4.40215 13 5.67392 13 7V11C13 11.7956 12.6839 12.5587 12.1213 13.1213C11.5587 13.6839 10.7956 14 10 14C9.20435 14 8.44129 13.6839 7.87868 13.1213C7.31607 12.5587 7 11.7956 7 11V7C7 6.73478 7.10536 6.48043 7.29289 6.29289C7.48043 6.10536 7.73478 6 8 6C8.26522 6 8.51957 6.10536 8.70711 6.29289C8.89464 6.48043 9 6.73478 9 7V11C9 11.2652 9.10536 11.5196 9.29289 11.7071C9.48043 11.8946 9.73478 12 10 12C10.2652 12 10.5196 11.8946 10.7071 11.7071C10.8946 11.5196 11 11.2652 11 11V7C11 6.20435 10.6839 5.44129 10.1213 4.87868C9.55871 4.31607 8.79565 4 8 4Z"/>
+                                    </svg>
+
+                                    <span class="ml-3" sidebar-toggle-item="">Support de cours</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path("teacher_quizzes_index") }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                         aria-hidden="true">
+                                        <path d="M10.394 2.08C10.2695 2.02663 10.1355 1.99911 10 1.99911C9.86455 1.99911 9.73051 2.02663 9.60601 2.08L2.60601 5.08C2.42562 5.15685 2.2718 5.28503 2.16368 5.44861C2.05557 5.61218 1.99792 5.80393 1.99792 6C1.99792 6.19608 2.05557 6.38783 2.16368 6.5514C2.2718 6.71498 2.42562 6.84316 2.60601 6.92L5.25001 8.051C5.34815 7.94 5.46975 7.85221 5.60601 7.794L9.60601 6.08C9.72705 6.02606 9.85761 5.9967 9.99009 5.99365C10.1226 5.99061 10.2544 6.01392 10.3777 6.06224C10.5011 6.11057 10.6137 6.18293 10.7089 6.27514C10.8041 6.36735 10.88 6.47755 10.9322 6.59935C10.9844 6.72115 11.0119 6.85211 11.0131 6.98463C11.0142 7.11714 10.989 7.24857 10.939 7.37126C10.8889 7.49396 10.8149 7.60548 10.7214 7.69934C10.6278 7.7932 10.5165 7.86753 10.394 7.918L7.66701 9.08801L9.60701 9.919C9.73137 9.97223 9.86523 9.99968 10.0005 9.99968C10.1358 9.99968 10.2696 9.97223 10.394 9.919L17.394 6.919C17.5738 6.84187 17.727 6.71369 17.8347 6.55034C17.9424 6.38699 17.9997 6.19565 17.9997 6C17.9997 5.80436 17.9424 5.61302 17.8347 5.44967C17.727 5.28632 17.5738 5.15814 17.394 5.081L10.394 2.081V2.08ZM3.31001 9.39701L5.00001 10.12V14.222C4.65376 14.1433 4.30314 14.0852 3.95001 14.048C3.72215 14.0241 3.50943 13.9226 3.34742 13.7606C3.18542 13.5986 3.08395 13.3859 3.06001 13.158C2.9285 11.8989 3.01305 10.6266 3.31001 9.396V9.39701ZM9.30001 16.573C8.62402 15.9097 7.84786 15.357 7.00001 14.935V10.978L8.81801 11.758C9.1915 11.9181 9.59364 12.0007 10 12.0007C10.4064 12.0007 10.8085 11.9181 11.182 11.758L16.69 9.39701C16.9887 10.6274 17.0733 11.9 16.94 13.159C16.9161 13.3869 16.8146 13.5996 16.6526 13.7616C16.4906 13.9236 16.2779 14.0251 16.05 14.049C14.0325 14.261 12.1465 15.1508 10.7 16.573C10.5131 16.7562 10.2618 16.8589 10 16.8589C9.73825 16.8589 9.48694 16.7562 9.30001 16.573ZM6.00001 18C6.26522 18 6.51958 17.8946 6.70711 17.7071C6.89465 17.5196 7.00001 17.2652 7.00001 17V14.935C6.364 14.619 5.6926 14.38 5.00001 14.223V17C5.00001 17.2652 5.10536 17.5196 5.2929 17.7071C5.48044 17.8946 5.73479 18 6.00001 18Z"/>
+                                    </svg>
+                                    <span class="ml-3" sidebar-toggle-item="">Examens</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_calendar') }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                         aria-hidden="true">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 2C5.73478 2 5.48043 2.10536 5.29289 2.29289C5.10536 2.48043 5 2.73478 5 3V4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V16C2 16.5304 2.21071 17.0391 2.58579 17.4142C2.96086 17.7893 3.46957 18 4 18H16C16.5304 18 17.0391 17.7893 17.4142 17.4142C17.7893 17.0391 18 16.5304 18 16V6C18 5.46957 17.7893 4.96086 17.4142 4.58579C17.0391 4.21071 16.5304 4 16 4H15V3C15 2.73478 14.8946 2.48043 14.7071 2.29289C14.5196 2.10536 14.2652 2 14 2C13.7348 2 13.4804 2.10536 13.2929 2.29289C13.1054 2.48043 13 2.73478 13 3V4H7V3C7 2.73478 6.89464 2.48043 6.70711 2.29289C6.51957 2.10536 6.26522 2 6 2ZM6 7C5.73478 7 5.48043 7.10536 5.29289 7.29289C5.10536 7.48043 5 7.73478 5 8C5 8.26522 5.10536 8.51957 5.29289 8.70711C5.48043 8.89464 5.73478 9 6 9H14C14.2652 9 14.5196 8.89464 14.7071 8.70711C14.8946 8.51957 15 8.26522 15 8C15 7.73478 14.8946 7.48043 14.7071 7.29289C14.5196 7.10536 14.2652 7 14 7H6Z"/>
+                                    </svg>
+                                    <span class="ml-3" sidebar-toggle-item="">Calendrier</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('chat_index') }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                         aria-hidden="true">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18 5V13C18 13.5304 17.7893 14.0391 17.4142 14.4142C17.0391 14.7893 16.5304 15 16 15H11L6 19V15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V5C2 4.46957 2.21071 3.96086 2.58579 3.58579C2.96086 3.21071 3.46957 3 4 3H16C16.5304 3 17.0391 3.21071 17.4142 3.58579C17.7893 3.96086 18 4.46957 18 5ZM7 8H5V10H7V8ZM9 8H11V10H9V8ZM15 8H13V10H15V8Z"/>
+                                    </svg>
+
+                                    <span class="ml-3" sidebar-toggle-item="">Messagerie</span>
+                                </a>
+                            </li>
+                            <li>
+
+                                <a href="{{ path("teacher_progress_index") }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                   <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.3 5A1 1 0 0 0 5 6.2l1.4 1.5a1 1 0 0 0 1.5-1.5L6.3 5Zm12.8 1.3A1 1 0 0 0 17.7 5l-1.5 1.4a1 1 0 0 0 1.5 1.5L19 6.3ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.8 17.7a1 1 0 1 0-1.5-1.5L5 17.7A1 1 0 1 0 6.3 19l1.5-1.4Zm9.9-1.5a1 1 0 0 0-1.5 1.5l1.5 1.4a1 1 0 0 0 1.4-1.4l-1.4-1.5ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z" clip-rule="evenodd"/>
+                                  </svg>                                
+                                    <span class="ml-3" sidebar-toggle-item="">Suivi des progressions</span>
+
+                                <a href="{{ path("app_import") }}"
+                                   class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                    <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                         aria-hidden="true">
+                                        <path d="M5.50004 13C4.60457 12.9988 3.7436 12.6545 3.09431 12.0378C2.44502 11.4211 2.0568 10.579 2.00952 9.68477C1.96225 8.79055 2.25952 7.91221 2.84017 7.23051C3.42082 6.5488 4.24068 6.11559 5.13104 6.02C4.86887 4.99189 5.02586 3.90174 5.56747 2.98938C6.10907 2.07701 6.99093 1.41717 8.01904 1.155C9.04715 0.892834 10.1373 1.04982 11.0497 1.59143C11.962 2.13303 12.6219 3.01489 12.884 4.043C13.4955 3.95786 14.1179 3.99945 14.7126 4.16517C15.3073 4.33088 15.8615 4.61719 16.3408 5.00628C16.8201 5.39537 17.2142 5.87892 17.4986 6.42685C17.783 6.97477 17.9517 7.57536 17.994 8.19125C18.0364 8.80714 17.9516 9.42516 17.7448 10.0069C17.5381 10.5886 17.2139 11.1215 16.7924 11.5726C16.3709 12.0236 15.8611 12.3831 15.2947 12.6287C14.7283 12.8742 14.1174 13.0006 13.5 13H11V9.413L12.293 10.706C12.4816 10.8882 12.7342 10.989 12.9964 10.9867C13.2586 10.9844 13.5095 10.8792 13.6949 10.6938C13.8803 10.5084 13.9854 10.2576 13.9877 9.9954C13.99 9.73321 13.8892 9.4806 13.707 9.292L10.707 6.292C10.5195 6.10453 10.2652 5.99921 10 5.99921C9.73488 5.99921 9.48057 6.10453 9.29304 6.292L6.29304 9.292C6.11088 9.4806 6.01009 9.73321 6.01237 9.9954C6.01464 10.2576 6.11981 10.5084 6.30522 10.6938C6.49063 10.8792 6.74144 10.9844 7.00364 10.9867C7.26584 10.989 7.51844 10.8882 7.70704 10.706L9.00004 9.414V13H5.50004Z"/>
+                                        <path d="M9 13H11V18C11 18.2652 10.8946 18.5196 10.7071 18.7071C10.5196 18.8946 10.2652 19 10 19C9.73478 19 9.48043 18.8946 9.29289 18.7071C9.10536 18.5196 9 18.2652 9 18V13Z"/>
+                                    </svg>                                    
+                                    <span class="ml-3" sidebar-toggle-item="">Import CSV</span>
+
+                                </a>
+                            </li>
+                        {% elseif is_granted("ROLE_STUDENT")  %}
+                        <li>
+                            <a href="{{ path("student_dashboard") }}"
+                               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                     aria-hidden="true">
+                                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                                </svg>
+                                <span class="ml-3" sidebar-toggle-item="">Tableau de bord</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_calendar') }}"
+                                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                     aria-hidden="true">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 2C5.73478 2 5.48043 2.10536 5.29289 2.29289C5.10536 2.48043 5 2.73478 5 3V4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V16C2 16.5304 2.21071 17.0391 2.58579 17.4142C2.96086 17.7893 3.46957 18 4 18H16C16.5304 18 17.0391 17.7893 17.4142 17.4142C17.7893 17.0391 18 16.5304 18 16V6C18 5.46957 17.7893 4.96086 17.4142 4.58579C17.0391 4.21071 16.5304 4 16 4H15V3C15 2.73478 14.8946 2.48043 14.7071 2.29289C14.5196 2.10536 14.2652 2 14 2C13.7348 2 13.4804 2.10536 13.2929 2.29289C13.1054 2.48043 13 2.73478 13 3V4H7V3C7 2.73478 6.89464 2.48043 6.70711 2.29289C6.51957 2.10536 6.26522 2 6 2ZM6 7C5.73478 7 5.48043 7.10536 5.29289 7.29289C5.10536 7.48043 5 7.73478 5 8C5 8.26522 5.10536 8.51957 5.29289 8.70711C5.48043 8.89464 5.73478 9 6 9H14C14.2652 9 14.5196 8.89464 14.7071 8.70711C14.8946 8.51957 15 8.26522 15 8C15 7.73478 14.8946 7.48043 14.7071 7.29289C14.5196 7.10536 14.2652 7 14 7H6Z"/>
+                                </svg>  
+                                <span class="ml-3" sidebar-toggle-item="">Calendrier</span>                              
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('chat_index') }}"
+                               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                     aria-hidden="true">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18 5V13C18 13.5304 17.7893 14.0391 17.4142 14.4142C17.0391 14.7893 16.5304 15 16 15H11L6 19V15H4C3.46957 15 2.96086 14.7893 2.58579 14.4142C2.21071 14.0391 2 13.5304 2 13V5C2 4.46957 2.21071 3.96086 2.58579 3.58579C2.96086 3.21071 3.46957 3 4 3H16C16.5304 3 17.0391 3.21071 17.4142 3.58579C17.7893 3.96086 18 4.46957 18 5ZM7 8H5V10H7V8ZM9 8H11V10H9V8ZM15 8H13V10H15V8Z"/>
+                                </svg>
+                                <span class="ml-3" sidebar-toggle-item="">Conversations</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("student_parameters_index") }}"
+                               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+                                <svg class="w-6 h-6 text-gray-500 text-gray-400 dark:group-hover:text-white group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.1 1.9-.7-.7m5.6 5.6-.7-.7m-4.2 0-.7.7m5.6-5.6-.7.7M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                  </svg>
+                                <span class="ml-3" sidebar-toggle-item="">Paramètres</span>
+                            </a>
+                        </li>
+                        {% elseif is_granted("ROLE_ADMIN")  %}
                         <li>
                             <a href="{{ path("admin_dashboard") }}"
                                class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
@@ -12,7 +160,55 @@
                                     <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                                     <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                                 </svg>
-                                <span class="ml-3" sidebar-toggle-item="">Dashboard</span>
+                                <span class="ml-3" sidebar-toggle-item="">Tableau de bord</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.496 2.13201C10.3449 2.04572 10.174 2.00034 10 2.00034C9.82603 2.00034 9.65506 2.04572 9.504 2.13201L2.504 6.13201C2.31267 6.24147 2.16287 6.41107 2.07788 6.61446C1.99289 6.81784 1.97749 7.0436 2.03405 7.25665C2.09062 7.46969 2.216 7.65807 2.39068 7.79251C2.56537 7.92694 2.77957 7.99989 3 8.00001V15C2.73478 15 2.48043 15.1054 2.29289 15.2929C2.10536 15.4804 2 15.7348 2 16C2 16.2652 2.10536 16.5196 2.29289 16.7071C2.48043 16.8947 2.73478 17 3 17H17C17.2652 17 17.5196 16.8947 17.7071 16.7071C17.8946 16.5196 18 16.2652 18 16C18 15.7348 17.8946 15.4804 17.7071 15.2929C17.5196 15.1054 17.2652 15 17 15V8.00001C17.2204 7.99989 17.4346 7.92694 17.6093 7.79251C17.784 7.65807 17.9094 7.46969 17.9659 7.25665C18.0225 7.0436 18.0071 6.81784 17.9221 6.61446C17.8371 6.41107 17.6873 6.24147 17.496 6.13201L10.496 2.13201ZM6 9.00001C5.73478 9.00001 5.48043 9.10537 5.29289 9.29291C5.10536 9.48044 5 9.7348 5 10V13C5 13.2652 5.10536 13.5196 5.29289 13.7071C5.48043 13.8947 5.73478 14 6 14C6.26522 14 6.51957 13.8947 6.70711 13.7071C6.89464 13.5196 7 13.2652 7 13V10C7 9.7348 6.89464 9.48044 6.70711 9.29291C6.51957 9.10537 6.26522 9.00001 6 9.00001ZM9 10C9 9.7348 9.10536 9.48044 9.29289 9.29291C9.48043 9.10537 9.73478 9.00001 10 9.00001C10.2652 9.00001 10.5196 9.10537 10.7071 9.29291C10.8946 9.48044 11 9.7348 11 10V13C11 13.2652 10.8946 13.5196 10.7071 13.7071C10.5196 13.8947 10.2652 14 10 14C9.73478 14 9.48043 13.8947 9.29289 13.7071C9.10536 13.5196 9 13.2652 9 13V10ZM14 9.00001C13.7348 9.00001 13.4804 9.10537 13.2929 9.29291C13.1054 9.48044 13 9.7348 13 10V13C13 13.2652 13.1054 13.5196 13.2929 13.7071C13.4804 13.8947 13.7348 14 14 14C14.2652 14 14.5196 13.8947 14.7071 13.7071C14.8946 13.5196 15 13.2652 15 13V10C15 9.7348 14.8946 9.48044 14.7071 9.29291C14.5196 9.10537 14.2652 9.00001 14 9.00001Z" fill="black"/>
+                                </svg>
+                                <span class="ml-3" sidebar-toggle-item="">Organismes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+                                    <path d="M13 6C13 6.79565 12.6839 7.55871 12.1213 8.12132C11.5587 8.68393 10.7956 9 10 9C9.20435 9 8.44129 8.68393 7.87868 8.12132C7.31607 7.55871 7 6.79565 7 6C7 5.20435 7.31607 4.44129 7.87868 3.87868C8.44129 3.31607 9.20435 3 10 3C10.7956 3 11.5587 3.31607 12.1213 3.87868C12.6839 4.44129 13 5.20435 13 6ZM18 8C18 8.53043 17.7893 9.03914 17.4142 9.41421C17.0391 9.78929 16.5304 10 16 10C15.4696 10 14.9609 9.78929 14.5858 9.41421C14.2107 9.03914 14 8.53043 14 8C14 7.46957 14.2107 6.96086 14.5858 6.58579C14.9609 6.21071 15.4696 6 16 6C16.5304 6 17.0391 6.21071 17.4142 6.58579C17.7893 6.96086 18 7.46957 18 8ZM14 15C14 13.9391 13.5786 12.9217 12.8284 12.1716C12.0783 11.4214 11.0609 11 10 11C8.93913 11 7.92172 11.4214 7.17157 12.1716C6.42143 12.9217 6 13.9391 6 15V18H14V15ZM6 8C6 8.53043 5.78929 9.03914 5.41421 9.41421C5.03914 9.78929 4.53043 10 4 10C3.46957 10 2.96086 9.78929 2.58579 9.41421C2.21071 9.03914 2 8.53043 2 8C2 7.46957 2.21071 6.96086 2.58579 6.58579C2.96086 6.21071 3.46957 6 4 6C4.53043 6 5.03914 6.21071 5.41421 6.58579C5.78929 6.96086 6 7.46957 6 8ZM16 18V15C16.0014 13.9833 15.7433 12.983 15.25 12.094C15.6933 11.9805 16.1568 11.9698 16.6049 12.0627C17.053 12.1556 17.474 12.3496 17.8357 12.6299C18.1974 12.9102 18.4903 13.2695 18.6921 13.6802C18.8939 14.091 18.9992 14.5424 19 15V18H16ZM4.75 12.094C4.25675 12.983 3.9986 13.9833 4 15V18H1V15C0.999808 14.542 1.10446 14.0901 1.30595 13.6789C1.50743 13.2676 1.80039 12.9079 2.16238 12.6274C2.52437 12.3469 2.94578 12.153 3.39431 12.0605C3.84284 11.9681 4.30658 11.9795 4.75 12.094Z" fill="black"/>
+                                </svg>
+                                <span class="ml-3" sidebar-toggle-item="">Classes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.00006 2C6.80231 2.00004 6.60901 2.05871 6.4446 2.1686C6.28019 2.27848 6.15205 2.43465 6.07638 2.61735C6.00071 2.80005 5.9809 3.00108 6.01947 3.19503C6.05804 3.38898 6.15325 3.56715 6.29306 3.707L7.00006 4.414V8.172C7 8.43719 6.8946 8.69151 6.70706 8.879L2.70706 12.879C0.817056 14.769 2.15606 18 4.82806 18H15.1711C17.8441 18 19.1831 14.769 17.2931 12.879L13.2931 8.879C13.1055 8.69151 13.0001 8.43719 13.0001 8.172V4.414L13.7071 3.707C13.8469 3.56715 13.9421 3.38898 13.9806 3.19503C14.0192 3.00108 13.9994 2.80005 13.9237 2.61735C13.8481 2.43465 13.7199 2.27848 13.5555 2.1686C13.3911 2.05871 13.1978 2.00004 13.0001 2H7.00006ZM9.00006 8.172V4H11.0001V8.172C11.0005 8.96724 11.3167 9.72977 11.8791 10.292L12.9061 11.32C12.1868 11.153 11.4354 11.1883 10.7351 11.422L10.2651 11.578C9.44393 11.8517 8.55618 11.8517 7.73506 11.578L7.17206 11.391C7.13441 11.3782 7.0964 11.3665 7.05806 11.356L8.12106 10.293C8.6837 9.73052 8.99989 8.96758 9.00006 8.172Z" fill="black"/>
+                                </svg>
+                                <span class="ml-3" sidebar-toggle-item="">Cours</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"
+                               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white">
+                                    <path d="M10.394 2.08C10.2695 2.02663 10.1355 1.99911 10 1.99911C9.86455 1.99911 9.73051 2.02663 9.60601 2.08L2.60601 5.08C2.42562 5.15685 2.2718 5.28503 2.16368 5.44861C2.05557 5.61218 1.99792 5.80393 1.99792 6C1.99792 6.19608 2.05557 6.38783 2.16368 6.5514C2.2718 6.71498 2.42562 6.84316 2.60601 6.92L5.25001 8.051C5.34815 7.94 5.46975 7.85221 5.60601 7.794L9.60601 6.08C9.72705 6.02606 9.85761 5.9967 9.99009 5.99365C10.1226 5.99061 10.2544 6.01392 10.3777 6.06224C10.5011 6.11057 10.6137 6.18293 10.7089 6.27514C10.8041 6.36735 10.88 6.47755 10.9322 6.59935C10.9844 6.72115 11.0119 6.85211 11.0131 6.98463C11.0142 7.11714 10.989 7.24857 10.939 7.37126C10.8889 7.49396 10.8149 7.60548 10.7214 7.69934C10.6278 7.7932 10.5165 7.86753 10.394 7.918L7.66701 9.08801L9.60701 9.919C9.73137 9.97223 9.86523 9.99968 10.0005 9.99968C10.1358 9.99968 10.2696 9.97223 10.394 9.919L17.394 6.919C17.5738 6.84187 17.727 6.71369 17.8347 6.55034C17.9424 6.38699 17.9997 6.19565 17.9997 6C17.9997 5.80436 17.9424 5.61302 17.8347 5.44967C17.727 5.28632 17.5738 5.15814 17.394 5.081L10.394 2.081V2.08ZM3.31001 9.39701L5.00001 10.12V14.222C4.65376 14.1433 4.30314 14.0852 3.95001 14.048C3.72215 14.0241 3.50943 13.9226 3.34742 13.7606C3.18542 13.5986 3.08395 13.3859 3.06001 13.158C2.9285 11.8989 3.01305 10.6266 3.31001 9.396V9.39701ZM9.30001 16.573C8.62402 15.9097 7.84786 15.357 7.00001 14.935V10.978L8.81801 11.758C9.1915 11.9181 9.59364 12.0007 10 12.0007C10.4064 12.0007 10.8085 11.9181 11.182 11.758L16.69 9.39701C16.9887 10.6274 17.0733 11.9 16.94 13.159C16.9161 13.3869 16.8146 13.5996 16.6526 13.7616C16.4906 13.9236 16.2779 14.0251 16.05 14.049C14.0325 14.261 12.1465 15.1508 10.7 16.573C10.5131 16.7562 10.2618 16.8589 10 16.8589C9.73825 16.8589 9.48694 16.7562 9.30001 16.573ZM6.00001 18C6.26522 18 6.51958 17.8946 6.70711 17.7071C6.89465 17.5196 7.00001 17.2652 7.00001 17V14.935C6.364 14.619 5.6926 14.38 5.00001 14.223V17C5.00001 17.2652 5.10536 17.5196 5.2929 17.7071C5.48044 17.8946 5.73479 18 6.00001 18Z" fill="black"/>
+                                </svg>
+                                <span class="ml-3" sidebar-toggle-item="">Elèves</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path("teacher_quizzes_index") }}"
+                               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 ">
+                                <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                     aria-hidden="true">
+                                    <path clip-rule="evenodd" fill-rule="evenodd"
+                                          d="M8.34 1.804A1 1 0 019.32 1h1.36a1 1 0 01.98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 011.262.125l.962.962a1 1 0 01.125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 01.804.98v1.361a1 1 0 01-.804.98l-1.473.295a6.95 6.95 0 01-.587 1.416l.834 1.25a1 1 0 01-.125 1.262l-.962.962a1 1 0 01-1.262.125l-1.25-.834a6.953 6.953 0 01-1.416.587l-.294 1.473a1 1 0 01-.98.804H9.32a1 1 0 01-.98-.804l-.295-1.473a6.957 6.957 0 01-1.416-.587l-1.25.834a1 1 0 01-1.262-.125l-.962-.962a1 1 0 01-.125-1.262l.834-1.25a6.957 6.957 0 01-.587-1.416l-1.473-.294A1 1 0 011 10.68V9.32a1 1 0 01.804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 01.125-1.262l.962-.962A1 1 0 015.38 3.03l1.25.834a6.957 6.957 0 011.416-.587l.294-1.473zM13 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span class="ml-3" sidebar-toggle-item="">Examens</span>
                             </a>
                         </li>
                         <li>
@@ -27,6 +223,7 @@
                                 <span class="ml-3" sidebar-toggle-item="">Settings</span>
                             </a>
                         </li>
+                        {% endif %}
                     {% else %}
                         <li>
                             <a href="{{ path("login") }}"
@@ -40,18 +237,6 @@
                         </li>
                     {% endif %}
                 </ul>
-            </div>
-        </div>
-        <div class="absolute bottom-0 left-0 justify-center hidden w-full p-4 space-x-4 bg-white lg:flex dark:bg-gray-800" sidebar-bottom-menu="">
-            <a href="#" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path></svg>
-            </a>
-            <a href="#" data-tooltip-target="tooltip-settings" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
-            </a>
-            <div id="tooltip-settings" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(71px, -64px, 0px);">
-                Settings page
-                <div class="tooltip-arrow" data-popper-arrow="" style="position: absolute; left: 0px; transform: translate3d(54.5px, 0px, 0px);"></div>
             </div>
         </div>
     </div>

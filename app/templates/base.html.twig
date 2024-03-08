@@ -2,8 +2,9 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="icon" type="image/png" href="{{ asset("favicon.png") }}" />
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -12,7 +13,7 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class="bg-gray-50 dark:bg-gray-800">
+    <body class="bg-gray-50 dark:bg-gray-800" {{ stimulus_controller("dark-mode sidebar") }}>
     {# read and display all flash messages #}
     {% for message in app.flashes('success') %}
         <div id="toast-success"
@@ -88,25 +89,33 @@
     {% endfor %}
 
 
-    {{ include("layout/_nav.html.twig") }}
+    {% if app.user %}
+        {{ include("layout/_nav.html.twig") }}
+    {% endif %}
 
-    <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
 
+    {% if app.user %}
         {{ include("layout/_sidebar.html.twig") }}
 
-        <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
+        <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
+            <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
+            <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
+                        <main id="content-without-footer" class="relative">
+                            {% block body %}
 
-        <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
-            <main>
-                {% block body %}
-
-                {% endblock %}
-            </main>
-            {{ include("layout/_footer.html.twig") }}
-            {{ include("layout/_copyright.html.twig") }}
-
-
+                            {% endblock %}
+                        </main>
+                {% if app.request.attributes.get('_route') is not same as 'chat_conversation' %}
+                    {{ include("layout/_footer.html.twig") }}
+                {% endif %}
+            </div>
         </div>
-    </div>
+    {% else %}
+        <main class="w-[100vw] h-[100vh] flex flex-col justify-center items-center">
+            {% block bodyNotLogin %}
+
+            {% endblock %}
+        </main>
+    {% endif %}
     </body>
 </html>

@@ -18,9 +18,19 @@ class HomepageController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function index(): Response
     {
-        $this->addFlash("success", "Exemple de message toast");
-        $this->addFlash("warning", "Exemple de message toast");
-        $this->addFlash("danger", "Exemple de message toast");
+        if (!$this->isGranted('IS_AUTHENTICATED') || !$this->isGranted('IS_AUTHENTICATED_FULLY') || !$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('login');
+        }
+
+        // redirection teacher
+        if ($this->isGranted('ROLE_TEACHER')) {
+            return $this->redirectToRoute('teacher_index');
+        }
+
+        // redirection student
+        if ($this->isGranted('ROLE_STUDENT')) {
+            return $this->redirectToRoute('student_dashboard');
+        }
 
         return $this->render('homepage/index.html.twig', [
             'controller_name' => 'HomepageController',

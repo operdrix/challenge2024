@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Utilisateur
@@ -18,6 +19,8 @@ abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserI
      * Email
      */
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
+    #[Assert\Email()]
+    #[Assert\NotBlank()]
     protected ?string $email = null;
 
     /**
@@ -29,24 +32,27 @@ abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserI
     /**
      * @var string The hashed password
      */
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     protected ?string $password = null;
 
     /**
      * Mot de passe non hashé
      */
+    #[Assert\NotBlank(groups: ["user_new"])]
     protected ?string $plainPassword = null;
 
     /**
      * Prénom
      */
     #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $firstname = null;
 
     /**
      * Nom
      */
     #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\NotBlank()]
     protected ?string $lastname = null;
 
     /**
@@ -182,7 +188,7 @@ abstract class AbstractUser implements UserInterface, PasswordAuthenticatedUserI
         return $this->birthdate;
     }
 
-    public function setBirthdate(\DateTimeImmutable $birthdate): static
+    public function setBirthdate(?\DateTimeImmutable $birthdate): static
     {
         $this->birthdate = $birthdate;
 
