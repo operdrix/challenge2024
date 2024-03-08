@@ -14,7 +14,7 @@
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                             </svg>
-                            Dashboard
+                            Tableau de bord
                         </a>
                     </li>
                     <li>
@@ -26,7 +26,11 @@
                                       clip-rule="evenodd"></path>
                             </svg>
                             <a href="{{ path("teacher_schools_index") }}"
-                               class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Organismes</a>
+                               class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+
+                                Organismes / Écoles
+
+                            </a>
                         </div>
                     </li>
                     <li>
@@ -37,17 +41,23 @@
                                       d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                                       clip-rule="evenodd"></path>
                             </svg>
-                            <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500"
-                                  aria-current="page">Voir</span>
+                            <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">
+                                    voir
+                                </span>
                         </div>
                     </li>
                 </ol>
             </nav>
-            <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">{{ school.name }}</h1>
+            <div class="flex flex-col">
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">{{ school.name }}</h1>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">
+                    Consultez toutes les informations sur l'organisme ou l'école</p>
+            </div>
         </div>
         <div class="col-span-full">
             <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                 <h3 class="mb-4 text-xl font-semibold dark:text-white">Informations générales</h3>
+                <p class="dark:text-white"><strong>Nom : </strong> {{ school.name }}</p>
                 <p class="dark:text-white"><strong>Adresse : </strong> {{ school.address }}</p>
                 <p class="dark:text-white"><strong>Email : </strong> {{ school.email }}</p>
                 <p class="dark:text-white"><strong>Contact : </strong> {{ school.contactName }}</p>
@@ -69,7 +79,7 @@
                 </div>
                 <h4 class="mb-4 text-lg font-semibold dark:text-white">Filtre</h4>
                 {{ form_start(formGrade, {"attr": {"class":"w-full", "noValidate": true}}) }}
-                <div class="w-full grid grid-cols-9 gap-6">
+                <div class="w-full grid grid-cols-9 gap-x-6">
                     <div class="col-span-full">
                         {{ form_row(formGrade.label) }}
                     </div>

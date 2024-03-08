@@ -80,13 +80,35 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5 space-y-4">
-                    <span {{ stimulus_target('calendar', 'modalGrade') }} class="hidden"></span>
-                    <span {{ stimulus_target('calendar', 'modalStudents') }} class="hidden"></span>
-                    <span {{ stimulus_target('calendar', 'modalDate') }}></span>
-                    <span {{ stimulus_target('calendar', 'modalOnline') }}></span>
-                    <span {{ stimulus_target('calendar', 'modalSessionLink') }} class="hidden"></span>
-                    <span {{ stimulus_target('calendar', 'modalPlace') }} class="hidden"></span>
+                <div class="p-4 md:p-5 space-y-4 flex flex-col">
+                    <div>
+                        <span class="font-bold">Classe: </span>
+                        <span {{ stimulus_target('calendar', 'modalGrade') }} ></span>
+                    </div>
+                    <div>
+                        <span class="font-bold">Classe: </span>
+                        <span {{ stimulus_target('calendar', 'modalTeacher') }}></span>
+                    </div>
+                    <div>
+                        <span class="font-bold">Étudiants: </span>
+                        <span {{ stimulus_target('calendar', 'modalStudents') }}></span>
+                    </div>
+                    <div>
+                        <span class="font-bold">Date: </span>
+                        <span {{ stimulus_target('calendar', 'modalDate') }}></span>
+                    </div>
+                    <div>
+                        <span class="font-bold">Modalité: </span>
+                        <span {{ stimulus_target('calendar', 'modalOnline') }}></span>
+                    </div>
+                    <div>
+                        <span class="font-bold">Lien d'accès: </span>
+                        <span {{ stimulus_target('calendar', 'modalSessionLink') }}></span>
+                    </div>
+                    <div>
+                        <span class="font-bold">Lieu: </span>
+                        <span {{ stimulus_target('calendar', 'modalPlace') }}></span>
+                    </div>
                 </div>
             </div>
         </div>

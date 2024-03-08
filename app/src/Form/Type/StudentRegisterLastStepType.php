@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class StudentRegisterLastStepType extends AbstractType
 {
@@ -24,7 +25,8 @@ class StudentRegisterLastStepType extends AbstractType
                     'placeholder' => 'Mot de passe',
                 ],
                 'constraints' => [
-                    new EduMentorPassword()
+                    new EduMentorPassword(),
+                    new NotBlank()
                 ]
             ]);
     }
