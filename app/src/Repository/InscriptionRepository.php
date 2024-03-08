@@ -37,6 +37,21 @@ class InscriptionRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findByGradeStudentAndQuiz($studentId, $quizId)
+    {
+        return $this->createQueryBuilder('i')
+            ->join('i.grade', 'g')
+            ->join('g.students', 's')
+            ->join('i.training', 't')
+            ->join('t.quizzes', 'q')
+            ->where('s.id = :studentId')
+            ->andWhere('q.id = :quizId')
+            ->setParameter('studentId', $studentId)
+            ->setParameter('quizId', $quizId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     /**
      * Requête de base
      */

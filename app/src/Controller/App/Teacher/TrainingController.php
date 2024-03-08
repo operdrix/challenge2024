@@ -8,7 +8,7 @@ use App\Entity\TrainingCategory;
 use App\Form\Type\InscriptionFilterType;
 use App\Form\Type\TrainingFilterType;
 use App\Form\Type\TrainingType;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +20,9 @@ class TrainingController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request,
-    ): Response
-    {
+    ): Response {
         $filters = [
             "teacher" => $this->getUser()
         ];
@@ -69,10 +68,9 @@ class TrainingController extends AbstractController
     #[Route("/{id}/show", name: "show", methods: ["GET"])]
     public function show(
         Training $training,
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request
-    ): Response
-    {
+    ): Response {
         $filters = [
             "teacher" => $this->getUser(),
             "training" => $training

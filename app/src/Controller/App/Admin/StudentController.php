@@ -5,7 +5,7 @@ namespace App\Controller\App\Admin;
 use App\Entity\Student;
 use App\Form\Type\StudentFilterType;
 use App\Form\Type\AdminStudentType;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class StudentController extends AbstractController
      */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        FilteredListService $filteredListService,
+        FilteredListServiceInterface $filteredListService,
         Request $request
     ): Response {
         [$pagination, $form] = $filteredListService->prepareFilteredList(

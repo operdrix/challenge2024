@@ -5,7 +5,7 @@ namespace App\Controller\App\Admin;
 use App\Entity\Admin;
 use App\Form\Type\AdminFilterType;
 use App\Form\Type\AdminType;
-use App\Service\FilteredListService;
+use App\Service\Interface\FilteredListServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +24,9 @@ class AdminController extends AbstractController
      */
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
-        FilteredListService $filteredListService,
-        Request                $request
-    ): Response
-    {
+        FilteredListServiceInterface $filteredListService,
+        Request $request
+    ): Response {
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             AdminFilterType::class,
@@ -53,8 +52,7 @@ class AdminController extends AbstractController
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher,
         ?Admin $admin = null
-    ): Response
-    {
+    ): Response {
         $formOptions = [];
         if (empty($admin)) {
             $admin = new Admin();
