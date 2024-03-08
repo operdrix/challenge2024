@@ -86,7 +86,7 @@ class QuizController extends AbstractController
         }
 
         return $this->render('teacher/quiz/edit.html.twig', [
-            'teacher' => $quiz,
+            'quiz' => $quiz,
             'form' => $form,
         ]);
     }
