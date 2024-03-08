@@ -4,20 +4,22 @@ export default class extends Controller {
     static targets = [
         "formContainer",
         "defaultContainer",
-        "header"
     ]
 
     connect() {
+        this.positionForm()
+    }
+
+    positionForm() {
+        let headerChatHeight = document.getElementById("header-chat").scrollHeight
+        let messageForm = document.getElementById("message_form").scrollHeight
         let navbarHeight = document.getElementById("main-navbar").scrollHeight
-        let headerHeight = this.headerTarget.scrollHeight
         let formHeight = this.formContainerTarget.scrollHeight
 
-        let height = 100 - (((headerHeight + formHeight + navbarHeight) / window.innerHeight) * 100)
+        let height = 100 - (((formHeight + navbarHeight + headerChatHeight - (messageForm / 1.75)) / window.innerHeight) * 100)
 
         this.defaultContainerTarget.style.height = height + "vh"
-        window.addEventListener("DOMContentLoaded", () => {
-            this.defaultContainerTarget.scrollTop = this.defaultContainerTarget.scrollHeight
+        this.defaultContainerTarget.scrollTop = this.defaultContainerTarget.scrollHeight
 
-        })
     }
 }
