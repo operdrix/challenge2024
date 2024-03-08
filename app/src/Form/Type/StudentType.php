@@ -26,26 +26,17 @@ class StudentType extends AbstractType
                     'placeholder' => $isStudentParameterPage ? 'Email' : 'Email de l\'étudiant',
                     'class' => ''
                 ],
-                'row_attr' => [
-                    'class' => 'py-4'
-                ],
             ])
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
                 'attr' => [
                     'placeholder' => $isStudentParameterPage ? 'Prénom' : 'Prénom de l\'étudiant'
                 ],
-                'row_attr' => [
-                    'class' => 'py-4'
-                ],
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom de famille',
                 'attr' => [
                     'placeholder' => $isStudentParameterPage ? 'Nom de famille' : 'Nom de famille de l\'étudiant'
-                ],
-                'row_attr' => [
-                    'class' => 'py-4'
                 ],
             ]);
         if ($isStudentParameterPage) {
