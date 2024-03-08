@@ -12,7 +12,7 @@
             <div {{ stimulus_controller("quiz-student-answer") }} data-quiz-student-answer-student-value="{{ app.user.id }}" data-quiz-student-answer-question-value="{{ question.id }}" class="grow basis-[400px] flex flex-col items-center max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 question relative">
                 <h5 class="mb-2 mt-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     {{ question.title }}
-                    <span class="bg-primary-50 text-primary-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300 absolute top-2 left-2">question n°{{ index + 1 }}</span>
+                    <span class="bg-primary-50 text-primary-800 text-xs font-medium ms-2 px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300 absolute top-2 left-0">question n°{{ index + 1 }}</span>
                     <span class="bg-secondary-50 text-secondary-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-secondary-900 dark:text-secondary-300 absolute top-2 right-0">{{ question.point }} points</span>
                 </h5>
                 {% if question.type.name == 'YESNO' %}
