@@ -57,7 +57,6 @@ class QuestionsType extends AbstractType
                 ],
                 'label' => 'Réponses possibles',
                 'row_attr' => [
-                    'class' => 'p-4 hidden',
                     'data-quiz-question-answer-target' => 'answers',
                 ],
                 'allow_add' => true,

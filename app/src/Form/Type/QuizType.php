@@ -52,14 +52,13 @@ class QuizType extends AbstractType
                 'entry_type' => QuestionsType::class,
                 'entry_options' => ['label' => false],
                 'row_attr' => [
-                    'class' => 'p-4',
                     'data-controller' => "quiz-question-answer"
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'delete_empty' => true,
-                'label' => false,
+                'label' => "Questions",
             ])
         ;
     }
