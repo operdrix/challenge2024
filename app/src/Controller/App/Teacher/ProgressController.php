@@ -11,6 +11,7 @@ use App\Form\Type\StudentFilterType;
 use App\Form\Type\TeacherStudentType;
 use App\Form\Type\GradeFilterType;
 use App\Repository\StudentRepository;
+use App\Repository\GradeRepository;
 use App\Service\Interface\FilteredListServiceInterface;
 use App\Service\Interface\ProgressServiceInterface;
 use App\Service\Interface\StudentServiceInterface;
@@ -28,6 +29,7 @@ class ProgressController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(
         StudentRepository $studentService,
+        GradeRepository $gradeService,
         FilteredListServiceInterface $filteredListService,
         Request $request
     ): Response {
@@ -36,11 +38,12 @@ class ProgressController extends AbstractController
             "teacher" => $this->getUser(),
         ];
 
+
         [$pagination, $form] = $filteredListService->prepareFilteredList(
             $request,
             StudentFilterType::class,
             Student::class,
-            $filtersStudent
+            $filtersStudent,
         );
 
         [$paginationGrade, $formGrade] = $filteredListService->prepareFilteredList(
@@ -54,7 +57,7 @@ class ProgressController extends AbstractController
             'form' => $form,
             'paginationGrade' => $paginationGrade,
             'formGrade' => $formGrade,
-            'students' => $studentService->findAll()
+            'grades' => $gradeService->findBy(['teacher' => $this->getUser()])
         ]);
     }
 
@@ -93,7 +96,8 @@ class ProgressController extends AbstractController
             'progressArray' => $progressService->getProgressArrayForTeacherByTraining(
                 $this->getUser(),
                 $training
-            )
+            ),
+            'training' => $training
         ]);
     }
 }
