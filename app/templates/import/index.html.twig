@@ -27,7 +27,6 @@
 
     <!-- contenu -->
         <div class="flex px-4 pt-6 xl:grid-cols-2 xl:gap-4 dark:bg-gray-900">
-            <!-- Right Content -->
             <div class="w-full">
                 <div class="p-4 mb-4 h-full bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                     <h3 class="mb-4 text-2xl font-semibold dark:text-white">Informations générales</h3>
@@ -36,108 +35,108 @@
                         <span class="font-medium">Attention !</span> Le contenu doit être séparé par une virgule.
                     </div>
 
-                    
-
-                    <div class="relative overflow-x-auto">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        Nom école
+                    <!-- tableau -->
+                    <div class="flex flex-col">
+                        <div class="overflow-x-auto">
+                          <div class="inline-block min-w-full align-middle">
+                            <div class="overflow-hidden shadow">
+                              <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+                                <thead class="bg-gray-100 dark:bg-gray-700">
+                                  <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                      École
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Email (requis)
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                      Prénom
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Prénom (requis)
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                      Nom
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Nom de famille (requis)
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                      Email
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Date de naissance
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                      Date de naissance
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Numéro de téléphone
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                      Numéro de téléphone
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Adresse
+                                    <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
+                                      Adresse
                                     </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        École 1
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Luc@myges.fr
+                                  </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                                  <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td rowspan="3" class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                      <div class="text-base text-gray-900 dark:text-white">Classe 1</div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        Luc
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                      <div class="text-base text-gray-900 dark:text-white">Luc</div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        Dumont
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">Dumont</div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        14/05/2001
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">luc@myges.fr</div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        07 07 07 07 07
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">07/05/2001</div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        7 rue de l'arc-en-ciel
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">07 07 07 07 07</div>
                                     </td>
-                                </tr>
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        École 2
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Diego@myges.fr
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">7 rue du marché</div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        Diego
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Dumont
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        14/05/2001
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        07 07 07 07 07
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        7 rue de l'arc-en-ciel
-                                    </td>
-                                </tr>
-                                <tr class="bg-white dark:bg-gray-800">
-                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        École 3
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        Yves@myges.fr
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Yves
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        Dumont
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        14/05/2001
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        07 07 07 07 07
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        7 rue de l'arc-en-ciel
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                  </tr>
+                                  <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">Yves</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">Sanchez</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">yves@myges.fr</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">03/05/2001</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">03 03 03 03 03</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">3 rue de Gaulles</div>
+                                      </td>
+                                  </tr>
+                                  <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">Sylvain</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">Duriff</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">sylvain@myges.fr</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">09/05/2001</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">09 09 09 09 09</div>
+                                      </td>
+                                      <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
+                                        <div class="text-base text-gray-900 dark:text-white">9 rue des Champs</div>
+                                      </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- fin tableau -->
 
 
                     <a href="{{ path('app_import_dummy') }}">
