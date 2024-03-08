@@ -78,11 +78,13 @@ class CalendarService implements CalendarServiceInterface
                 'extentedProps' => [
                     'trainingId' => $training->getId(),
                     'trainingTitle' => $training->getTitle(),
+                    'trainingDifficulty' => $training->getDifficulty(),
                     'teacherName' => $training->getTeacher()->getLastname() . ' '
                         . $training->getTeacher()->getFirstname(),
                     'isOnline' => $session->isIsOnline(),
                     'sessionLink' => $session->getSessionLink(),
-                    'place' => $session->getPlace()
+                    'place' => $session->getPlace(),
+                    'sessionDate' => $session->getStartDate()->format('h:i d/m')
                 ]
             ];
 

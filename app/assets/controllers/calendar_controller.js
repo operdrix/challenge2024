@@ -20,6 +20,7 @@ export default class extends Controller {
         'modal',
         'modalTitle',
         'modalGrade',
+        'modalTeacher',
         'modalStudents',
         'modalDate',
         'modalOnline',
@@ -72,35 +73,38 @@ export default class extends Controller {
                 method: 'POST'
             },
             eventClick: (info) => {
-                console.log(info.event.extendedProps);
-                console.log(info.event.extendedProps.trainingId);
-                this.modalTitleTarget.innerText = info.event.extendedProps['trainingTitle'];
-                this.modalDateTarget.innerText = info.event.startStr;
+                const { extentedProps } = info.event.extendedProps;
+                console.log(extentedProps);
+                console.log(this.modalTitleTarget.innerText);
+                this.modalTitleTarget.innerText = extentedProps.trainingTitle + ' - ' + extentedProps.trainingDifficulty;
+                this.modalDateTarget.innerText = extentedProps.sessionDate;
+                this.modalTeacherTarget.innerText = extentedProps.teacherName;
 
                 // Cours pour une classe ou des étudiants individuels
-                if (info.event.extendedProps.gradeLabel) {
-                    this.modalGradeTarget.innerText = info.event.extendedProps.gradeLabel;
-                    this.modalGradeTarget.classList.remove('hidden');
+                if (extentedProps.gradeLabel) {
+                    this.modalGradeTarget.innerText = extentedProps.gradeLabel;
+                    this.modalGradeTarget.parentElement.classList.remove('hidden');
 
-                    this.modalStudents.classList.add('hidden');
+                    this.modalStudentsTarget.parentElement.classList.add('hidden');
                 } else {
-                    this.modalGradeTarget.classList.add('hidden');
-                    this.modalStudentsTarget.classList.remove('hidden');
+                    this.modalGradeTarget.parentElement.classList.add('hidden');
+                    this.modalStudentsTarget.parentElement.classList.remove('hidden');
                 }
 
+                console.log(extentedProps.gradeLabel);
                 // Session distancielle ou présentielle
-                if (info.event.extendedProps.isOnline) {
+                if (extentedProps.isOnline) {
                     this.modalOnlineTarget.innerText = "Distanciel";
-                    this.modalSessionLinkTarget.classList.remove('hidden');
-                    this.modalSessionLinkTarget.innerText = info.event.extendedProps.sessionLink;
-                    this.modalPlaceTarget.classList.add('hidden');
+                    this.modalSessionLinkTarget.parentElement.classList.remove('hidden');
+                    this.modalSessionLinkTarget.innerText = extentedProps.sessionLink;
+                    this.modalPlaceTarget.parentElement.classList.add('hidden');
                     this.modalPlaceTarget.innerText = '';
                 } else {
                     this.modalOnlineTarget.innerText = "Présentiel";
-                    this.modalSessionLinkTarget.classList.add('hidden');
+                    this.modalSessionLinkTarget.parentElement.classList.add('hidden');
                     this.modalSessionLinkTarget.innerText = '';
-                    this.modalPlaceTarget.innerText = info.event.extendedProps.place;
-                    this.modalPlaceTarget.classList.remove('hidden');
+                    this.modalPlaceTarget.innerText = extentedProps.place;
+                    this.modalPlaceTarget.parentElement.classList.remove('hidden');
                 }
 
                 this.modal.show();
