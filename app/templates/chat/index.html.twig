@@ -112,7 +112,7 @@
                                     {% else %}
                                         {% set parameters = { idStudent: person.id, idTeacher: app.user.id } %}
                                     {% endif %}
-                                    <a href="{{ path('chat_conversation', parameters) }}" data-modal-toggle="edit-user-modal"
+                                    <a href="{{ path('chat_conversation', parameters) }}"
                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700">
                                         Ouvrir la conversation
                                     </a>
